@@ -101,10 +101,16 @@ public class HomeScreensActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_home_screens, container, false);
+            Log.i(getClass().getName(), "onCreateView");
 
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
+            Log.i(getClass().getName(), "sectionNumber: " + sectionNumber);
+
+            int layoutIdentifier = getResources().getIdentifier("fragment_home_screen" + String.valueOf(sectionNumber), "layout", getActivity().getPackageName());
+            View rootView = inflater.inflate(layoutIdentifier, container, false);
+
+//            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+//            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
 
             return rootView;
         }
