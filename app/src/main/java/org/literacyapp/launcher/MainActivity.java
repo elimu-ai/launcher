@@ -32,6 +32,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Intent intent = new Intent(getApplicationContext(), HomeScreensActivity.class);
+        startActivity(intent);
+
+        finish();
     }
 
     @Override

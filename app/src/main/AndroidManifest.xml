@@ -20,9 +20,13 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".AppsListActivity"
-            android:theme="@style/AppTheme.Wallpaper">
-        </activity>
+        <activity
+            android:name=".AppsListActivity"
+            android:theme="@style/AppTheme.Wallpaper"></activity>
+        <activity
+            android:name=".HomeScreensActivity"
+            android:label="@string/title_activity_home_screens"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
