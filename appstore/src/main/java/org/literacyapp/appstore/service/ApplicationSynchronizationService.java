@@ -12,9 +12,10 @@ public class ApplicationSynchronizationService extends JobService {
     public boolean onStartJob(JobParameters jobParameters) {
         Log.i(getClass().getName(), "onStartJob");
 
-        // Start processing work
-        new DownloadApplicationsAsyncTask(getApplicationContext()).execute();
-        // TODO: call jobFinished once AsyncTask completes
+        // Temporarily disable until Appstore application has been removed
+//        // Start processing work
+//        new DownloadApplicationsAsyncTask(getApplicationContext()).execute();
+//        // TODO: call jobFinished once AsyncTask completes
 
         boolean isWorkProcessingPending = false;
         return isWorkProcessingPending;
