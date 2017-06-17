@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.andraskindler.parallaxviewpager.ParallaxViewPager;
+
 public class HomeScreensActivity extends AppCompatActivity {
 
     /**
@@ -29,20 +31,24 @@ public class HomeScreensActivity extends AppCompatActivity {
     /**
      * The {@link ViewPager} that will host the section contents.
      */
-    private ViewPager mViewPager;
+    private ParallaxViewPager parallaxViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screens);
 
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        parallaxViewPager = (ParallaxViewPager) findViewById(R.id.container);
+        parallaxViewPager.setBackgroundResource(R.drawable.background);
+        parallaxViewPager.setAdapter(mSectionsPagerAdapter);
     }
 
     @Override
