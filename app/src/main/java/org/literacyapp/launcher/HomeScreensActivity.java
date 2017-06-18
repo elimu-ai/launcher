@@ -1,5 +1,7 @@
 package org.literacyapp.launcher;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,13 +10,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.andraskindler.parallaxviewpager.ParallaxViewPager;
+import com.matthewtamlin.sliding_intro_screen_library.indicators.DotIndicator;
 
 public class HomeScreensActivity extends AppCompatActivity {
 
@@ -31,7 +33,11 @@ public class HomeScreensActivity extends AppCompatActivity {
     /**
      * The {@link ViewPager} that will host the section contents.
      */
-    private ParallaxViewPager parallaxViewPager;
+    private ParallaxViewPager viewPager;
+
+    private ImageView egraOralVocabularyImageView;
+
+    private DotIndicator dotIndicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,31 +52,40 @@ public class HomeScreensActivity extends AppCompatActivity {
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        parallaxViewPager = (ParallaxViewPager) findViewById(R.id.container);
-        parallaxViewPager.setBackgroundResource(R.drawable.background);
-        parallaxViewPager.setAdapter(mSectionsPagerAdapter);
-    }
+        viewPager = (ParallaxViewPager) findViewById(R.id.container);
+        viewPager.setBackgroundResource(R.drawable.background);
+        viewPager.setAdapter(mSectionsPagerAdapter);
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_home_screens, menu);
-        return true;
-    }
+        egraOralVocabularyImageView = (ImageView) findViewById(R.id.egraOralVocabularyImageView);
+//        // Animate subtle movements
+//        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(egraOralVocabularyImageView, "rotation", 2);
+//        objectAnimator.setDuration(1000);
+//        objectAnimator.setRepeatCount(ValueAnimator.INFINITE);
+//        objectAnimator.setRepeatMode(ValueAnimator.REVERSE);
+//        objectAnimator.start();
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        dotIndicator = (DotIndicator) findViewById(R.id.dotIndicator);
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                Log.i(getClass().getName(), "onPageScrolled");
 
-        return super.onOptionsItemSelected(item);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Log.i(getClass().getName(), "onPageSelected");
+
+                dotIndicator.setSelectedItem(position, true);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                Log.i(getClass().getName(), "onPageScrollStateChanged");
+
+            }
+        });
     }
 
     /**
@@ -101,10 +116,15 @@ public class HomeScreensActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_home_screens, container, false);
+            Log.i(getClass().getName(), "onCreateView");
 
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
+            Log.i(getClass().getName(), "sectionNumber: " + sectionNumber);
+
+            int layoutIdentifier = getResources().getIdentifier("fragment_home_screen" + String.valueOf(sectionNumber), "layout", getActivity().getPackageName());
+            View rootView = inflater.inflate(layoutIdentifier, container, false);
+
+
 
             return rootView;
         }
