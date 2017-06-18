@@ -1,7 +1,8 @@
 package org.literacyapp.launcher;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -9,10 +10,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.andraskindler.parallaxviewpager.ParallaxViewPager;
 import com.matthewtamlin.sliding_intro_screen_library.indicators.DotIndicator;
@@ -34,6 +35,8 @@ public class HomeScreensActivity extends AppCompatActivity {
      */
     private ParallaxViewPager viewPager;
 
+    private ImageView egraOralVocabularyImageView;
+
     private DotIndicator dotIndicator;
 
     @Override
@@ -52,6 +55,14 @@ public class HomeScreensActivity extends AppCompatActivity {
         viewPager = (ParallaxViewPager) findViewById(R.id.container);
         viewPager.setBackgroundResource(R.drawable.background);
         viewPager.setAdapter(mSectionsPagerAdapter);
+
+        egraOralVocabularyImageView = (ImageView) findViewById(R.id.egraOralVocabularyImageView);
+//        // Animate subtle movements
+//        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(egraOralVocabularyImageView, "rotation", 2);
+//        objectAnimator.setDuration(1000);
+//        objectAnimator.setRepeatCount(ValueAnimator.INFINITE);
+//        objectAnimator.setRepeatMode(ValueAnimator.REVERSE);
+//        objectAnimator.start();
 
         dotIndicator = (DotIndicator) findViewById(R.id.dotIndicator);
 
