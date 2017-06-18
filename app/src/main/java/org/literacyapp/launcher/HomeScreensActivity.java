@@ -25,7 +25,6 @@ import com.afollestad.materialdialogs.Theme;
 import com.andraskindler.parallaxviewpager.ParallaxViewPager;
 import com.matthewtamlin.sliding_intro_screen_library.indicators.DotIndicator;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -82,11 +81,36 @@ public class HomeScreensActivity extends AppCompatActivity {
 
         private static final String ARG_SECTION_NUMBER = "section_number";
 
+
+        // Skill: Tablet navigation
+
         private RelativeLayout tabletNavigationContainer;
         private ImageView tabletNavigationImageView;
 
+
+        // Skills: EGRA
+
         private RelativeLayout egraOralVocabularyContainer;
         private ImageView egraOralVocabularyImageView;
+
+        private RelativeLayout egraPhonemicAwarenessContainer;
+        private ImageView egraPhonemicAwarenessImageView;
+
+        private RelativeLayout egraLetterIdentificationContainer;
+        private ImageView egraLetterIdentificationImageView;
+
+        private RelativeLayout egraSyllableNamingContainer;
+        private ImageView egraSyllableNamingImageView;
+
+
+        // Skills: EGMA
+
+        private RelativeLayout egmaOralCountingContainer;
+        private ImageView egmaOralCountingImageView;
+
+        private RelativeLayout egmaNumberIdentificationContainer;
+        private ImageView egmaNumberIdentificationImageView;
+
 
         public PlaceholderFragment() {
         }
@@ -111,6 +135,8 @@ public class HomeScreensActivity extends AppCompatActivity {
             View rootView = inflater.inflate(layoutIdentifier, container, false);
 
             if (sectionNumber == 1) {
+                // 1. Tablet navigation
+
                 tabletNavigationContainer = (RelativeLayout) rootView.findViewById(R.id.tabletNavigationContainer);
                 tabletNavigationImageView = (ImageView) rootView.findViewById(R.id.tabletNavigationImageView);
                 tabletNavigationImageView.setOnClickListener(new View.OnClickListener() {
@@ -118,7 +144,7 @@ public class HomeScreensActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         Log.i(getClass().getName(), "tabletNavigationImageView onClick");
 
-                        // Fetch apps for category
+                        // Fetch apps for category (Tablet Navigation)
                         // TODO: load dynamically from Appstore
                         List<String> packageNames = Arrays.asList(
                                 "com.android.camera2",
@@ -137,6 +163,9 @@ public class HomeScreensActivity extends AppCompatActivity {
                     }
                 });
 
+
+                // 2. EGRA skills
+
                 egraOralVocabularyContainer = (RelativeLayout) rootView.findViewById(R.id.egraOralVocabularyContainer);
                 egraOralVocabularyImageView = (ImageView) rootView.findViewById(R.id.egraOralVocabularyImageView);
                 egraOralVocabularyImageView.setOnClickListener(new View.OnClickListener() {
@@ -144,18 +173,119 @@ public class HomeScreensActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         Log.i(getClass().getName(), "egraOralVocabularyImageView onClick");
 
-                        // Fetch apps for category
+                        // Fetch apps for category (Oral Vocabulary and Listening Comprehension)
                         // TODO: load dynamically from Appstore
                         List<String> packageNames = Arrays.asList(
                                 "com.android.gallery3d",
+                                "org.literacyapp", // TODO: only use the Video launcher
                                 "org.literacyapp.imagepicker",
-                                "org.literacyapp", // TODO: only use the video launcher
                                 "org.literacyapp.storybooks"
                         );
 
                         initializeDialog(packageNames);
                     }
                 });
+
+                egraPhonemicAwarenessContainer = (RelativeLayout) rootView.findViewById(R.id.egraPhonemicAwarenessContainer);
+                egraPhonemicAwarenessImageView = (ImageView) rootView.findViewById(R.id.egraPhonemicAwarenessImageView);
+                egraPhonemicAwarenessImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.i(getClass().getName(), "egraPhonemicAwarenessImageView onClick");
+
+                        // Fetch apps for category (Phonemic Awareness)
+                        // TODO: load dynamically from Appstore
+                        List<String> packageNames = Arrays.asList(
+                                "com.ubongokids.alphabetEng",
+                                "org.literacyapp.soundcards"
+                        );
+
+                        initializeDialog(packageNames);
+                    }
+                });
+
+                egraLetterIdentificationContainer = (RelativeLayout) rootView.findViewById(R.id.egraLetterIdentificationContainer);
+                egraLetterIdentificationImageView = (ImageView) rootView.findViewById(R.id.egraLetterIdentificationImageView);
+                egraLetterIdentificationImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.i(getClass().getName(), "egraLetterIdentificationImageView onClick");
+
+                        // Fetch apps for category (Letter Identification)
+                        // TODO: load dynamically from Appstore
+                        List<String> packageNames = Arrays.asList(
+                                "com.ubongokids.alphabetEng",
+                                "org.literacyapp", // TODO: only use the Literacy launcher
+                                "org.literacyapp.handwriting",
+                                "org.literacyapp.chat",
+                                "org.literacyapp.visemes",
+                                "org.literacyapp.voltair",
+                                "org.literacyapp.walezi"
+                        );
+
+                        initializeDialog(packageNames);
+                    }
+                });
+
+
+                // 3. EGMA skills
+
+                egmaOralCountingContainer = (RelativeLayout) rootView.findViewById(R.id.egmaOralCountingContainer);
+                egmaOralCountingImageView = (ImageView) rootView.findViewById(R.id.egmaOralCountingImageView);
+                egmaOralCountingImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.i(getClass().getName(), "egmaOralCountingImageView onClick");
+
+                        // Fetch apps for category (Oral Counting)
+                        // TODO: load dynamically from Appstore
+                        List<String> packageNames = Arrays.asList(
+                                "com.android.gallery3d",
+                                "org.literacyapp", // TODO: only use the Numeracy launcher
+                                "com.ubongokids.ratmathEng"
+                        );
+
+                        initializeDialog(packageNames);
+                    }
+                });
+
+                egmaNumberIdentificationContainer = (RelativeLayout) rootView.findViewById(R.id.egmaNumberIdentificationContainer);
+                egmaNumberIdentificationImageView = (ImageView) rootView.findViewById(R.id.egmaNumberIdentificationImageView);
+                egmaNumberIdentificationImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.i(getClass().getName(), "egmaNumberIdentificationImageView onClick");
+
+                        // Fetch apps for category (Number Identification)
+                        // TODO: load dynamically from Appstore
+                        List<String> packageNames = Arrays.asList(
+                                "com.ubongokids.ratmathEng",
+                                "org.jempe.hockey",
+                                "org.literacyapp", // TODO: only use the Numeracy launcher
+                                "org.literacyapp.calculator",
+                                "org.literacyapp.chat",
+                                "org.literacyapp.handwriting_numbers",
+                                "org.literacyapp.nya",
+                                "org.literacyapp.tilt",
+                                "ru.o2genum.coregame"
+                        );
+
+                        initializeDialog(packageNames);
+                    }
+                });
+            } else if (sectionNumber == 2) {
+                // 1. EGRA skills
+
+                // TODO: syllable naming
+
+
+                // 2. EGMA skills
+
+                // TODO
+            } else if (sectionNumber == 3) {
+                // TODO
+            }  else if (sectionNumber == 4) {
+                // TODO
             }
 
             return rootView;
@@ -209,6 +339,12 @@ public class HomeScreensActivity extends AppCompatActivity {
         public void onStart() {
             Log.i(getClass().getName(), "onCreateView");
             super.onStart();
+        }
+
+        @Override
+        public void onResume() {
+            Log.i(getClass().getName(), "onResume");
+            super.onResume();
 
             // Add subtle movements to the space ships
             ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(egraOralVocabularyContainer, "rotation", 2 + ((int) Math.random() * 3));
@@ -216,6 +352,12 @@ public class HomeScreensActivity extends AppCompatActivity {
             objectAnimator.setRepeatCount(ValueAnimator.INFINITE);
             objectAnimator.setRepeatMode(ValueAnimator.REVERSE);
             objectAnimator.start();
+
+//            objectAnimator = ObjectAnimator.ofFloat(egraPhonemicAwarenessContainer, "rotation", 2 + ((int) Math.random() * 3));
+//            objectAnimator.start();
+//
+//            objectAnimator = ObjectAnimator.ofFloat(egraLetterIdentificationContainer, "rotation", 2 + ((int) Math.random() * 3));
+//            objectAnimator.start();
         }
     }
 
