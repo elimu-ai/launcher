@@ -104,7 +104,7 @@
                     android:layout_height="110dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="40dp"
-                    android:src="@drawable/egra_syllable_naming" />
+                    android:src="@drawable/egra_letter_identification" />
             </RelativeLayout>
         </LinearLayout>
         <LinearLayout
