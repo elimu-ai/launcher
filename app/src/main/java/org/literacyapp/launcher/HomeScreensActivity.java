@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.andraskindler.parallaxviewpager.ParallaxViewPager;
 import com.matthewtamlin.sliding_intro_screen_library.indicators.DotIndicator;
 
 public class HomeScreensActivity extends AppCompatActivity {
@@ -31,7 +32,7 @@ public class HomeScreensActivity extends AppCompatActivity {
     /**
      * The {@link ViewPager} that will host the section contents.
      */
-    private ViewPager viewPager;
+    private ParallaxViewPager viewPager;
 
     private DotIndicator dotIndicator;
 
@@ -48,7 +49,7 @@ public class HomeScreensActivity extends AppCompatActivity {
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        viewPager = (ViewPager) findViewById(R.id.container);
+        viewPager = (ParallaxViewPager) findViewById(R.id.container);
         viewPager.setBackgroundResource(R.drawable.background);
         viewPager.setAdapter(mSectionsPagerAdapter);
 

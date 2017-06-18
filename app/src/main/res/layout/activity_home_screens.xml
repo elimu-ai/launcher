@@ -8,12 +8,11 @@
     android:fitsSystemWindows="true"
     tools:context="org.literacyapp.launcher.HomeScreensActivity">
 
-    <android.support.v4.view.ViewPager
+    <com.andraskindler.parallaxviewpager.ParallaxViewPager
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:background="@drawable/background" />
 
     <com.matthewtamlin.sliding_intro_screen_library.indicators.DotIndicator
         android:id="@+id/dotIndicator"
