@@ -118,57 +118,22 @@ public class HomeScreensActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         Log.i(getClass().getName(), "tabletNavigationImageView onClick");
 
-//                        Intent intent = new Intent(getContext(), CategoryOverlayActivity.class);
-//                        startActivity(intent);
-
-                        MaterialDialog materialDialog = new MaterialDialog.Builder(getContext())
-                                .customView(R.layout.dialog_apps, true)
-                                .theme(Theme.DARK)
-                                .show();
-
-                        View customView = materialDialog.getCustomView();
-                        GridLayout appGridLayout = (GridLayout) customView.findViewById(R.id.appGridLayout);
-
                         // Fetch apps for category
-                        // TODO: fetch dynamically from Appstore
+                        // TODO: load dynamically from Appstore
                         List<String> packageNames = Arrays.asList(
                                 "com.android.camera2",
                                 "com.android.gallery3d",
+                                "com.android.soundrecorder",
+                                "cc.openframeworks.inkSpace",
+                                "com.google.fpl.liquidfunpaint",
+                                "org.dsandler.apps.markers",
+                                "org.esteban.piano",
                                 "fr.tvbarthel.apps.cameracolorpicker.foss.kids",
                                 "org.literacyapp.startguide",
                                 "org.literacyapp.tilt"
                         );
-                        Intent intent = new Intent(Intent.ACTION_MAIN, null);
-                        intent.addCategory(Intent.CATEGORY_LAUNCHER);
-                        final PackageManager packageManager = getActivity().getPackageManager();
-                        List<ResolveInfo> availableActivities = packageManager.queryIntentActivities(intent, 0);
-                        for (ResolveInfo resolveInfo : availableActivities) {
-                            final String packageName = resolveInfo.activityInfo.packageName;
-                            Log.i(getClass().getName(), "packageName: " + packageName);
-                            CharSequence label = resolveInfo.loadLabel(packageManager);
-                            Log.i(getClass().getName(), "label: " + label);
-                            Drawable icon = resolveInfo.loadIcon(packageManager);
-                            Log.i(getClass().getName(), "icon: " + icon);
 
-                            if (packageNames.contains(packageName)) {
-                                View appView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_apps_app_view, appGridLayout, false);
-
-                                ImageView appIconImageView = (ImageView) appView.findViewById(R.id.appIconImageView);
-                                appIconImageView.setImageDrawable(icon);
-
-                                appIconImageView.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Log.i(getClass().getName(), "appIconImageView onClick");
-
-                                        Intent intent = packageManager.getLaunchIntentForPackage(packageName);
-                                        startActivity(intent);
-                                    }
-                                });
-
-                                appGridLayout.addView(appView);
-                            }
-                        }
+                        initializeDialog(packageNames);
                     }
                 });
 
@@ -179,12 +144,65 @@ public class HomeScreensActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         Log.i(getClass().getName(), "egraOralVocabularyImageView onClick");
 
+                        // Fetch apps for category
+                        // TODO: load dynamically from Appstore
+                        List<String> packageNames = Arrays.asList(
+                                "com.android.gallery3d",
+                                "org.literacyapp.imagepicker",
+                                "org.literacyapp", // TODO: only use the video launcher
+                                "org.literacyapp.storybooks"
+                        );
 
+                        initializeDialog(packageNames);
                     }
                 });
             }
 
             return rootView;
+        }
+
+        private void initializeDialog(List<String> packageNames) {
+            Log.i(getClass().getName(), "initializeDialog");
+
+            MaterialDialog materialDialog = new MaterialDialog.Builder(getContext())
+                    .customView(R.layout.dialog_apps, true)
+                    .theme(Theme.DARK)
+                    .show();
+
+            View customView = materialDialog.getCustomView();
+            GridLayout appGridLayout = (GridLayout) customView.findViewById(R.id.appGridLayout);
+
+            Intent intent = new Intent(Intent.ACTION_MAIN, null);
+            intent.addCategory(Intent.CATEGORY_LAUNCHER);
+            final PackageManager packageManager = getActivity().getPackageManager();
+            List<ResolveInfo> availableActivities = packageManager.queryIntentActivities(intent, 0);
+            for (ResolveInfo resolveInfo : availableActivities) {
+                final String packageName = resolveInfo.activityInfo.packageName;
+                Log.i(getClass().getName(), "packageName: " + packageName);
+                CharSequence label = resolveInfo.loadLabel(packageManager);
+                Log.i(getClass().getName(), "label: " + label);
+                Drawable icon = resolveInfo.loadIcon(packageManager);
+                Log.i(getClass().getName(), "icon: " + icon);
+
+                if (packageNames.contains(packageName)) {
+                    View appView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_apps_app_view, appGridLayout, false);
+
+                    ImageView appIconImageView = (ImageView) appView.findViewById(R.id.appIconImageView);
+                    appIconImageView.setImageDrawable(icon);
+
+                    appIconImageView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Log.i(getClass().getName(), "appIconImageView onClick");
+
+                            Intent intent = packageManager.getLaunchIntentForPackage(packageName);
+                            startActivity(intent);
+                        }
+                    });
+
+                    appGridLayout.addView(appView);
+                }
+            }
         }
 
         @Override
@@ -193,8 +211,8 @@ public class HomeScreensActivity extends AppCompatActivity {
             super.onStart();
 
             // Add subtle movements to the space ships
-            ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(egraOralVocabularyContainer, "rotation", 2);
-            objectAnimator.setDuration(1000);
+            ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(egraOralVocabularyContainer, "rotation", 2 + ((int) Math.random() * 3));
+            objectAnimator.setDuration(1000 + ((int) Math.random() * 1000));
             objectAnimator.setRepeatCount(ValueAnimator.INFINITE);
             objectAnimator.setRepeatMode(ValueAnimator.REVERSE);
             objectAnimator.start();
