@@ -2,12 +2,17 @@ package org.literacyapp.launcher;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,27 +20,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.Theme;
 import com.andraskindler.parallaxviewpager.ParallaxViewPager;
 import com.matthewtamlin.sliding_intro_screen_library.indicators.DotIndicator;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class HomeScreensActivity extends AppCompatActivity {
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
     private ParallaxViewPager viewPager;
-
-    private ImageView egraOralVocabularyImageView;
 
     private DotIndicator dotIndicator;
 
@@ -55,14 +52,6 @@ public class HomeScreensActivity extends AppCompatActivity {
         viewPager = (ParallaxViewPager) findViewById(R.id.container);
         viewPager.setBackgroundResource(R.drawable.background);
         viewPager.setAdapter(mSectionsPagerAdapter);
-
-        egraOralVocabularyImageView = (ImageView) findViewById(R.id.egraOralVocabularyImageView);
-//        // Animate subtle movements
-//        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(egraOralVocabularyImageView, "rotation", 2);
-//        objectAnimator.setDuration(1000);
-//        objectAnimator.setRepeatCount(ValueAnimator.INFINITE);
-//        objectAnimator.setRepeatMode(ValueAnimator.REVERSE);
-//        objectAnimator.start();
 
         dotIndicator = (DotIndicator) findViewById(R.id.dotIndicator);
 
@@ -88,23 +77,44 @@ public class HomeScreensActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
     public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
+
         private static final String ARG_SECTION_NUMBER = "section_number";
+
+
+        // Skill: Tablet navigation
+
+        private RelativeLayout tabletNavigationContainer;
+        private ImageView tabletNavigationImageView;
+
+
+        // Skills: EGRA
+
+        private RelativeLayout egraOralVocabularyContainer;
+        private ImageView egraOralVocabularyImageView;
+
+        private RelativeLayout egraPhonemicAwarenessContainer;
+        private ImageView egraPhonemicAwarenessImageView;
+
+        private RelativeLayout egraLetterIdentificationContainer;
+        private ImageView egraLetterIdentificationImageView;
+
+        private RelativeLayout egraSyllableNamingContainer;
+        private ImageView egraSyllableNamingImageView;
+
+
+        // Skills: EGMA
+
+        private RelativeLayout egmaOralCountingContainer;
+        private ImageView egmaOralCountingImageView;
+
+        private RelativeLayout egmaNumberIdentificationContainer;
+        private ImageView egmaNumberIdentificationImageView;
+
 
         public PlaceholderFragment() {
         }
 
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
@@ -124,16 +134,233 @@ public class HomeScreensActivity extends AppCompatActivity {
             int layoutIdentifier = getResources().getIdentifier("fragment_home_screen" + String.valueOf(sectionNumber), "layout", getActivity().getPackageName());
             View rootView = inflater.inflate(layoutIdentifier, container, false);
 
+            if (sectionNumber == 1) {
+                // 1. Tablet navigation
 
+                tabletNavigationContainer = (RelativeLayout) rootView.findViewById(R.id.tabletNavigationContainer);
+                tabletNavigationImageView = (ImageView) rootView.findViewById(R.id.tabletNavigationImageView);
+                tabletNavigationImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.i(getClass().getName(), "tabletNavigationImageView onClick");
+
+                        // Fetch apps for category (Tablet Navigation)
+                        // TODO: load dynamically from Appstore
+                        List<String> packageNames = Arrays.asList(
+                                "com.android.camera2",
+                                "com.android.gallery3d",
+                                "com.android.soundrecorder",
+                                "cc.openframeworks.inkSpace",
+                                "com.google.fpl.liquidfunpaint",
+                                "org.dsandler.apps.markers",
+                                "org.esteban.piano",
+                                "fr.tvbarthel.apps.cameracolorpicker.foss.kids",
+                                "org.literacyapp.startguide",
+                                "org.literacyapp.tilt"
+                        );
+
+                        initializeDialog(packageNames);
+                    }
+                });
+
+
+                // 2. EGRA skills
+
+                egraOralVocabularyContainer = (RelativeLayout) rootView.findViewById(R.id.egraOralVocabularyContainer);
+                egraOralVocabularyImageView = (ImageView) rootView.findViewById(R.id.egraOralVocabularyImageView);
+                egraOralVocabularyImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.i(getClass().getName(), "egraOralVocabularyImageView onClick");
+
+                        // Fetch apps for category (Oral Vocabulary and Listening Comprehension)
+                        // TODO: load dynamically from Appstore
+                        List<String> packageNames = Arrays.asList(
+                                "com.android.gallery3d",
+                                "org.literacyapp", // TODO: only use the Video launcher
+                                "org.literacyapp.imagepicker",
+                                "org.literacyapp.storybooks"
+                        );
+
+                        initializeDialog(packageNames);
+                    }
+                });
+
+                egraPhonemicAwarenessContainer = (RelativeLayout) rootView.findViewById(R.id.egraPhonemicAwarenessContainer);
+                egraPhonemicAwarenessImageView = (ImageView) rootView.findViewById(R.id.egraPhonemicAwarenessImageView);
+                egraPhonemicAwarenessImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.i(getClass().getName(), "egraPhonemicAwarenessImageView onClick");
+
+                        // Fetch apps for category (Phonemic Awareness)
+                        // TODO: load dynamically from Appstore
+                        List<String> packageNames = Arrays.asList(
+                                "com.ubongokids.alphabetEng",
+                                "org.literacyapp.soundcards"
+                        );
+
+                        initializeDialog(packageNames);
+                    }
+                });
+
+                egraLetterIdentificationContainer = (RelativeLayout) rootView.findViewById(R.id.egraLetterIdentificationContainer);
+                egraLetterIdentificationImageView = (ImageView) rootView.findViewById(R.id.egraLetterIdentificationImageView);
+                egraLetterIdentificationImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.i(getClass().getName(), "egraLetterIdentificationImageView onClick");
+
+                        // Fetch apps for category (Letter Identification)
+                        // TODO: load dynamically from Appstore
+                        List<String> packageNames = Arrays.asList(
+                                "com.ubongokids.alphabetEng",
+                                "org.literacyapp", // TODO: only use the Literacy launcher
+                                "org.literacyapp.handwriting",
+                                "org.literacyapp.chat",
+                                "org.literacyapp.visemes",
+                                "org.literacyapp.voltair",
+                                "org.literacyapp.walezi"
+                        );
+
+                        initializeDialog(packageNames);
+                    }
+                });
+
+
+                // 3. EGMA skills
+
+                egmaOralCountingContainer = (RelativeLayout) rootView.findViewById(R.id.egmaOralCountingContainer);
+                egmaOralCountingImageView = (ImageView) rootView.findViewById(R.id.egmaOralCountingImageView);
+                egmaOralCountingImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.i(getClass().getName(), "egmaOralCountingImageView onClick");
+
+                        // Fetch apps for category (Oral Counting)
+                        // TODO: load dynamically from Appstore
+                        List<String> packageNames = Arrays.asList(
+                                "com.android.gallery3d",
+                                "org.literacyapp", // TODO: only use the Numeracy launcher
+                                "com.ubongokids.ratmathEng"
+                        );
+
+                        initializeDialog(packageNames);
+                    }
+                });
+
+                egmaNumberIdentificationContainer = (RelativeLayout) rootView.findViewById(R.id.egmaNumberIdentificationContainer);
+                egmaNumberIdentificationImageView = (ImageView) rootView.findViewById(R.id.egmaNumberIdentificationImageView);
+                egmaNumberIdentificationImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.i(getClass().getName(), "egmaNumberIdentificationImageView onClick");
+
+                        // Fetch apps for category (Number Identification)
+                        // TODO: load dynamically from Appstore
+                        List<String> packageNames = Arrays.asList(
+                                "com.ubongokids.ratmathEng",
+                                "org.jempe.hockey",
+                                "org.literacyapp", // TODO: only use the Numeracy launcher
+                                "org.literacyapp.calculator",
+                                "org.literacyapp.chat",
+                                "org.literacyapp.handwriting_numbers",
+                                "org.literacyapp.nya",
+                                "org.literacyapp.tilt",
+                                "ru.o2genum.coregame"
+                        );
+
+                        initializeDialog(packageNames);
+                    }
+                });
+            } else if (sectionNumber == 2) {
+                // 1. EGRA skills
+
+                // TODO: syllable naming
+
+
+                // 2. EGMA skills
+
+                // TODO
+            } else if (sectionNumber == 3) {
+                // TODO
+            }  else if (sectionNumber == 4) {
+                // TODO
+            }
 
             return rootView;
         }
+
+        private void initializeDialog(List<String> packageNames) {
+            Log.i(getClass().getName(), "initializeDialog");
+
+            MaterialDialog materialDialog = new MaterialDialog.Builder(getContext())
+                    .customView(R.layout.dialog_apps, true)
+                    .theme(Theme.DARK)
+                    .show();
+
+            View customView = materialDialog.getCustomView();
+            GridLayout appGridLayout = (GridLayout) customView.findViewById(R.id.appGridLayout);
+
+            Intent intent = new Intent(Intent.ACTION_MAIN, null);
+            intent.addCategory(Intent.CATEGORY_LAUNCHER);
+            final PackageManager packageManager = getActivity().getPackageManager();
+            List<ResolveInfo> availableActivities = packageManager.queryIntentActivities(intent, 0);
+            for (ResolveInfo resolveInfo : availableActivities) {
+                final String packageName = resolveInfo.activityInfo.packageName;
+                Log.i(getClass().getName(), "packageName: " + packageName);
+                CharSequence label = resolveInfo.loadLabel(packageManager);
+                Log.i(getClass().getName(), "label: " + label);
+                Drawable icon = resolveInfo.loadIcon(packageManager);
+                Log.i(getClass().getName(), "icon: " + icon);
+
+                if (packageNames.contains(packageName)) {
+                    View appView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_apps_app_view, appGridLayout, false);
+
+                    ImageView appIconImageView = (ImageView) appView.findViewById(R.id.appIconImageView);
+                    appIconImageView.setImageDrawable(icon);
+
+                    appIconImageView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Log.i(getClass().getName(), "appIconImageView onClick");
+
+                            Intent intent = packageManager.getLaunchIntentForPackage(packageName);
+                            startActivity(intent);
+                        }
+                    });
+
+                    appGridLayout.addView(appView);
+                }
+            }
+        }
+
+        @Override
+        public void onStart() {
+            Log.i(getClass().getName(), "onCreateView");
+            super.onStart();
+        }
+
+        @Override
+        public void onResume() {
+            Log.i(getClass().getName(), "onResume");
+            super.onResume();
+
+            // Add subtle movements to the space ships
+            ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(egraOralVocabularyContainer, "rotation", 2 + ((int) Math.random() * 3));
+            objectAnimator.setDuration(1000 + ((int) Math.random() * 1000));
+            objectAnimator.setRepeatCount(ValueAnimator.INFINITE);
+            objectAnimator.setRepeatMode(ValueAnimator.REVERSE);
+            objectAnimator.start();
+
+//            objectAnimator = ObjectAnimator.ofFloat(egraPhonemicAwarenessContainer, "rotation", 2 + ((int) Math.random() * 3));
+//            objectAnimator.start();
+//
+//            objectAnimator = ObjectAnimator.ofFloat(egraLetterIdentificationContainer, "rotation", 2 + ((int) Math.random() * 3));
+//            objectAnimator.start();
+        }
     }
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
@@ -142,14 +369,11 @@ public class HomeScreensActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
             return PlaceholderFragment.newInstance(position + 1);
         }
 
         @Override
         public int getCount() {
-            // Show 4 total pages.
             return 4;
         }
 

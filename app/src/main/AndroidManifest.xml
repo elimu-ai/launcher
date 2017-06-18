@@ -21,12 +21,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AppsListActivity"
-            android:theme="@style/AppTheme.Wallpaper"></activity>
+            android:name=".AppsListActivity" />
         <activity
-            android:name=".HomeScreensActivity"
-            android:label="@string/title_activity_home_screens"
-            android:theme="@style/AppTheme"></activity>
+            android:name=".HomeScreensActivity" />
+
+        <activity
+            android:name=".CategoryOverlayActivity" />
     </application>
 
 </manifest>
