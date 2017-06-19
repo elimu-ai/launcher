@@ -28,6 +28,8 @@ import com.andraskindler.parallaxviewpager.ParallaxViewPager;
 import com.matthewtamlin.sliding_intro_screen_library.indicators.DotIndicator;
 
 import org.literacyapp.analytics.eventtracker.EventTracker;
+import org.literacyapp.model.enums.content.LiteracySkill;
+import org.literacyapp.model.enums.content.NumeracySkill;
 
 import java.util.Arrays;
 import java.util.List;
@@ -166,7 +168,7 @@ public class HomeScreensActivity extends AppCompatActivity {
                                 // TODO: add Memory Game For Kids
                         );
 
-                        initializeDialog(packageNames);
+                        initializeDialog(packageNames, null, null);
                     }
                 });
 
@@ -189,7 +191,7 @@ public class HomeScreensActivity extends AppCompatActivity {
                                 "org.literacyapp.storybooks"
                         );
 
-                        initializeDialog(packageNames);
+                        initializeDialog(packageNames, LiteracySkill.ORAL_VOCABULARY, null);
                     }
                 });
 
@@ -207,7 +209,7 @@ public class HomeScreensActivity extends AppCompatActivity {
                                 "org.literacyapp.soundcards"
                         );
 
-                        initializeDialog(packageNames);
+                        initializeDialog(packageNames, LiteracySkill.PHONEMIC_AWARENESS, null);
                     }
                 });
 
@@ -230,7 +232,7 @@ public class HomeScreensActivity extends AppCompatActivity {
                                 "org.literacyapp.walezi"
                         );
 
-                        initializeDialog(packageNames);
+                        initializeDialog(packageNames, LiteracySkill.LETTER_IDENTIFICATION, null);
                     }
                 });
 
@@ -252,7 +254,7 @@ public class HomeScreensActivity extends AppCompatActivity {
                                 "com.ubongokids.ratmathEng"
                         );
 
-                        initializeDialog(packageNames);
+                        initializeDialog(packageNames, null, NumeracySkill.ORAL_COUNTING);
                     }
                 });
 
@@ -277,7 +279,7 @@ public class HomeScreensActivity extends AppCompatActivity {
                                 "ru.o2genum.coregame"
                         );
 
-                        initializeDialog(packageNames);
+                        initializeDialog(packageNames, null, NumeracySkill.NUMBER_IDENTIFICATION);
                     }
                 });
             } else if (sectionNumber == 2) {
@@ -298,7 +300,7 @@ public class HomeScreensActivity extends AppCompatActivity {
             return rootView;
         }
 
-        private void initializeDialog(List<String> packageNames) {
+        private void initializeDialog(List<String> packageNames, LiteracySkill literacySkill, NumeracySkill numeracySkill) {
             Log.i(getClass().getName(), "initializeDialog");
 
             MaterialDialog materialDialog = new MaterialDialog.Builder(getContext())
@@ -330,6 +332,32 @@ public class HomeScreensActivity extends AppCompatActivity {
                 Log.i(getClass().getName(), "icon: " + icon);
 
                 if (packageNames.contains(activityInfo.packageName)) {
+                    if ((literacySkill == LiteracySkill.ORAL_VOCABULARY) || (literacySkill == LiteracySkill.PHONEMIC_AWARENESS)) {
+                        if ("org.literacyapp".equals(activityInfo.packageName)
+                                && !activityInfo.name.equals("org.literacyapp.content.multimedia.video.VideosActivity")) {
+                            continue;
+                        }
+                    } else if (literacySkill == LiteracySkill.LETTER_IDENTIFICATION) {
+                        if ("org.literacyapp".equals(activityInfo.packageName)
+                                && !activityInfo.name.equals("org.literacyapp.content.letter.LettersActivity")
+                                && !activityInfo.name.equals("org.literacyapp.content.multimedia.video.VideosActivity")) {
+                            continue;
+                        }
+                    }
+
+                    if (numeracySkill == NumeracySkill.ORAL_COUNTING) {
+                        if ("org.literacyapp".equals(activityInfo.packageName)
+                                && !activityInfo.name.equals("org.literacyapp.content.multimedia.video.VideosActivity")) {
+                            continue;
+                        }
+                    } else if (numeracySkill == NumeracySkill.NUMBER_IDENTIFICATION) {
+                        if ("org.literacyapp".equals(activityInfo.packageName)
+                                && !activityInfo.name.equals("org.literacyapp.content.number.NumbersActivity")
+                                && !activityInfo.name.equals("org.literacyapp.content.multimedia.video.VideosActivity")) {
+                            continue;
+                        }
+                    }
+
                     View appView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_apps_app_view, appGridLayout, false);
 
                     ImageView appIconImageView = (ImageView) appView.findViewById(R.id.appIconImageView);
