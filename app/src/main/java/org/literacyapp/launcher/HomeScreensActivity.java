@@ -2,7 +2,9 @@ package org.literacyapp.launcher;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
@@ -24,6 +26,8 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.andraskindler.parallaxviewpager.ParallaxViewPager;
 import com.matthewtamlin.sliding_intro_screen_library.indicators.DotIndicator;
+
+import org.literacyapp.analytics.eventtracker.EventTracker;
 
 import java.util.Arrays;
 import java.util.List;
@@ -157,6 +161,9 @@ public class HomeScreensActivity extends AppCompatActivity {
                                 "fr.tvbarthel.apps.cameracolorpicker.foss.kids",
                                 "org.literacyapp.startguide",
                                 "org.literacyapp.tilt"
+                                // TODO: add "Shapi" // TODO: move to EGMA shape identification
+                                // TODO: add Kintsukuroi
+                                // TODO: add Memory Game For Kids
                         );
 
                         initializeDialog(packageNames);
@@ -307,14 +314,22 @@ public class HomeScreensActivity extends AppCompatActivity {
             final PackageManager packageManager = getActivity().getPackageManager();
             List<ResolveInfo> availableActivities = packageManager.queryIntentActivities(intent, 0);
             for (ResolveInfo resolveInfo : availableActivities) {
-                final String packageName = resolveInfo.activityInfo.packageName;
-                Log.i(getClass().getName(), "packageName: " + packageName);
+                final ActivityInfo activityInfo = resolveInfo.activityInfo;
+                Log.i(getClass().getName(), "activityInfo: " + activityInfo);
+
+                Log.i(getClass().getName(), "activityInfo.packageName: " + activityInfo.packageName);
+                Log.i(getClass().getName(), "activityInfo.name: " + activityInfo.name);
+
+                final ComponentName componentName = new ComponentName(activityInfo.packageName, activityInfo.name);
+                Log.i(getClass().getName(), "componentName: " + componentName);
+
                 CharSequence label = resolveInfo.loadLabel(packageManager);
                 Log.i(getClass().getName(), "label: " + label);
+
                 Drawable icon = resolveInfo.loadIcon(packageManager);
                 Log.i(getClass().getName(), "icon: " + icon);
 
-                if (packageNames.contains(packageName)) {
+                if (packageNames.contains(activityInfo.packageName)) {
                     View appView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_apps_app_view, appGridLayout, false);
 
                     ImageView appIconImageView = (ImageView) appView.findViewById(R.id.appIconImageView);
@@ -325,8 +340,13 @@ public class HomeScreensActivity extends AppCompatActivity {
                         public void onClick(View v) {
                             Log.i(getClass().getName(), "appIconImageView onClick");
 
-                            Intent intent = packageManager.getLaunchIntentForPackage(packageName);
+                            Intent intent = new Intent(Intent.ACTION_MAIN);
+                            intent.addCategory(Intent.CATEGORY_LAUNCHER);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                            intent.setComponent(componentName);
                             startActivity(intent);
+
+                            EventTracker.reportApplicationOpenedEvent(getContext(), activityInfo.packageName);
                         }
                     });
 
