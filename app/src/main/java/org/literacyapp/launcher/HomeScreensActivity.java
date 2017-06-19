@@ -2,7 +2,9 @@ package org.literacyapp.launcher;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
@@ -24,6 +26,10 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.andraskindler.parallaxviewpager.ParallaxViewPager;
 import com.matthewtamlin.sliding_intro_screen_library.indicators.DotIndicator;
+
+import org.literacyapp.analytics.eventtracker.EventTracker;
+import org.literacyapp.model.enums.content.LiteracySkill;
+import org.literacyapp.model.enums.content.NumeracySkill;
 
 import java.util.Arrays;
 import java.util.List;
@@ -157,9 +163,12 @@ public class HomeScreensActivity extends AppCompatActivity {
                                 "fr.tvbarthel.apps.cameracolorpicker.foss.kids",
                                 "org.literacyapp.startguide",
                                 "org.literacyapp.tilt"
+                                // TODO: add "Shapi" // TODO: move to EGMA shape identification
+                                // TODO: add Kintsukuroi
+                                // TODO: add Memory Game For Kids
                         );
 
-                        initializeDialog(packageNames);
+                        initializeDialog(packageNames, null, null);
                     }
                 });
 
@@ -182,7 +191,7 @@ public class HomeScreensActivity extends AppCompatActivity {
                                 "org.literacyapp.storybooks"
                         );
 
-                        initializeDialog(packageNames);
+                        initializeDialog(packageNames, LiteracySkill.ORAL_VOCABULARY, null);
                     }
                 });
 
@@ -200,7 +209,7 @@ public class HomeScreensActivity extends AppCompatActivity {
                                 "org.literacyapp.soundcards"
                         );
 
-                        initializeDialog(packageNames);
+                        initializeDialog(packageNames, LiteracySkill.PHONEMIC_AWARENESS, null);
                     }
                 });
 
@@ -223,7 +232,7 @@ public class HomeScreensActivity extends AppCompatActivity {
                                 "org.literacyapp.walezi"
                         );
 
-                        initializeDialog(packageNames);
+                        initializeDialog(packageNames, LiteracySkill.LETTER_IDENTIFICATION, null);
                     }
                 });
 
@@ -245,7 +254,7 @@ public class HomeScreensActivity extends AppCompatActivity {
                                 "com.ubongokids.ratmathEng"
                         );
 
-                        initializeDialog(packageNames);
+                        initializeDialog(packageNames, null, NumeracySkill.ORAL_COUNTING);
                     }
                 });
 
@@ -270,7 +279,7 @@ public class HomeScreensActivity extends AppCompatActivity {
                                 "ru.o2genum.coregame"
                         );
 
-                        initializeDialog(packageNames);
+                        initializeDialog(packageNames, null, NumeracySkill.NUMBER_IDENTIFICATION);
                     }
                 });
             } else if (sectionNumber == 2) {
@@ -291,7 +300,7 @@ public class HomeScreensActivity extends AppCompatActivity {
             return rootView;
         }
 
-        private void initializeDialog(List<String> packageNames) {
+        private void initializeDialog(List<String> packageNames, LiteracySkill literacySkill, NumeracySkill numeracySkill) {
             Log.i(getClass().getName(), "initializeDialog");
 
             MaterialDialog materialDialog = new MaterialDialog.Builder(getContext())
@@ -307,14 +316,48 @@ public class HomeScreensActivity extends AppCompatActivity {
             final PackageManager packageManager = getActivity().getPackageManager();
             List<ResolveInfo> availableActivities = packageManager.queryIntentActivities(intent, 0);
             for (ResolveInfo resolveInfo : availableActivities) {
-                final String packageName = resolveInfo.activityInfo.packageName;
-                Log.i(getClass().getName(), "packageName: " + packageName);
+                final ActivityInfo activityInfo = resolveInfo.activityInfo;
+                Log.i(getClass().getName(), "activityInfo: " + activityInfo);
+
+                Log.i(getClass().getName(), "activityInfo.packageName: " + activityInfo.packageName);
+                Log.i(getClass().getName(), "activityInfo.name: " + activityInfo.name);
+
+                final ComponentName componentName = new ComponentName(activityInfo.packageName, activityInfo.name);
+                Log.i(getClass().getName(), "componentName: " + componentName);
+
                 CharSequence label = resolveInfo.loadLabel(packageManager);
                 Log.i(getClass().getName(), "label: " + label);
+
                 Drawable icon = resolveInfo.loadIcon(packageManager);
                 Log.i(getClass().getName(), "icon: " + icon);
 
-                if (packageNames.contains(packageName)) {
+                if (packageNames.contains(activityInfo.packageName)) {
+                    if ((literacySkill == LiteracySkill.ORAL_VOCABULARY) || (literacySkill == LiteracySkill.PHONEMIC_AWARENESS)) {
+                        if ("org.literacyapp".equals(activityInfo.packageName)
+                                && !activityInfo.name.equals("org.literacyapp.content.multimedia.video.VideosActivity")) {
+                            continue;
+                        }
+                    } else if (literacySkill == LiteracySkill.LETTER_IDENTIFICATION) {
+                        if ("org.literacyapp".equals(activityInfo.packageName)
+                                && !activityInfo.name.equals("org.literacyapp.content.letter.LettersActivity")
+                                && !activityInfo.name.equals("org.literacyapp.content.multimedia.video.VideosActivity")) {
+                            continue;
+                        }
+                    }
+
+                    if (numeracySkill == NumeracySkill.ORAL_COUNTING) {
+                        if ("org.literacyapp".equals(activityInfo.packageName)
+                                && !activityInfo.name.equals("org.literacyapp.content.multimedia.video.VideosActivity")) {
+                            continue;
+                        }
+                    } else if (numeracySkill == NumeracySkill.NUMBER_IDENTIFICATION) {
+                        if ("org.literacyapp".equals(activityInfo.packageName)
+                                && !activityInfo.name.equals("org.literacyapp.content.number.NumbersActivity")
+                                && !activityInfo.name.equals("org.literacyapp.content.multimedia.video.VideosActivity")) {
+                            continue;
+                        }
+                    }
+
                     View appView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_apps_app_view, appGridLayout, false);
 
                     ImageView appIconImageView = (ImageView) appView.findViewById(R.id.appIconImageView);
@@ -325,8 +368,13 @@ public class HomeScreensActivity extends AppCompatActivity {
                         public void onClick(View v) {
                             Log.i(getClass().getName(), "appIconImageView onClick");
 
-                            Intent intent = packageManager.getLaunchIntentForPackage(packageName);
+                            Intent intent = new Intent(Intent.ACTION_MAIN);
+                            intent.addCategory(Intent.CATEGORY_LAUNCHER);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                            intent.setComponent(componentName);
                             startActivity(intent);
+
+                            EventTracker.reportApplicationOpenedEvent(getContext(), activityInfo.packageName);
                         }
                     });
 
