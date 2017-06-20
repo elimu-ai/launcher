@@ -117,6 +117,9 @@ public class HomeScreensActivity extends AppCompatActivity {
         private RelativeLayout egmaNumberIdentificationContainer;
         private ImageView egmaNumberIdentificationImageView;
 
+        private RelativeLayout egmaMissingNumberContainer;
+        private ImageView egmaMissingNumberImageView;
+
 
         public PlaceholderFragment() {
         }
@@ -163,7 +166,6 @@ public class HomeScreensActivity extends AppCompatActivity {
                                 "fr.tvbarthel.apps.cameracolorpicker.foss.kids",
                                 "org.literacyapp.startguide",
                                 "org.literacyapp.tilt"
-                                // TODO: add "Shapi" // TODO: move to EGMA shape identification
                                 // TODO: add Kintsukuroi
                                 // TODO: add Memory Game For Kids
                         );
@@ -251,7 +253,7 @@ public class HomeScreensActivity extends AppCompatActivity {
                         List<String> packageNames = Arrays.asList(
                                 "com.android.gallery3d",
                                 "org.literacyapp", // TODO: only use the Numeracy launcher
-                                "com.ubongokids.ratmathEng"
+                                "fr.tvbarthel.apps.shapi" // TODO: move to previous EGMA category
                         );
 
                         initializeDialog(packageNames, null, NumeracySkill.ORAL_COUNTING);
@@ -268,7 +270,6 @@ public class HomeScreensActivity extends AppCompatActivity {
                         // Fetch apps for category (Number Identification)
                         // TODO: load dynamically from Appstore
                         List<String> packageNames = Arrays.asList(
-                                "com.ubongokids.ratmathEng",
                                 "org.jempe.hockey",
                                 "org.literacyapp", // TODO: only use the Numeracy launcher
                                 "org.literacyapp.calculator",
@@ -280,6 +281,24 @@ public class HomeScreensActivity extends AppCompatActivity {
                         );
 
                         initializeDialog(packageNames, null, NumeracySkill.NUMBER_IDENTIFICATION);
+                    }
+                });
+
+                egmaMissingNumberContainer = (RelativeLayout) rootView.findViewById(R.id.egmaMissingNumberContainer);
+                egmaMissingNumberImageView = (ImageView) rootView.findViewById(R.id.egmaMissingNumberImageView);
+                egmaMissingNumberImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.i(getClass().getName(), "egmaMissingNumberImageView onClick");
+
+                        // Fetch apps for category (Missing Number and Quantity Discrimination)
+                        // TODO: load dynamically from Appstore
+                        List<String> packageNames = Arrays.asList(
+                                "org.literacyapp.missing_number",
+                                "org.literacyapp.nya.qd" // TODO: move to previous EGMA category (Quantity Discrimination)
+                        );
+
+                        initializeDialog(packageNames, null, NumeracySkill.MISSING_NUMBER);
                     }
                 });
             } else if (sectionNumber == 2) {
@@ -395,17 +414,24 @@ public class HomeScreensActivity extends AppCompatActivity {
             super.onResume();
 
             // Add subtle movements to the space ships
-            ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(egraOralVocabularyContainer, "rotation", 2 + ((int) Math.random() * 3));
-            objectAnimator.setDuration(1000 + ((int) Math.random() * 1000));
-            objectAnimator.setRepeatCount(ValueAnimator.INFINITE);
-            objectAnimator.setRepeatMode(ValueAnimator.REVERSE);
-            objectAnimator.start();
 
-//            objectAnimator = ObjectAnimator.ofFloat(egraPhonemicAwarenessContainer, "rotation", 2 + ((int) Math.random() * 3));
-//            objectAnimator.start();
-//
-//            objectAnimator = ObjectAnimator.ofFloat(egraLetterIdentificationContainer, "rotation", 2 + ((int) Math.random() * 3));
-//            objectAnimator.start();
+            ObjectAnimator objectAnimatorEGRA = ObjectAnimator.ofFloat(egraOralVocabularyContainer, "rotation", 2 + ((int) Math.random() * 3));
+            objectAnimatorEGRA.setDuration(1000 + ((int) Math.random() * 1000));
+            objectAnimatorEGRA.setRepeatCount(ValueAnimator.INFINITE);
+            objectAnimatorEGRA.setRepeatMode(ValueAnimator.REVERSE);
+            objectAnimatorEGRA.start();
+
+            ObjectAnimator objectAnimatorEgmaPhonemicAwareness = ObjectAnimator.ofFloat(egraPhonemicAwarenessContainer, "rotation", 2 + ((int) Math.random() * 3));
+            objectAnimatorEgmaPhonemicAwareness.setDuration(1000 + ((int) Math.random() * 1000));
+            objectAnimatorEgmaPhonemicAwareness.setRepeatCount(ValueAnimator.INFINITE);
+            objectAnimatorEgmaPhonemicAwareness.setRepeatMode(ValueAnimator.REVERSE);
+            objectAnimatorEgmaPhonemicAwareness.start();
+
+            ObjectAnimator objectAnimatorEGMA = ObjectAnimator.ofFloat(egmaOralCountingContainer, "rotation", 2 + ((int) Math.random() * 3));
+            objectAnimatorEGMA.setDuration(1000 + ((int) Math.random() * 1000));
+            objectAnimatorEGMA.setRepeatCount(ValueAnimator.INFINITE);
+            objectAnimatorEGMA.setRepeatMode(ValueAnimator.REVERSE);
+            objectAnimatorEGMA.start();
         }
     }
 
