@@ -90,8 +90,7 @@
             <RelativeLayout
                 android:id="@+id/egraLetterIdentificationContainer"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingRight="@dimen/activity_horizontal_margin">
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/egraLetterIdentificationImageView"
@@ -154,13 +153,22 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/egmaMissingNumberContainer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
                 <ImageView
                     android:layout_width="200dp"
                     android:layout_height="200dp"
-                    android:src="@drawable/egma_locked" />
+                    android:src="@drawable/egma_unlocked" />
+
+                <ImageView
+                    android:id="@+id/egmaMissingNumberImageView"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="40dp"
+                    android:src="@drawable/egma_missing_number" />
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
