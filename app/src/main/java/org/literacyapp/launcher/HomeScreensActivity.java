@@ -304,7 +304,22 @@ public class HomeScreensActivity extends AppCompatActivity {
             } else if (sectionNumber == 2) {
                 // 1. EGRA skills
 
-                // TODO: syllable naming
+                egraSyllableNamingContainer = (RelativeLayout) rootView.findViewById(R.id.egraSyllableNamingContainer);
+                egraSyllableNamingImageView = (ImageView) rootView.findViewById(R.id.egraSyllableNamingImageView);
+                egraSyllableNamingImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.i(getClass().getName(), "egraSyllableNamingImageView onClick");
+
+                        // Fetch apps for category (Syllable Naming and Familiar Word Reading)
+                        // TODO: load dynamically from Appstore
+                        List<String> packageNames = Arrays.asList(
+                                "org.literacyapp.familiar_word_reading"
+                        );
+
+                        initializeDialog(packageNames, LiteracySkill.FAMILIAR_WORD_READING, null);
+                    }
+                });
 
 
                 // 2. EGMA skills
