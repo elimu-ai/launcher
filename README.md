@@ -13,13 +13,13 @@ See demo at https://www.youtube.com/watch?v=lLinDWyL564
 
 Each app on the platform is categorized by which literacy/numeracy it teaches, and each skill (and its collection of apps) is gradually unlocked for every type of skill:
 
-## Early Grade Reading Assessment (EGRA)
+### Early Grade Reading Assessment (EGRA)
 
 EGRA subtasks (represented by the green spaceships in the launcher):
 
 ![egra_correlations](https://user-images.githubusercontent.com/15718174/27515885-74e0ca62-59ae-11e7-83c1-7ef12c0851ce.png)
 
-## Early Grade Mathematics Assessment (EGMA)
+### Early Grade Mathematics Assessment (EGMA)
 
 EGMA subtasks (represented by the blue spaceships in the launcher):
 
