@@ -9,6 +9,10 @@ Custom Android Launcher with a clear instructional path (based on EGRA/EGMA skil
 
 See demo at https://www.youtube.com/watch?v=lLinDWyL564
 
+## Pedagogy
+
+Each app on the platform is categorized by which literacy/numeracy it teaches, and each skill (and its collection of apps) is gradually unlocked for every type of skill:
+
 ## Early Grade Reading Assessment (EGRA)
 
 EGRA subtasks (represented by the green spaceships in the launcher):
