@@ -1,5 +1,6 @@
-# literacyapp-launcher
-Custom Android Launcher with a clear instructional path (based on EGRA/EGMA skills).
+# launcher
+
+Custom Android Launcher providing a clear instructional path (based on EGRA/EGMA skills).
 
 ![screenshot_20170619-205117](https://user-images.githubusercontent.com/15718174/27299219-ecf36596-552b-11e7-9fe9-09e5ca29d655.png)
 

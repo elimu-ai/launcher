@@ -1,4 +1,4 @@
-package org.literacyapp.launcher;
+package ai.elimu.launcher;
 
 import org.junit.Test;
 

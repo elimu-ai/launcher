@@ -1,4 +1,4 @@
-package org.literacyapp.launcher;
+package ai.elimu.launcher;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,8 +14,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import org.literacyapp.appstore.AppstoreApplication;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -39,22 +37,17 @@ public class AppsListActivity extends AppCompatActivity {
     }
 
     private void loadApps(){
-        AppstoreApplication appstoreApplication = (AppstoreApplication) getApplicationContext();
-        Set<String> packagesToHide = appstoreApplication.getPackagesToHide();
         manager = getPackageManager();
         apps = new ArrayList<>();
         Intent intent = new Intent(Intent.ACTION_MAIN, null);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
         List<ResolveInfo> availableActivities = manager.queryIntentActivities(intent, 0);
         for (ResolveInfo resolveInfo : availableActivities){
-            //exclude apps which should be hidden
-            if ((packagesToHide == null) || (!packagesToHide.contains(resolveInfo.activityInfo.packageName))){
-                Item app = new Item();
-                app.label = resolveInfo.activityInfo.packageName; //get app package
-                app.name = resolveInfo.loadLabel(manager); //get app name
-                app.icon = resolveInfo.loadIcon(manager); //get app icon
-                apps.add(app);
-            }
+            Item app = new Item();
+            app.label = resolveInfo.activityInfo.packageName; //get app package
+            app.name = resolveInfo.loadLabel(manager); //get app name
+            app.icon = resolveInfo.loadIcon(manager); //get app icon
+            apps.add(app);
         }
     }
 

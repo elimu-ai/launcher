@@ -1,4 +1,4 @@
-package org.literacyapp.launcher;
+package ai.elimu.launcher;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("org.literacyapp.launcher", appContext.getPackageName());
+        assertEquals("ai.elimu.launcher", appContext.getPackageName());
     }
 }

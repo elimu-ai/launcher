@@ -4,11 +4,11 @@ android {
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
     defaultConfig {
-        applicationId "org.literacyapp.launcher"
+        applicationId "ai.elimu.launcher"
         minSdkVersion 21
         targetSdkVersion 23
-        versionCode 1000001
-        versionName "1.0.1"
+        versionCode 2000000
+        versionName "2.0.0"
     }
 
     lintOptions {
@@ -28,9 +28,9 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile project(':appstore')
 
-    compile 'org.literacyapp.analytics:eventtracker:1.0.4'
+    compile 'ai.elimu:model:1.1.58'
+    compile 'ai.elimu.analytics:eventtracker:1.0.5'
 
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:support-annotations:23.4.0'
