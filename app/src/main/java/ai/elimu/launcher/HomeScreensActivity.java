@@ -1,4 +1,4 @@
-package org.literacyapp.launcher;
+package ai.elimu.launcher;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
@@ -27,9 +27,9 @@ import com.afollestad.materialdialogs.Theme;
 import com.andraskindler.parallaxviewpager.ParallaxViewPager;
 import com.matthewtamlin.sliding_intro_screen_library.indicators.DotIndicator;
 
-import org.literacyapp.analytics.eventtracker.EventTracker;
-import org.literacyapp.model.enums.content.LiteracySkill;
-import org.literacyapp.model.enums.content.NumeracySkill;
+import ai.elimu.analytics.eventtracker.EventTracker;
+import ai.elimu.model.enums.content.LiteracySkill;
+import ai.elimu.model.enums.content.NumeracySkill;
 
 import java.util.Arrays;
 import java.util.List;
@@ -164,8 +164,8 @@ public class HomeScreensActivity extends AppCompatActivity {
                                 "org.dsandler.apps.markers",
                                 "org.esteban.piano",
                                 "fr.tvbarthel.apps.cameracolorpicker.foss.kids",
-                                "org.literacyapp.startguide",
-                                "org.literacyapp.tilt"
+                                "ai.elimu.startguide",
+                                "ai.elimu.tilt"
                                 // TODO: add Kintsukuroi
                                 // TODO: add Memory Game For Kids
                         );
@@ -188,9 +188,9 @@ public class HomeScreensActivity extends AppCompatActivity {
                         // TODO: load dynamically from Appstore
                         List<String> packageNames = Arrays.asList(
                                 "com.android.gallery3d",
-                                "org.literacyapp", // TODO: only use the Video launcher
-                                "org.literacyapp.imagepicker",
-                                "org.literacyapp.storybooks"
+                                "ai.elimu", // TODO: only use the Video launcher
+                                "ai.elimu.imagepicker",
+                                "ai.elimu.storybooks"
                         );
 
                         initializeDialog(packageNames, LiteracySkill.ORAL_VOCABULARY, null);
@@ -208,7 +208,7 @@ public class HomeScreensActivity extends AppCompatActivity {
                         // TODO: load dynamically from Appstore
                         List<String> packageNames = Arrays.asList(
                                 "com.ubongokids.alphabetEng",
-                                "org.literacyapp.soundcards"
+                                "ai.elimu.soundcards"
                         );
 
                         initializeDialog(packageNames, LiteracySkill.PHONEMIC_AWARENESS, null);
@@ -226,12 +226,12 @@ public class HomeScreensActivity extends AppCompatActivity {
                         // TODO: load dynamically from Appstore
                         List<String> packageNames = Arrays.asList(
                                 "com.ubongokids.alphabetEng",
-                                "org.literacyapp", // TODO: only use the Literacy launcher
-                                "org.literacyapp.handwriting",
-                                "org.literacyapp.chat",
-                                "org.literacyapp.visemes",
-                                "org.literacyapp.voltair",
-                                "org.literacyapp.walezi"
+                                "ai.elimu", // TODO: only use the Literacy launcher
+                                "ai.elimu.handwriting",
+                                "ai.elimu.chat",
+                                "ai.elimu.visemes",
+                                "ai.elimu.voltair",
+                                "ai.elimu.walezi"
                         );
 
                         initializeDialog(packageNames, LiteracySkill.LETTER_IDENTIFICATION, null);
@@ -252,7 +252,7 @@ public class HomeScreensActivity extends AppCompatActivity {
                         // TODO: load dynamically from Appstore
                         List<String> packageNames = Arrays.asList(
                                 "com.android.gallery3d",
-                                "org.literacyapp", // TODO: only use the Numeracy launcher
+                                "ai.elimu", // TODO: only use the Numeracy launcher
                                 "fr.tvbarthel.apps.shapi" // TODO: move to previous EGMA category
                         );
 
@@ -271,12 +271,12 @@ public class HomeScreensActivity extends AppCompatActivity {
                         // TODO: load dynamically from Appstore
                         List<String> packageNames = Arrays.asList(
                                 "org.jempe.hockey",
-                                "org.literacyapp", // TODO: only use the Numeracy launcher
-                                "org.literacyapp.calculator",
-                                "org.literacyapp.chat",
-                                "org.literacyapp.handwriting_numbers",
-                                "org.literacyapp.nya",
-                                "org.literacyapp.tilt",
+                                "ai.elimu", // TODO: only use the Numeracy launcher
+                                "ai.elimu.calculator",
+                                "ai.elimu.chat",
+                                "ai.elimu.handwriting_numbers",
+                                "ai.elimu.nya",
+                                "ai.elimu.tilt",
                                 "ru.o2genum.coregame"
                         );
 
@@ -294,8 +294,8 @@ public class HomeScreensActivity extends AppCompatActivity {
                         // Fetch apps for category (Missing Number and Quantity Discrimination)
                         // TODO: load dynamically from Appstore
                         List<String> packageNames = Arrays.asList(
-                                "org.literacyapp.missing_number",
-                                "org.literacyapp.nya.qd" // TODO: move to previous EGMA category (Quantity Discrimination)
+                                "ai.elimu.missing_number",
+                                "ai.elimu.nya.qd" // TODO: move to previous EGMA category (Quantity Discrimination)
                         );
 
                         initializeDialog(packageNames, null, NumeracySkill.MISSING_NUMBER);
@@ -314,7 +314,7 @@ public class HomeScreensActivity extends AppCompatActivity {
                         // Fetch apps for category (Syllable Naming and Familiar Word Reading)
                         // TODO: load dynamically from Appstore
                         List<String> packageNames = Arrays.asList(
-                                "org.literacyapp.familiar_word_reading"
+                                "ai.elimu.familiar_word_reading"
                         );
 
                         initializeDialog(packageNames, LiteracySkill.FAMILIAR_WORD_READING, null);
@@ -367,27 +367,27 @@ public class HomeScreensActivity extends AppCompatActivity {
 
                 if (packageNames.contains(activityInfo.packageName)) {
                     if ((literacySkill == LiteracySkill.ORAL_VOCABULARY) || (literacySkill == LiteracySkill.PHONEMIC_AWARENESS)) {
-                        if ("org.literacyapp".equals(activityInfo.packageName)
-                                && !activityInfo.name.equals("org.literacyapp.content.multimedia.video.VideosActivity")) {
+                        if ("ai.elimu".equals(activityInfo.packageName)
+                                && !activityInfo.name.equals("ai.elimu.content.multimedia.video.VideosActivity")) {
                             continue;
                         }
                     } else if (literacySkill == LiteracySkill.LETTER_IDENTIFICATION) {
-                        if ("org.literacyapp".equals(activityInfo.packageName)
-                                && !activityInfo.name.equals("org.literacyapp.content.letter.LettersActivity")
-                                && !activityInfo.name.equals("org.literacyapp.content.multimedia.video.VideosActivity")) {
+                        if ("ai.elimu".equals(activityInfo.packageName)
+                                && !activityInfo.name.equals("ai.elimu.content.letter.LettersActivity")
+                                && !activityInfo.name.equals("ai.elimu.content.multimedia.video.VideosActivity")) {
                             continue;
                         }
                     }
 
                     if (numeracySkill == NumeracySkill.ORAL_COUNTING) {
-                        if ("org.literacyapp".equals(activityInfo.packageName)
-                                && !activityInfo.name.equals("org.literacyapp.content.multimedia.video.VideosActivity")) {
+                        if ("ai.elimu".equals(activityInfo.packageName)
+                                && !activityInfo.name.equals("ai.elimu.content.multimedia.video.VideosActivity")) {
                             continue;
                         }
                     } else if (numeracySkill == NumeracySkill.NUMBER_IDENTIFICATION) {
-                        if ("org.literacyapp".equals(activityInfo.packageName)
-                                && !activityInfo.name.equals("org.literacyapp.content.number.NumbersActivity")
-                                && !activityInfo.name.equals("org.literacyapp.content.multimedia.video.VideosActivity")) {
+                        if ("ai.elimu".equals(activityInfo.packageName)
+                                && !activityInfo.name.equals("ai.elimu.content.number.NumbersActivity")
+                                && !activityInfo.name.equals("ai.elimu.content.multimedia.video.VideosActivity")) {
                             continue;
                         }
                     }
