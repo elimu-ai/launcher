@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.database.Cursor;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -21,13 +23,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.andraskindler.parallaxviewpager.ParallaxViewPager;
 import com.matthewtamlin.sliding_intro_screen_library.indicators.DotIndicator;
 
-import ai.elimu.analytics.eventtracker.EventTracker;
+//import ai.elimu.analytics.eventtracker.EventTracker;
 import ai.elimu.model.enums.content.LiteracySkill;
 import ai.elimu.model.enums.content.NumeracySkill;
 
@@ -81,6 +84,27 @@ public class HomeScreensActivity extends AppCompatActivity {
 
             }
         });
+
+        // Fetch Applications from the Appstore's ContentProvider
+        Uri uri = Uri.parse("content://ai.elimu.appstore.provider/application");
+        Cursor cursor = getContentResolver(). query(uri, null, null, null, null);
+        if (cursor != null) {
+            Log.i(getClass().getName(), "cursor.getCount(): " + cursor.getCount());
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+
+                int columnLocale = cursor.getColumnIndex("LOCALE");
+                String locale = cursor.getString(columnLocale);
+                Toast.makeText(getApplicationContext(), "locale: " + locale, Toast.LENGTH_LONG).show();
+
+                Log.i(getClass().getName(), "cursor.isClosed(): " + cursor.isClosed());
+                cursor.close();
+            } else {
+                Toast.makeText(getApplicationContext(), "cursor.getCount() == 0", Toast.LENGTH_LONG).show();
+            }
+        } else {
+            Toast.makeText(getApplicationContext(), "cursor == null", Toast.LENGTH_LONG).show();
+        }
     }
 
     public static class PlaceholderFragment extends Fragment {
@@ -408,7 +432,7 @@ public class HomeScreensActivity extends AppCompatActivity {
                             intent.setComponent(componentName);
                             startActivity(intent);
 
-                            EventTracker.reportApplicationOpenedEvent(getContext(), activityInfo.packageName);
+//                            EventTracker.reportApplicationOpenedEvent(getContext(), activityInfo.packageName);
                         }
                     });
 

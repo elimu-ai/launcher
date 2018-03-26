@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ai.elimu.launcher">
 
+    <uses-permission android:name="ai.elimu.appstore.provider.READ" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
