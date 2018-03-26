@@ -2,9 +2,11 @@ package ai.elimu.launcher;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.app.Application;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
@@ -31,11 +33,18 @@ import com.andraskindler.parallaxviewpager.ParallaxViewPager;
 import com.matthewtamlin.sliding_intro_screen_library.indicators.DotIndicator;
 
 //import ai.elimu.analytics.eventtracker.EventTracker;
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import ai.elimu.model.enums.content.LiteracySkill;
 import ai.elimu.model.enums.content.NumeracySkill;
+import ai.elimu.model.gson.admin.ApplicationGson;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class HomeScreensActivity extends AppCompatActivity {
 
@@ -85,18 +94,84 @@ public class HomeScreensActivity extends AppCompatActivity {
             }
         });
 
+        // Fetch Appstore version
+        try {
+            PackageInfo packageInfoAppstore = getPackageManager().getPackageInfo("ai.elimu.appstore", 0);
+            Log.i(getClass().getName(), "packageInfoAppstore.versionCode: " + packageInfoAppstore.versionCode);
+            // TODO: match available ContentProvider queries with the Appstore's versionCode
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e(getClass().getName(), null, e);
+            // TODO: force the user to install the Appstore app
+        }
+
         // Fetch Applications from the Appstore's ContentProvider
+        List<ApplicationGson> applications = new ArrayList<>();
         Uri uri = Uri.parse("content://ai.elimu.appstore.provider/application");
         Cursor cursor = getContentResolver(). query(uri, null, null, null, null);
         if (cursor != null) {
             Log.i(getClass().getName(), "cursor.getCount(): " + cursor.getCount());
             if (cursor.getCount() > 0) {
-                cursor.moveToFirst();
+                boolean isLast = false;
+                while (!isLast) {
+                    cursor.moveToNext();
 
-                int columnLocale = cursor.getColumnIndex("LOCALE");
-                String locale = cursor.getString(columnLocale);
-                Toast.makeText(getApplicationContext(), "locale: " + locale, Toast.LENGTH_LONG).show();
+                    // Convert from database row to Application object
 
+                    int columnId = cursor.getColumnIndex("_id");
+                    Long id = cursor.getLong(columnId);
+                    Log.i(getClass().getName(), "id: " + id);
+
+                    int columnLocale = cursor.getColumnIndex("LOCALE");
+                    String locale = cursor.getString(columnLocale);
+                    Log.i(getClass().getName(), "locale: " + locale);
+
+                    int columnPackageName = cursor.getColumnIndex("PACKAGE_NAME");
+                    String packageName = cursor.getString(columnPackageName);
+                    Log.i(getClass().getName(), "packageName: " + packageName);
+
+                    int columnLiteracySkills = cursor.getColumnIndex("LITERACY_SKILLS");
+                    String literacySkillsAsString = cursor.getString(columnLiteracySkills);
+                    Log.i(getClass().getName(), "literacySkillsAsString: " + literacySkillsAsString);
+                    Set<LiteracySkill> literacySkillSet = new HashSet<>();
+                    try {
+                        JSONArray jsonArray = new JSONArray(literacySkillsAsString);
+                        Log.i(getClass().getName(), "jsonArray: " + jsonArray);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            String value = jsonArray.getString(i);
+                            Log.i(getClass().getName(), "value: " + value);
+                            LiteracySkill literacySkill = LiteracySkill.valueOf(value);
+                            literacySkillSet.add(literacySkill);
+                        }
+                    } catch (JSONException e) {
+                        Log.e(getClass().getName(), null, e);
+                    }
+
+                    int columnNumeracySkills = cursor.getColumnIndex("NUMERACY_SKILLS");
+                    String numeracySkillsAsString = cursor.getString(columnNumeracySkills);
+                    Log.i(getClass().getName(), "columnNumeracySkillsAsString: " + numeracySkillsAsString);
+                    Set<NumeracySkill> numeracySkillSet = new HashSet<>();
+                    try {
+                        JSONArray jsonArray = new JSONArray(numeracySkillsAsString);
+                        Log.i(getClass().getName(), "jsonArray: " + jsonArray);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            String value = jsonArray.getString(i);
+                            Log.i(getClass().getName(), "value: " + value);
+                            NumeracySkill numeracySkill = NumeracySkill.valueOf(value);
+                            numeracySkillSet.add(numeracySkill);
+                        }
+                    } catch (JSONException e) {
+                        Log.e(getClass().getName(), null, e);
+                    }
+
+                    ApplicationGson application = new ApplicationGson();
+                    application.setId(id);
+                    application.setPackageName(packageName);
+                    application.setLiteracySkills(literacySkillSet);
+                    application.setNumeracySkills(numeracySkillSet);
+                    applications.add(application);
+
+                    isLast = cursor.isLast();
+                }
                 Log.i(getClass().getName(), "cursor.isClosed(): " + cursor.isClosed());
                 cursor.close();
             } else {
@@ -105,6 +180,7 @@ public class HomeScreensActivity extends AppCompatActivity {
         } else {
             Toast.makeText(getApplicationContext(), "cursor == null", Toast.LENGTH_LONG).show();
         }
+        Log.i(getClass().getName(), "applications.size(): " + applications.size());
     }
 
     public static class PlaceholderFragment extends Fragment {
