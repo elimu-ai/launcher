@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.andraskindler.parallaxviewpager.ParallaxViewPager;
@@ -301,9 +302,32 @@ public class HomeScreensActivity extends AppCompatActivity {
         private void initializeDialog(LiteracySkill literacySkill, NumeracySkill numeracySkill) {
             Timber.i("initializeDialog");
 
+            String dialogTitle = null;
+            if (false) { // TODO
+                dialogTitle = "TABLET_NAVIGATION"; // TODO
+            } else if (literacySkill != null) {
+                try {
+                    int resourceIdentifier = getResources().getIdentifier("literacy_skill_" + literacySkill, "string", getActivity().getPackageName());
+                    dialogTitle = getString(resourceIdentifier);
+                } catch (Resources.NotFoundException e) {
+                    // Fall back to enum name
+                    dialogTitle = literacySkill.toString();
+                }
+            } else if (numeracySkill != null) {
+                try {
+                    int resourceIdentifier = getResources().getIdentifier("numeracy_skill_" + numeracySkill, "string", getActivity().getPackageName());
+                    dialogTitle = getString(resourceIdentifier);
+                } catch (Resources.NotFoundException e) {
+                    // Fall back to enum name
+                    dialogTitle = numeracySkill.toString();
+                }
+            }
+
             MaterialDialog materialDialog = new MaterialDialog.Builder(getContext())
                     .customView(R.layout.dialog_apps, true)
                     .theme(Theme.DARK)
+                    .title(dialogTitle)
+                    .titleGravity(GravityEnum.CENTER)
                     .show();
 
             View customView = materialDialog.getCustomView();
