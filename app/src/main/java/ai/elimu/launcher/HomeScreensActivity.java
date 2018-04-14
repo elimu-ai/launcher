@@ -2,11 +2,9 @@ package ai.elimu.launcher;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
-import android.app.Application;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
@@ -32,19 +30,20 @@ import com.afollestad.materialdialogs.Theme;
 import com.andraskindler.parallaxviewpager.ParallaxViewPager;
 import com.matthewtamlin.sliding_intro_screen_library.indicators.DotIndicator;
 
-//import ai.elimu.analytics.eventtracker.EventTracker;
 import org.json.JSONArray;
 import org.json.JSONException;
-
-import ai.elimu.model.enums.content.LiteracySkill;
-import ai.elimu.model.enums.content.NumeracySkill;
-import ai.elimu.model.gson.admin.ApplicationGson;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import ai.elimu.model.enums.content.LiteracySkill;
+import ai.elimu.model.enums.content.NumeracySkill;
+import ai.elimu.model.gson.admin.ApplicationGson;
+
+//import ai.elimu.analytics.eventtracker.EventTracker;
 
 public class HomeScreensActivity extends AppCompatActivity {
 
@@ -66,17 +65,16 @@ public class HomeScreensActivity extends AppCompatActivity {
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        viewPager = (ParallaxViewPager) findViewById(R.id.container);
+        viewPager = findViewById(R.id.container);
         viewPager.setBackgroundResource(R.drawable.background);
         viewPager.setAdapter(mSectionsPagerAdapter);
 
-        dotIndicator = (DotIndicator) findViewById(R.id.dotIndicator);
+        dotIndicator = findViewById(R.id.dotIndicator);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 Log.i(getClass().getName(), "onPageScrolled");
-
             }
 
             @Override
@@ -89,28 +87,12 @@ public class HomeScreensActivity extends AppCompatActivity {
             @Override
             public void onPageScrollStateChanged(int state) {
                 Log.i(getClass().getName(), "onPageScrollStateChanged");
-
             }
         });
 
-        // Fetch Appstore version
-        String appstoreApplicationId = "ai.elimu.appstore";
-        if (BuildConfig.DEBUG) {
-            appstoreApplicationId += ".debug";
-        }
-        Log.i(getClass().getName(), "appstoreApplicationId: " + appstoreApplicationId);
-        try {
-            PackageInfo packageInfoAppstore = getPackageManager().getPackageInfo(appstoreApplicationId, 0);
-            Log.i(getClass().getName(), "packageInfoAppstore.versionCode: " + packageInfoAppstore.versionCode);
-            // TODO: match available ContentProvider queries with the Appstore's versionCode
-        } catch (PackageManager.NameNotFoundException e) {
-            Log.e(getClass().getName(), null, e);
-            // TODO: force the user to install the Appstore app
-        }
-
         // Fetch Applications from the Appstore's ContentProvider
         List<ApplicationGson> applications = new ArrayList<>();
-        Uri uri = Uri.parse("content://" + appstoreApplicationId + ".provider/application");
+        Uri uri = Uri.parse("content://" + BuildConfig.APPSTORE_APPLICATION_ID + ".provider/application");
         Log.i(getClass().getName(), "uri: " + uri);
         Cursor cursor = getContentResolver(). query(uri, null, null, null, null);
         if (cursor != null) {
@@ -251,8 +233,8 @@ public class HomeScreensActivity extends AppCompatActivity {
             if (sectionNumber == 1) {
                 // 1. Tablet navigation
 
-                tabletNavigationContainer = (RelativeLayout) rootView.findViewById(R.id.tabletNavigationContainer);
-                tabletNavigationImageView = (ImageView) rootView.findViewById(R.id.tabletNavigationImageView);
+                tabletNavigationContainer = rootView.findViewById(R.id.tabletNavigationContainer);
+                tabletNavigationImageView = rootView.findViewById(R.id.tabletNavigationImageView);
                 tabletNavigationImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -282,8 +264,8 @@ public class HomeScreensActivity extends AppCompatActivity {
 
                 // 2. EGRA skills
 
-                egraOralVocabularyContainer = (RelativeLayout) rootView.findViewById(R.id.egraOralVocabularyContainer);
-                egraOralVocabularyImageView = (ImageView) rootView.findViewById(R.id.egraOralVocabularyImageView);
+                egraOralVocabularyContainer = rootView.findViewById(R.id.egraOralVocabularyContainer);
+                egraOralVocabularyImageView = rootView.findViewById(R.id.egraOralVocabularyImageView);
                 egraOralVocabularyImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -302,8 +284,8 @@ public class HomeScreensActivity extends AppCompatActivity {
                     }
                 });
 
-                egraPhonemicAwarenessContainer = (RelativeLayout) rootView.findViewById(R.id.egraPhonemicAwarenessContainer);
-                egraPhonemicAwarenessImageView = (ImageView) rootView.findViewById(R.id.egraPhonemicAwarenessImageView);
+                egraPhonemicAwarenessContainer = rootView.findViewById(R.id.egraPhonemicAwarenessContainer);
+                egraPhonemicAwarenessImageView = rootView.findViewById(R.id.egraPhonemicAwarenessImageView);
                 egraPhonemicAwarenessImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -320,8 +302,8 @@ public class HomeScreensActivity extends AppCompatActivity {
                     }
                 });
 
-                egraLetterIdentificationContainer = (RelativeLayout) rootView.findViewById(R.id.egraLetterIdentificationContainer);
-                egraLetterIdentificationImageView = (ImageView) rootView.findViewById(R.id.egraLetterIdentificationImageView);
+                egraLetterIdentificationContainer = rootView.findViewById(R.id.egraLetterIdentificationContainer);
+                egraLetterIdentificationImageView = rootView.findViewById(R.id.egraLetterIdentificationImageView);
                 egraLetterIdentificationImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -346,8 +328,8 @@ public class HomeScreensActivity extends AppCompatActivity {
 
                 // 3. EGMA skills
 
-                egmaOralCountingContainer = (RelativeLayout) rootView.findViewById(R.id.egmaOralCountingContainer);
-                egmaOralCountingImageView = (ImageView) rootView.findViewById(R.id.egmaOralCountingImageView);
+                egmaOralCountingContainer = rootView.findViewById(R.id.egmaOralCountingContainer);
+                egmaOralCountingImageView = rootView.findViewById(R.id.egmaOralCountingImageView);
                 egmaOralCountingImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -365,8 +347,8 @@ public class HomeScreensActivity extends AppCompatActivity {
                     }
                 });
 
-                egmaNumberIdentificationContainer = (RelativeLayout) rootView.findViewById(R.id.egmaNumberIdentificationContainer);
-                egmaNumberIdentificationImageView = (ImageView) rootView.findViewById(R.id.egmaNumberIdentificationImageView);
+                egmaNumberIdentificationContainer = rootView.findViewById(R.id.egmaNumberIdentificationContainer);
+                egmaNumberIdentificationImageView = rootView.findViewById(R.id.egmaNumberIdentificationImageView);
                 egmaNumberIdentificationImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -389,8 +371,8 @@ public class HomeScreensActivity extends AppCompatActivity {
                     }
                 });
 
-                egmaMissingNumberContainer = (RelativeLayout) rootView.findViewById(R.id.egmaMissingNumberContainer);
-                egmaMissingNumberImageView = (ImageView) rootView.findViewById(R.id.egmaMissingNumberImageView);
+                egmaMissingNumberContainer = rootView.findViewById(R.id.egmaMissingNumberContainer);
+                egmaMissingNumberImageView = rootView.findViewById(R.id.egmaMissingNumberImageView);
                 egmaMissingNumberImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -409,8 +391,8 @@ public class HomeScreensActivity extends AppCompatActivity {
             } else if (sectionNumber == 2) {
                 // 1. EGRA skills
 
-                egraSyllableNamingContainer = (RelativeLayout) rootView.findViewById(R.id.egraSyllableNamingContainer);
-                egraSyllableNamingImageView = (ImageView) rootView.findViewById(R.id.egraSyllableNamingImageView);
+                egraSyllableNamingContainer = rootView.findViewById(R.id.egraSyllableNamingContainer);
+                egraSyllableNamingImageView = rootView.findViewById(R.id.egraSyllableNamingImageView);
                 egraSyllableNamingImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -448,7 +430,7 @@ public class HomeScreensActivity extends AppCompatActivity {
                     .show();
 
             View customView = materialDialog.getCustomView();
-            GridLayout appGridLayout = (GridLayout) customView.findViewById(R.id.appGridLayout);
+            GridLayout appGridLayout = customView.findViewById(R.id.appGridLayout);
 
             Intent intent = new Intent(Intent.ACTION_MAIN, null);
             intent.addCategory(Intent.CATEGORY_LAUNCHER);
@@ -499,7 +481,7 @@ public class HomeScreensActivity extends AppCompatActivity {
 
                     View appView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_apps_app_view, appGridLayout, false);
 
-                    ImageView appIconImageView = (ImageView) appView.findViewById(R.id.appIconImageView);
+                    ImageView appIconImageView = appView.findViewById(R.id.appIconImageView);
                     appIconImageView.setImageDrawable(icon);
 
                     appIconImageView.setOnClickListener(new View.OnClickListener() {
