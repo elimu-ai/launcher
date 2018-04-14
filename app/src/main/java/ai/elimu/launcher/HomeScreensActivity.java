@@ -49,7 +49,7 @@ public class HomeScreensActivity extends AppCompatActivity {
 
     private DotIndicator dotIndicator;
 
-    private static List<ApplicationGson> applications = new ArrayList<>();
+    private static List<ApplicationGson> applications;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +89,7 @@ public class HomeScreensActivity extends AppCompatActivity {
         });
 
         // Fetch Applications from the Appstore's ContentProvider
+        applications = new ArrayList<>();
         Uri uri = Uri.parse("content://" + BuildConfig.APPSTORE_APPLICATION_ID + ".provider/application");
         Timber.i("uri: " + uri);
         Cursor cursor = getContentResolver(). query(uri, null, null, null, null);
