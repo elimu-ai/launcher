@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.database.Cursor;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -21,18 +23,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.andraskindler.parallaxviewpager.ParallaxViewPager;
 import com.matthewtamlin.sliding_intro_screen_library.indicators.DotIndicator;
 
-import ai.elimu.analytics.eventtracker.EventTracker;
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import ai.elimu.model.enums.content.LiteracySkill;
 import ai.elimu.model.enums.content.NumeracySkill;
+import ai.elimu.model.gson.admin.ApplicationGson;
 
-import java.util.Arrays;
-import java.util.List;
+//import ai.elimu.analytics.eventtracker.EventTracker;
 
 public class HomeScreensActivity extends AppCompatActivity {
 
@@ -50,22 +61,20 @@ public class HomeScreensActivity extends AppCompatActivity {
         getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
 
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
+        // Create the adapter that will return a fragment for each of the primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        viewPager = (ParallaxViewPager) findViewById(R.id.container);
+        viewPager = findViewById(R.id.container);
         viewPager.setBackgroundResource(R.drawable.background);
         viewPager.setAdapter(mSectionsPagerAdapter);
 
-        dotIndicator = (DotIndicator) findViewById(R.id.dotIndicator);
+        dotIndicator = findViewById(R.id.dotIndicator);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 Log.i(getClass().getName(), "onPageScrolled");
-
             }
 
             @Override
@@ -78,9 +87,87 @@ public class HomeScreensActivity extends AppCompatActivity {
             @Override
             public void onPageScrollStateChanged(int state) {
                 Log.i(getClass().getName(), "onPageScrollStateChanged");
-
             }
         });
+
+        // Fetch Applications from the Appstore's ContentProvider
+        List<ApplicationGson> applications = new ArrayList<>();
+        Uri uri = Uri.parse("content://" + BuildConfig.APPSTORE_APPLICATION_ID + ".provider/application");
+        Log.i(getClass().getName(), "uri: " + uri);
+        Cursor cursor = getContentResolver(). query(uri, null, null, null, null);
+        if (cursor != null) {
+            Log.i(getClass().getName(), "cursor.getCount(): " + cursor.getCount());
+            if (cursor.getCount() > 0) {
+                boolean isLast = false;
+                while (!isLast) {
+                    cursor.moveToNext();
+
+                    // Convert from database row to Application object
+
+                    int columnId = cursor.getColumnIndex("_id");
+                    Long id = cursor.getLong(columnId);
+                    Log.i(getClass().getName(), "id: " + id);
+
+                    int columnLocale = cursor.getColumnIndex("LOCALE");
+                    String locale = cursor.getString(columnLocale);
+                    Log.i(getClass().getName(), "locale: " + locale);
+
+                    int columnPackageName = cursor.getColumnIndex("PACKAGE_NAME");
+                    String packageName = cursor.getString(columnPackageName);
+                    Log.i(getClass().getName(), "packageName: " + packageName);
+
+                    int columnLiteracySkills = cursor.getColumnIndex("LITERACY_SKILLS");
+                    String literacySkillsAsString = cursor.getString(columnLiteracySkills);
+                    Log.i(getClass().getName(), "literacySkillsAsString: " + literacySkillsAsString);
+                    Set<LiteracySkill> literacySkillSet = new HashSet<>();
+                    try {
+                        JSONArray jsonArray = new JSONArray(literacySkillsAsString);
+                        Log.i(getClass().getName(), "jsonArray: " + jsonArray);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            String value = jsonArray.getString(i);
+                            Log.i(getClass().getName(), "value: " + value);
+                            LiteracySkill literacySkill = LiteracySkill.valueOf(value);
+                            literacySkillSet.add(literacySkill);
+                        }
+                    } catch (JSONException e) {
+                        Log.e(getClass().getName(), null, e);
+                    }
+
+                    int columnNumeracySkills = cursor.getColumnIndex("NUMERACY_SKILLS");
+                    String numeracySkillsAsString = cursor.getString(columnNumeracySkills);
+                    Log.i(getClass().getName(), "columnNumeracySkillsAsString: " + numeracySkillsAsString);
+                    Set<NumeracySkill> numeracySkillSet = new HashSet<>();
+                    try {
+                        JSONArray jsonArray = new JSONArray(numeracySkillsAsString);
+                        Log.i(getClass().getName(), "jsonArray: " + jsonArray);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            String value = jsonArray.getString(i);
+                            Log.i(getClass().getName(), "value: " + value);
+                            NumeracySkill numeracySkill = NumeracySkill.valueOf(value);
+                            numeracySkillSet.add(numeracySkill);
+                        }
+                    } catch (JSONException e) {
+                        Log.e(getClass().getName(), null, e);
+                    }
+
+                    ApplicationGson application = new ApplicationGson();
+                    application.setId(id);
+                    application.setPackageName(packageName);
+                    application.setLiteracySkills(literacySkillSet);
+                    application.setNumeracySkills(numeracySkillSet);
+                    applications.add(application);
+
+                    isLast = cursor.isLast();
+                }
+                Log.i(getClass().getName(), "cursor.isClosed(): " + cursor.isClosed());
+                cursor.close();
+            } else {
+                Toast.makeText(getApplicationContext(), "cursor.getCount() == 0", Toast.LENGTH_LONG).show();
+            }
+        } else {
+            Toast.makeText(getApplicationContext(), "cursor == null", Toast.LENGTH_LONG).show();
+        }
+        Log.i(getClass().getName(), "applications.size(): " + applications.size());
     }
 
     public static class PlaceholderFragment extends Fragment {
@@ -146,8 +233,8 @@ public class HomeScreensActivity extends AppCompatActivity {
             if (sectionNumber == 1) {
                 // 1. Tablet navigation
 
-                tabletNavigationContainer = (RelativeLayout) rootView.findViewById(R.id.tabletNavigationContainer);
-                tabletNavigationImageView = (ImageView) rootView.findViewById(R.id.tabletNavigationImageView);
+                tabletNavigationContainer = rootView.findViewById(R.id.tabletNavigationContainer);
+                tabletNavigationImageView = rootView.findViewById(R.id.tabletNavigationImageView);
                 tabletNavigationImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -177,8 +264,8 @@ public class HomeScreensActivity extends AppCompatActivity {
 
                 // 2. EGRA skills
 
-                egraOralVocabularyContainer = (RelativeLayout) rootView.findViewById(R.id.egraOralVocabularyContainer);
-                egraOralVocabularyImageView = (ImageView) rootView.findViewById(R.id.egraOralVocabularyImageView);
+                egraOralVocabularyContainer = rootView.findViewById(R.id.egraOralVocabularyContainer);
+                egraOralVocabularyImageView = rootView.findViewById(R.id.egraOralVocabularyImageView);
                 egraOralVocabularyImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -197,8 +284,8 @@ public class HomeScreensActivity extends AppCompatActivity {
                     }
                 });
 
-                egraPhonemicAwarenessContainer = (RelativeLayout) rootView.findViewById(R.id.egraPhonemicAwarenessContainer);
-                egraPhonemicAwarenessImageView = (ImageView) rootView.findViewById(R.id.egraPhonemicAwarenessImageView);
+                egraPhonemicAwarenessContainer = rootView.findViewById(R.id.egraPhonemicAwarenessContainer);
+                egraPhonemicAwarenessImageView = rootView.findViewById(R.id.egraPhonemicAwarenessImageView);
                 egraPhonemicAwarenessImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -215,8 +302,8 @@ public class HomeScreensActivity extends AppCompatActivity {
                     }
                 });
 
-                egraLetterIdentificationContainer = (RelativeLayout) rootView.findViewById(R.id.egraLetterIdentificationContainer);
-                egraLetterIdentificationImageView = (ImageView) rootView.findViewById(R.id.egraLetterIdentificationImageView);
+                egraLetterIdentificationContainer = rootView.findViewById(R.id.egraLetterIdentificationContainer);
+                egraLetterIdentificationImageView = rootView.findViewById(R.id.egraLetterIdentificationImageView);
                 egraLetterIdentificationImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -241,8 +328,8 @@ public class HomeScreensActivity extends AppCompatActivity {
 
                 // 3. EGMA skills
 
-                egmaOralCountingContainer = (RelativeLayout) rootView.findViewById(R.id.egmaOralCountingContainer);
-                egmaOralCountingImageView = (ImageView) rootView.findViewById(R.id.egmaOralCountingImageView);
+                egmaOralCountingContainer = rootView.findViewById(R.id.egmaOralCountingContainer);
+                egmaOralCountingImageView = rootView.findViewById(R.id.egmaOralCountingImageView);
                 egmaOralCountingImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -260,8 +347,8 @@ public class HomeScreensActivity extends AppCompatActivity {
                     }
                 });
 
-                egmaNumberIdentificationContainer = (RelativeLayout) rootView.findViewById(R.id.egmaNumberIdentificationContainer);
-                egmaNumberIdentificationImageView = (ImageView) rootView.findViewById(R.id.egmaNumberIdentificationImageView);
+                egmaNumberIdentificationContainer = rootView.findViewById(R.id.egmaNumberIdentificationContainer);
+                egmaNumberIdentificationImageView = rootView.findViewById(R.id.egmaNumberIdentificationImageView);
                 egmaNumberIdentificationImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -284,8 +371,8 @@ public class HomeScreensActivity extends AppCompatActivity {
                     }
                 });
 
-                egmaMissingNumberContainer = (RelativeLayout) rootView.findViewById(R.id.egmaMissingNumberContainer);
-                egmaMissingNumberImageView = (ImageView) rootView.findViewById(R.id.egmaMissingNumberImageView);
+                egmaMissingNumberContainer = rootView.findViewById(R.id.egmaMissingNumberContainer);
+                egmaMissingNumberImageView = rootView.findViewById(R.id.egmaMissingNumberImageView);
                 egmaMissingNumberImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -304,8 +391,8 @@ public class HomeScreensActivity extends AppCompatActivity {
             } else if (sectionNumber == 2) {
                 // 1. EGRA skills
 
-                egraSyllableNamingContainer = (RelativeLayout) rootView.findViewById(R.id.egraSyllableNamingContainer);
-                egraSyllableNamingImageView = (ImageView) rootView.findViewById(R.id.egraSyllableNamingImageView);
+                egraSyllableNamingContainer = rootView.findViewById(R.id.egraSyllableNamingContainer);
+                egraSyllableNamingImageView = rootView.findViewById(R.id.egraSyllableNamingImageView);
                 egraSyllableNamingImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -343,7 +430,7 @@ public class HomeScreensActivity extends AppCompatActivity {
                     .show();
 
             View customView = materialDialog.getCustomView();
-            GridLayout appGridLayout = (GridLayout) customView.findViewById(R.id.appGridLayout);
+            GridLayout appGridLayout = customView.findViewById(R.id.appGridLayout);
 
             Intent intent = new Intent(Intent.ACTION_MAIN, null);
             intent.addCategory(Intent.CATEGORY_LAUNCHER);
@@ -394,7 +481,7 @@ public class HomeScreensActivity extends AppCompatActivity {
 
                     View appView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_apps_app_view, appGridLayout, false);
 
-                    ImageView appIconImageView = (ImageView) appView.findViewById(R.id.appIconImageView);
+                    ImageView appIconImageView = appView.findViewById(R.id.appIconImageView);
                     appIconImageView.setImageDrawable(icon);
 
                     appIconImageView.setOnClickListener(new View.OnClickListener() {
@@ -408,7 +495,7 @@ public class HomeScreensActivity extends AppCompatActivity {
                             intent.setComponent(componentName);
                             startActivity(intent);
 
-                            EventTracker.reportApplicationOpenedEvent(getContext(), activityInfo.packageName);
+//                            EventTracker.reportApplicationOpenedEvent(getContext(), activityInfo.packageName);
                         }
                     });
 
