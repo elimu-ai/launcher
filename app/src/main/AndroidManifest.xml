@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ai.elimu.launcher">
 
-    <uses-permission android:name="ai.elimu.appstore.provider.READ" />
+    <!-- Appstore ContentProvider -->
+    <uses-permission android:name="ai.elimu.appstore.debug.provider.READ" />
+    <!--<uses-permission android:name="ai.elimu.appstore.provider.READ" />-->
 
     <application
         android:allowBackup="true"
@@ -10,11 +12,13 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTask"
             android:stateNotNeeded="true"
             android:theme="@style/AppTheme.Wallpaper">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,13 +26,11 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".AppsListActivity" />
+
         <activity
             android:name=".HomeScreensActivity" />
 
         <activity
             android:name=".CategoryOverlayActivity" />
     </application>
-
 </manifest>
