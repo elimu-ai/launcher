@@ -11,6 +11,16 @@ android {
         versionName "2.0.1-SNAPSHOT"
     }
 
+    buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
+        }
+        release {
+
+        }
+    }
+
     lintOptions {
         abortOnError false
     }

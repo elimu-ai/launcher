@@ -62,8 +62,7 @@ public class HomeScreensActivity extends AppCompatActivity {
         getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
 
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
+        // Create the adapter that will return a fragment for each of the primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
@@ -95,8 +94,13 @@ public class HomeScreensActivity extends AppCompatActivity {
         });
 
         // Fetch Appstore version
+        String appstoreApplicationId = "ai.elimu.appstore";
+        if (BuildConfig.DEBUG) {
+            appstoreApplicationId += ".debug";
+        }
+        Log.i(getClass().getName(), "appstoreApplicationId: " + appstoreApplicationId);
         try {
-            PackageInfo packageInfoAppstore = getPackageManager().getPackageInfo("ai.elimu.appstore", 0);
+            PackageInfo packageInfoAppstore = getPackageManager().getPackageInfo(appstoreApplicationId, 0);
             Log.i(getClass().getName(), "packageInfoAppstore.versionCode: " + packageInfoAppstore.versionCode);
             // TODO: match available ContentProvider queries with the Appstore's versionCode
         } catch (PackageManager.NameNotFoundException e) {
@@ -106,7 +110,8 @@ public class HomeScreensActivity extends AppCompatActivity {
 
         // Fetch Applications from the Appstore's ContentProvider
         List<ApplicationGson> applications = new ArrayList<>();
-        Uri uri = Uri.parse("content://ai.elimu.appstore.provider/application");
+        Uri uri = Uri.parse("content://" + appstoreApplicationId + ".provider/application");
+        Log.i(getClass().getName(), "uri: " + uri);
         Cursor cursor = getContentResolver(). query(uri, null, null, null, null);
         if (cursor != null) {
             Log.i(getClass().getName(), "cursor.getCount(): " + cursor.getCount());

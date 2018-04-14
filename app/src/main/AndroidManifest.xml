@@ -3,8 +3,7 @@
     package="ai.elimu.launcher">
 
     <!-- Appstore ContentProvider -->
-    <uses-permission android:name="ai.elimu.appstore.debug.provider.READ" />
-    <!--<uses-permission android:name="ai.elimu.appstore.provider.READ" />-->
+    <uses-permission android:name="ai.elimu.appstore.provider.READ" />
 
     <application
         android:allowBackup="true"
