@@ -2,14 +2,14 @@ package ai.elimu.launcher;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
-import android.content.ComponentName;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,7 +17,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayout;
-import android.util.Log;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,23 +25,20 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.andraskindler.parallaxviewpager.ParallaxViewPager;
 import com.matthewtamlin.sliding_intro_screen_library.indicators.DotIndicator;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
+import ai.elimu.launcher.util.CursorToApplicationConverter;
 import ai.elimu.model.enums.content.LiteracySkill;
 import ai.elimu.model.enums.content.NumeracySkill;
 import ai.elimu.model.gson.admin.ApplicationGson;
+import timber.log.Timber;
 
 //import ai.elimu.analytics.eventtracker.EventTracker;
 
@@ -52,6 +49,8 @@ public class HomeScreensActivity extends AppCompatActivity {
     private ParallaxViewPager viewPager;
 
     private DotIndicator dotIndicator;
+
+    private static List<ApplicationGson> applications;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,92 +73,42 @@ public class HomeScreensActivity extends AppCompatActivity {
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                Log.i(getClass().getName(), "onPageScrolled");
+                Timber.i("onPageScrolled");
             }
 
             @Override
             public void onPageSelected(int position) {
-                Log.i(getClass().getName(), "onPageSelected");
+                Timber.i("onPageSelected");
 
                 dotIndicator.setSelectedItem(position, true);
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-                Log.i(getClass().getName(), "onPageScrollStateChanged");
+                Timber.i("onPageScrollStateChanged");
             }
         });
 
         // Fetch Applications from the Appstore's ContentProvider
-        List<ApplicationGson> applications = new ArrayList<>();
-        Uri uri = Uri.parse("content://" + BuildConfig.APPSTORE_APPLICATION_ID + ".provider/application");
-        Log.i(getClass().getName(), "uri: " + uri);
-        Cursor cursor = getContentResolver(). query(uri, null, null, null, null);
+        applications = new ArrayList<>();
+        Uri uri = Uri.parse("content://" + BuildConfig.APPSTORE_APPLICATION_ID + ".provider.application_provider/application");
+        Timber.i("uri: " + uri);
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
         if (cursor != null) {
-            Log.i(getClass().getName(), "cursor.getCount(): " + cursor.getCount());
+            Timber.i("cursor.getCount(): " + cursor.getCount());
             if (cursor.getCount() > 0) {
                 boolean isLast = false;
                 while (!isLast) {
                     cursor.moveToNext();
 
-                    // Convert from database row to Application object
+                    // Convert from database row to ApplicationGson object
+                    ApplicationGson application = CursorToApplicationConverter.getApplication(cursor);
 
-                    int columnId = cursor.getColumnIndex("_id");
-                    Long id = cursor.getLong(columnId);
-                    Log.i(getClass().getName(), "id: " + id);
-
-                    int columnLocale = cursor.getColumnIndex("LOCALE");
-                    String locale = cursor.getString(columnLocale);
-                    Log.i(getClass().getName(), "locale: " + locale);
-
-                    int columnPackageName = cursor.getColumnIndex("PACKAGE_NAME");
-                    String packageName = cursor.getString(columnPackageName);
-                    Log.i(getClass().getName(), "packageName: " + packageName);
-
-                    int columnLiteracySkills = cursor.getColumnIndex("LITERACY_SKILLS");
-                    String literacySkillsAsString = cursor.getString(columnLiteracySkills);
-                    Log.i(getClass().getName(), "literacySkillsAsString: " + literacySkillsAsString);
-                    Set<LiteracySkill> literacySkillSet = new HashSet<>();
-                    try {
-                        JSONArray jsonArray = new JSONArray(literacySkillsAsString);
-                        Log.i(getClass().getName(), "jsonArray: " + jsonArray);
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            String value = jsonArray.getString(i);
-                            Log.i(getClass().getName(), "value: " + value);
-                            LiteracySkill literacySkill = LiteracySkill.valueOf(value);
-                            literacySkillSet.add(literacySkill);
-                        }
-                    } catch (JSONException e) {
-                        Log.e(getClass().getName(), null, e);
-                    }
-
-                    int columnNumeracySkills = cursor.getColumnIndex("NUMERACY_SKILLS");
-                    String numeracySkillsAsString = cursor.getString(columnNumeracySkills);
-                    Log.i(getClass().getName(), "columnNumeracySkillsAsString: " + numeracySkillsAsString);
-                    Set<NumeracySkill> numeracySkillSet = new HashSet<>();
-                    try {
-                        JSONArray jsonArray = new JSONArray(numeracySkillsAsString);
-                        Log.i(getClass().getName(), "jsonArray: " + jsonArray);
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            String value = jsonArray.getString(i);
-                            Log.i(getClass().getName(), "value: " + value);
-                            NumeracySkill numeracySkill = NumeracySkill.valueOf(value);
-                            numeracySkillSet.add(numeracySkill);
-                        }
-                    } catch (JSONException e) {
-                        Log.e(getClass().getName(), null, e);
-                    }
-
-                    ApplicationGson application = new ApplicationGson();
-                    application.setId(id);
-                    application.setPackageName(packageName);
-                    application.setLiteracySkills(literacySkillSet);
-                    application.setNumeracySkills(numeracySkillSet);
                     applications.add(application);
 
                     isLast = cursor.isLast();
                 }
-                Log.i(getClass().getName(), "cursor.isClosed(): " + cursor.isClosed());
+                Timber.i("cursor.isClosed(): " + cursor.isClosed());
                 cursor.close();
             } else {
                 Toast.makeText(getApplicationContext(), "cursor.getCount() == 0", Toast.LENGTH_LONG).show();
@@ -167,7 +116,7 @@ public class HomeScreensActivity extends AppCompatActivity {
         } else {
             Toast.makeText(getApplicationContext(), "cursor == null", Toast.LENGTH_LONG).show();
         }
-        Log.i(getClass().getName(), "applications.size(): " + applications.size());
+        Timber.i("applications.size(): " + applications.size());
     }
 
     public static class PlaceholderFragment extends Fragment {
@@ -222,10 +171,10 @@ public class HomeScreensActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            Log.i(getClass().getName(), "onCreateView");
+            Timber.i("onCreateView");
 
             int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
-            Log.i(getClass().getName(), "sectionNumber: " + sectionNumber);
+            Timber.i("sectionNumber: " + sectionNumber);
 
             int layoutIdentifier = getResources().getIdentifier("fragment_home_screen" + String.valueOf(sectionNumber), "layout", getActivity().getPackageName());
             View rootView = inflater.inflate(layoutIdentifier, container, false);
@@ -238,26 +187,11 @@ public class HomeScreensActivity extends AppCompatActivity {
                 tabletNavigationImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Log.i(getClass().getName(), "tabletNavigationImageView onClick");
+                        Timber.i("tabletNavigationImageView onClick");
 
-                        // Fetch apps for category (Tablet Navigation)
-                        // TODO: load dynamically from Appstore
-                        List<String> packageNames = Arrays.asList(
-                                "com.android.camera2",
-                                "com.android.gallery3d",
-                                "com.android.soundrecorder",
-                                "cc.openframeworks.inkSpace",
-                                "com.google.fpl.liquidfunpaint",
-                                "org.dsandler.apps.markers",
-                                "org.esteban.piano",
-                                "fr.tvbarthel.apps.cameracolorpicker.foss.kids",
-                                "ai.elimu.startguide",
-                                "ai.elimu.tilt"
-                                // TODO: add Kintsukuroi
-                                // TODO: add Memory Game For Kids
-                        );
-
-                        initializeDialog(packageNames, null, null);
+                        // Tablet Navigation
+//                        initializeDialog(null, null);
+                        initializeDialog(null, NumeracySkill.SHAPE_IDENTIFICATION);
                     }
                 });
 
@@ -269,18 +203,11 @@ public class HomeScreensActivity extends AppCompatActivity {
                 egraOralVocabularyImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Log.i(getClass().getName(), "egraOralVocabularyImageView onClick");
+                        Timber.i("egraOralVocabularyImageView onClick");
 
-                        // Fetch apps for category (Oral Vocabulary and Listening Comprehension)
-                        // TODO: load dynamically from Appstore
-                        List<String> packageNames = Arrays.asList(
-                                "com.android.gallery3d",
-                                "ai.elimu", // TODO: only use the Video launcher
-                                "ai.elimu.imagepicker",
-                                "ai.elimu.storybooks"
-                        );
-
-                        initializeDialog(packageNames, LiteracySkill.ORAL_VOCABULARY, null);
+                        // Oral Vocabulary and Listening Comprehension
+                        // TODO: include LiteracySkill.LISTENING_COMPREHENSION
+                        initializeDialog(LiteracySkill.ORAL_VOCABULARY, null);
                     }
                 });
 
@@ -289,16 +216,10 @@ public class HomeScreensActivity extends AppCompatActivity {
                 egraPhonemicAwarenessImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Log.i(getClass().getName(), "egraPhonemicAwarenessImageView onClick");
+                        Timber.i("egraPhonemicAwarenessImageView onClick");
 
-                        // Fetch apps for category (Phonemic Awareness)
-                        // TODO: load dynamically from Appstore
-                        List<String> packageNames = Arrays.asList(
-                                "com.ubongokids.alphabetEng",
-                                "ai.elimu.soundcards"
-                        );
-
-                        initializeDialog(packageNames, LiteracySkill.PHONEMIC_AWARENESS, null);
+                        // Phonemic Awareness
+                        initializeDialog(LiteracySkill.PHONEMIC_AWARENESS, null);
                     }
                 });
 
@@ -307,21 +228,10 @@ public class HomeScreensActivity extends AppCompatActivity {
                 egraLetterIdentificationImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Log.i(getClass().getName(), "egraLetterIdentificationImageView onClick");
+                        Timber.i("egraLetterIdentificationImageView onClick");
 
-                        // Fetch apps for category (Letter Identification)
-                        // TODO: load dynamically from Appstore
-                        List<String> packageNames = Arrays.asList(
-                                "com.ubongokids.alphabetEng",
-                                "ai.elimu", // TODO: only use the Literacy launcher
-                                "ai.elimu.handwriting",
-                                "ai.elimu.chat",
-                                "ai.elimu.visemes",
-                                "ai.elimu.voltair",
-                                "ai.elimu.walezi"
-                        );
-
-                        initializeDialog(packageNames, LiteracySkill.LETTER_IDENTIFICATION, null);
+                        // Letter Identification
+                        initializeDialog(LiteracySkill.LETTER_IDENTIFICATION, null);
                     }
                 });
 
@@ -333,17 +243,10 @@ public class HomeScreensActivity extends AppCompatActivity {
                 egmaOralCountingImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Log.i(getClass().getName(), "egmaOralCountingImageView onClick");
+                        Timber.i("egmaOralCountingImageView onClick");
 
-                        // Fetch apps for category (Oral Counting)
-                        // TODO: load dynamically from Appstore
-                        List<String> packageNames = Arrays.asList(
-                                "com.android.gallery3d",
-                                "ai.elimu", // TODO: only use the Numeracy launcher
-                                "fr.tvbarthel.apps.shapi" // TODO: move to previous EGMA category
-                        );
-
-                        initializeDialog(packageNames, null, NumeracySkill.ORAL_COUNTING);
+                        // Oral Counting
+                        initializeDialog(null, NumeracySkill.ORAL_COUNTING);
                     }
                 });
 
@@ -352,22 +255,10 @@ public class HomeScreensActivity extends AppCompatActivity {
                 egmaNumberIdentificationImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Log.i(getClass().getName(), "egmaNumberIdentificationImageView onClick");
+                        Timber.i("egmaNumberIdentificationImageView onClick");
 
-                        // Fetch apps for category (Number Identification)
-                        // TODO: load dynamically from Appstore
-                        List<String> packageNames = Arrays.asList(
-                                "org.jempe.hockey",
-                                "ai.elimu", // TODO: only use the Numeracy launcher
-                                "ai.elimu.calculator",
-                                "ai.elimu.chat",
-                                "ai.elimu.handwriting_numbers",
-                                "ai.elimu.nya",
-                                "ai.elimu.tilt",
-                                "ru.o2genum.coregame"
-                        );
-
-                        initializeDialog(packageNames, null, NumeracySkill.NUMBER_IDENTIFICATION);
+                        // Number Identification
+                        initializeDialog(null, NumeracySkill.NUMBER_IDENTIFICATION);
                     }
                 });
 
@@ -376,16 +267,10 @@ public class HomeScreensActivity extends AppCompatActivity {
                 egmaMissingNumberImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Log.i(getClass().getName(), "egmaMissingNumberImageView onClick");
+                        Timber.i("egmaMissingNumberImageView onClick");
 
-                        // Fetch apps for category (Missing Number and Quantity Discrimination)
-                        // TODO: load dynamically from Appstore
-                        List<String> packageNames = Arrays.asList(
-                                "ai.elimu.missing_number",
-                                "ai.elimu.nya.qd" // TODO: move to previous EGMA category (Quantity Discrimination)
-                        );
-
-                        initializeDialog(packageNames, null, NumeracySkill.MISSING_NUMBER);
+                        // Missing Number and Quantity Discrimination
+                        initializeDialog(null, NumeracySkill.MISSING_NUMBER);
                     }
                 });
             } else if (sectionNumber == 2) {
@@ -396,15 +281,10 @@ public class HomeScreensActivity extends AppCompatActivity {
                 egraSyllableNamingImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Log.i(getClass().getName(), "egraSyllableNamingImageView onClick");
+                        Timber.i("egraSyllableNamingImageView onClick");
 
-                        // Fetch apps for category (Syllable Naming and Familiar Word Reading)
-                        // TODO: load dynamically from Appstore
-                        List<String> packageNames = Arrays.asList(
-                                "ai.elimu.familiar_word_reading"
-                        );
-
-                        initializeDialog(packageNames, LiteracySkill.FAMILIAR_WORD_READING, null);
+                        // Syllable Naming and Familiar Word Reading
+                        initializeDialog(LiteracySkill.FAMILIAR_WORD_READING, null);
                     }
                 });
 
@@ -421,78 +301,80 @@ public class HomeScreensActivity extends AppCompatActivity {
             return rootView;
         }
 
-        private void initializeDialog(List<String> packageNames, LiteracySkill literacySkill, NumeracySkill numeracySkill) {
-            Log.i(getClass().getName(), "initializeDialog");
+        private void initializeDialog(LiteracySkill literacySkill, NumeracySkill numeracySkill) {
+            Timber.i("initializeDialog");
+
+            String dialogTitle = null;
+            if (false) { // TODO
+                dialogTitle = "TABLET_NAVIGATION"; // TODO
+            } else if (literacySkill != null) {
+                try {
+                    int resourceIdentifier = getResources().getIdentifier("literacy_skill_" + literacySkill, "string", getActivity().getPackageName());
+                    dialogTitle = getString(resourceIdentifier);
+                } catch (Resources.NotFoundException e) {
+                    // Fall back to enum name
+                    dialogTitle = literacySkill.toString();
+                }
+            } else if (numeracySkill != null) {
+                try {
+                    int resourceIdentifier = getResources().getIdentifier("numeracy_skill_" + numeracySkill, "string", getActivity().getPackageName());
+                    dialogTitle = getString(resourceIdentifier);
+                } catch (Resources.NotFoundException e) {
+                    // Fall back to enum name
+                    dialogTitle = numeracySkill.toString();
+                }
+            }
 
             MaterialDialog materialDialog = new MaterialDialog.Builder(getContext())
                     .customView(R.layout.dialog_apps, true)
                     .theme(Theme.DARK)
+                    .title(dialogTitle)
+                    .titleGravity(GravityEnum.CENTER)
                     .show();
 
             View customView = materialDialog.getCustomView();
             GridLayout appGridLayout = customView.findViewById(R.id.appGridLayout);
 
-            Intent intent = new Intent(Intent.ACTION_MAIN, null);
-            intent.addCategory(Intent.CATEGORY_LAUNCHER);
-            final PackageManager packageManager = getActivity().getPackageManager();
-            List<ResolveInfo> availableActivities = packageManager.queryIntentActivities(intent, 0);
-            for (ResolveInfo resolveInfo : availableActivities) {
-                final ActivityInfo activityInfo = resolveInfo.activityInfo;
-                Log.i(getClass().getName(), "activityInfo: " + activityInfo);
-
-                Log.i(getClass().getName(), "activityInfo.packageName: " + activityInfo.packageName);
-                Log.i(getClass().getName(), "activityInfo.name: " + activityInfo.name);
-
-                final ComponentName componentName = new ComponentName(activityInfo.packageName, activityInfo.name);
-                Log.i(getClass().getName(), "componentName: " + componentName);
-
-                CharSequence label = resolveInfo.loadLabel(packageManager);
-                Log.i(getClass().getName(), "label: " + label);
-
-                Drawable icon = resolveInfo.loadIcon(packageManager);
-                Log.i(getClass().getName(), "icon: " + icon);
-
-                if (packageNames.contains(activityInfo.packageName)) {
-                    if ((literacySkill == LiteracySkill.ORAL_VOCABULARY) || (literacySkill == LiteracySkill.PHONEMIC_AWARENESS)) {
-                        if ("ai.elimu".equals(activityInfo.packageName)
-                                && !activityInfo.name.equals("ai.elimu.content.multimedia.video.VideosActivity")) {
-                            continue;
-                        }
-                    } else if (literacySkill == LiteracySkill.LETTER_IDENTIFICATION) {
-                        if ("ai.elimu".equals(activityInfo.packageName)
-                                && !activityInfo.name.equals("ai.elimu.content.letter.LettersActivity")
-                                && !activityInfo.name.equals("ai.elimu.content.multimedia.video.VideosActivity")) {
-                            continue;
-                        }
-                    }
-
-                    if (numeracySkill == NumeracySkill.ORAL_COUNTING) {
-                        if ("ai.elimu".equals(activityInfo.packageName)
-                                && !activityInfo.name.equals("ai.elimu.content.multimedia.video.VideosActivity")) {
-                            continue;
-                        }
-                    } else if (numeracySkill == NumeracySkill.NUMBER_IDENTIFICATION) {
-                        if ("ai.elimu".equals(activityInfo.packageName)
-                                && !activityInfo.name.equals("ai.elimu.content.number.NumbersActivity")
-                                && !activityInfo.name.equals("ai.elimu.content.multimedia.video.VideosActivity")) {
-                            continue;
-                        }
-                    }
+            for (final ApplicationGson application : applications) {
+                Timber.i("application.getPackageName(): " + application.getPackageName());
+                boolean isTabletNavigationSkill = false; // TODO
+                Timber.i("isTabletNavigationSkill: " + isTabletNavigationSkill);
+                boolean isLiteracySkill = application.getLiteracySkills().contains(literacySkill);
+                Timber.i("isLiteracySkill: " + isLiteracySkill);
+                boolean isNumeracySkill = application.getNumeracySkills().contains(numeracySkill);
+                Timber.i("isNumeracySkill: " + isNumeracySkill);
+                if (isTabletNavigationSkill || isLiteracySkill || isNumeracySkill) {
+                    // Add Application to dialog
 
                     View appView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_apps_app_view, appGridLayout, false);
 
+                    // Set app icon
                     ImageView appIconImageView = appView.findViewById(R.id.appIconImageView);
-                    appIconImageView.setImageDrawable(icon);
+                    final PackageManager packageManager = getActivity().getPackageManager();
+                    try {
+                        ApplicationInfo applicationInfo = packageManager.getApplicationInfo(application.getPackageName(), PackageManager.GET_META_DATA);
+                        Resources resources = packageManager.getResourcesForApplication(application.getPackageName());
+                        Drawable icon;
+                        if (Build.VERSION.SDK_INT >= 22) {
+                            icon = resources.getDrawableForDensity(applicationInfo.icon, DisplayMetrics.DENSITY_XXHIGH, null);
+                        } else {
+                            // This method was deprecated in API level 22
+                            icon = resources.getDrawableForDensity(applicationInfo.icon, DisplayMetrics.DENSITY_XXHIGH);
+                        }
+                        appIconImageView.setImageDrawable(icon);
+                    } catch (PackageManager.NameNotFoundException e) {
+                        Timber.e(e);
+                    }
 
+                    // Open Application when pressing app icon
                     appIconImageView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Log.i(getClass().getName(), "appIconImageView onClick");
+                            Timber.i("appIconImageView onClick");
 
-                            Intent intent = new Intent(Intent.ACTION_MAIN);
+                            Intent intent = packageManager.getLaunchIntentForPackage(application.getPackageName());
                             intent.addCategory(Intent.CATEGORY_LAUNCHER);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                            intent.setComponent(componentName);
                             startActivity(intent);
 
 //                            EventTracker.reportApplicationOpenedEvent(getContext(), activityInfo.packageName);
@@ -506,13 +388,13 @@ public class HomeScreensActivity extends AppCompatActivity {
 
         @Override
         public void onStart() {
-            Log.i(getClass().getName(), "onCreateView");
+            Timber.i("onCreateView");
             super.onStart();
         }
 
         @Override
         public void onResume() {
-            Log.i(getClass().getName(), "onResume");
+            Timber.i("onResume");
             super.onResume();
 
             // Add subtle movements to the space ships
@@ -571,7 +453,7 @@ public class HomeScreensActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Log.i(getClass().getName(), "onBackPressed");
+        Timber.i("onBackPressed");
 
         // Do nothing
     }
