@@ -190,7 +190,8 @@ public class HomeScreensActivity extends AppCompatActivity {
                         Timber.i("tabletNavigationImageView onClick");
 
                         // Tablet Navigation
-                        initializeDialog(null, null);
+//                        initializeDialog(null, null);
+                        initializeDialog(null, NumeracySkill.SHAPE_IDENTIFICATION);
                     }
                 });
 
@@ -205,6 +206,7 @@ public class HomeScreensActivity extends AppCompatActivity {
                         Timber.i("egraOralVocabularyImageView onClick");
 
                         // Oral Vocabulary and Listening Comprehension
+                        // TODO: include LiteracySkill.LISTENING_COMPREHENSION
                         initializeDialog(LiteracySkill.ORAL_VOCABULARY, null);
                     }
                 });
