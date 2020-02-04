@@ -1,4 +1,4 @@
-# Launcher
+# Launcher 🚀
 
 Custom Android Launcher providing a clear instructional path (based on EGRA/EGMA skills).
 
