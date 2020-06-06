@@ -1,4 +1,4 @@
-package ai.elimu.launcher;
+package ai.elimu.launcher.ui;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
@@ -35,6 +35,8 @@ import com.matthewtamlin.sliding_intro_screen_library.indicators.DotIndicator;
 import java.util.ArrayList;
 import java.util.List;
 
+import ai.elimu.launcher.BuildConfig;
+import ai.elimu.launcher.R;
 import ai.elimu.launcher.util.CursorToApplicationConverter;
 import ai.elimu.model.enums.content.LiteracySkill;
 import ai.elimu.model.enums.content.NumeracySkill;

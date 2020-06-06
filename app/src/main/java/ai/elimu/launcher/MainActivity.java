@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import ai.elimu.launcher.ui.HomeScreensActivity;
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
@@ -16,16 +17,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Fetch Appstore version
+        // Check if the elimu.ai Appstore is already installed
         try {
             PackageInfo packageInfoAppstore = getPackageManager().getPackageInfo(BuildConfig.APPSTORE_APPLICATION_ID, 0);
             Timber.i( "packageInfoAppstore.versionCode: " + packageInfoAppstore.versionCode);
-            // TODO: match available ContentProvider queries with the Appstore's versionCode
         } catch (PackageManager.NameNotFoundException e) {
-            // The Appstore app has not been installed
             Timber.w( null, e);
-            Toast.makeText(getApplicationContext(), "This launcher will not work until you install the Appstore app: " + BuildConfig.APPSTORE_APPLICATION_ID, Toast.LENGTH_LONG).show();
-            // TODO: force the user to install the Appstore app
+            Toast.makeText(getApplicationContext(), "The elimu.ai Launcher will not work without the elimu.ai Appstore: " + BuildConfig.APPSTORE_APPLICATION_ID, Toast.LENGTH_LONG).show();
+            // TODO: Add link to GitHub for downloading APK
         }
 
         Intent intent = new Intent(getApplicationContext(), HomeScreensActivity.class);
@@ -37,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Timber.i("onBackPressed");
+
         // Do nothing
     }
 }

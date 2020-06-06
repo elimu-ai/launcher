@@ -29,9 +29,9 @@
         </activity>
 
         <activity
-            android:name=".HomeScreensActivity" />
+            android:name=".ui.HomeScreensActivity" />
 
         <activity
-            android:name=".CategoryOverlayActivity" />
+            android:name=".ui.CategoryOverlayActivity" />
     </application>
 </manifest>

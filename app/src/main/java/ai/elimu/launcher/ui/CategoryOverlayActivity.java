@@ -1,9 +1,10 @@
-package ai.elimu.launcher;
+package ai.elimu.launcher.ui;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import ai.elimu.launcher.R;
 import timber.log.Timber;
 
 public class CategoryOverlayActivity extends AppCompatActivity {
