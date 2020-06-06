@@ -10,7 +10,7 @@ import java.util.Set;
 
 import ai.elimu.model.enums.content.LiteracySkill;
 import ai.elimu.model.enums.content.NumeracySkill;
-import ai.elimu.model.gson.admin.ApplicationGson;
+import ai.elimu.model.v1.gson.admin.ApplicationGson;
 import timber.log.Timber;
 
 public class CursorToApplicationConverter {

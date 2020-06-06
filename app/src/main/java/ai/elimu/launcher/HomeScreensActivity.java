@@ -11,19 +11,20 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayout;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -37,10 +38,8 @@ import java.util.List;
 import ai.elimu.launcher.util.CursorToApplicationConverter;
 import ai.elimu.model.enums.content.LiteracySkill;
 import ai.elimu.model.enums.content.NumeracySkill;
-import ai.elimu.model.gson.admin.ApplicationGson;
+import ai.elimu.model.v1.gson.admin.ApplicationGson;
 import timber.log.Timber;
-
-//import ai.elimu.analytics.eventtracker.EventTracker;
 
 public class HomeScreensActivity extends AppCompatActivity {
 
@@ -308,21 +307,9 @@ public class HomeScreensActivity extends AppCompatActivity {
             if (false) { // TODO
                 dialogTitle = "TABLET_NAVIGATION"; // TODO
             } else if (literacySkill != null) {
-                try {
-                    int resourceIdentifier = getResources().getIdentifier("literacy_skill_" + literacySkill, "string", getActivity().getPackageName());
-                    dialogTitle = getString(resourceIdentifier);
-                } catch (Resources.NotFoundException e) {
-                    // Fall back to enum name
-                    dialogTitle = literacySkill.toString();
-                }
+                dialogTitle = literacySkill.toString();
             } else if (numeracySkill != null) {
-                try {
-                    int resourceIdentifier = getResources().getIdentifier("numeracy_skill_" + numeracySkill, "string", getActivity().getPackageName());
-                    dialogTitle = getString(resourceIdentifier);
-                } catch (Resources.NotFoundException e) {
-                    // Fall back to enum name
-                    dialogTitle = numeracySkill.toString();
-                }
+                dialogTitle = numeracySkill.toString();
             }
 
             MaterialDialog materialDialog = new MaterialDialog.Builder(getContext())

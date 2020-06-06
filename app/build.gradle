@@ -1,14 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
 
     defaultConfig {
         applicationId "ai.elimu.launcher"
-        minSdkVersion 21
-        targetSdkVersion 26
-        versionCode 2000001
-        versionName "2.0.1-SNAPSHOT"
+        minSdkVersion 24
+        targetSdkVersion 29
+        versionCode 2001000
+        versionName "2.1.0-SNAPSHOT"
     }
 
     buildTypes {
@@ -16,9 +17,11 @@ android {
             applicationIdSuffix ".debug"
             versionNameSuffix "-debug"
             buildConfigField("String", "APPSTORE_APPLICATION_ID", '"ai.elimu.appstore.debug"')
+            buildConfigField("String", "ANALYTICS_APPLICATION_ID", '"ai.elimu.analytics.debug"')
         }
         release {
             buildConfigField("String", "APPSTORE_APPLICATION_ID", '"ai.elimu.appstore"')
+            buildConfigField("String", "ANALYTICS_APPLICATION_ID", '"ai.elimu.analytics"')
         }
     }
 
@@ -30,18 +33,14 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-    implementation 'ai.elimu:model:1.1.70'
-//    implementation 'ai.elimu.analytics:eventtracker:1.0.5'
+    implementation 'ai.elimu:model:2.0.14'
 
     implementation 'com.jakewharton.timber:timber:4.5.1'
-    implementation "com.android.support:appcompat-v7:$supportLibVersion"
-    implementation "com.android.support:support-annotations:$supportLibVersion"
-    implementation "com.android.support:design:$supportLibVersion"
-    implementation "com.android.support:gridlayout-v7:$supportLibVersion"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.andraskindler.parallaxviewpager:parallaxviewpager:0.3.1'
     implementation 'com.matthew-tamlin:sliding-intro-screen:3.2.0'
     implementation 'com.afollestad.material-dialogs:core:0.8.6.2'
 
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }

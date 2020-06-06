@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.GridLayout
+    <GridLayout
         android:id="@+id/appGridLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:columnCount="@integer/gridlayout_column_count"
-        app:useDefaultMargins="true">
+        android:columnCount="@integer/gridlayout_column_count"
+        android:useDefaultMargins="true">
 
         <!-- Programmatically add dialog_apps_app_view.xml -->
-    </android.support.v7.widget.GridLayout>
+    </GridLayout>
 </RelativeLayout>
