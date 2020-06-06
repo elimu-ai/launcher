@@ -9,7 +9,6 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -102,7 +101,7 @@ public class HomeScreensActivity extends AppCompatActivity {
                 while (!isLast) {
                     cursor.moveToNext();
 
-                    // Convert from database row to ApplicationGson object
+                    // Convert from database row to Gson
                     ApplicationGson application = CursorToApplicationConverter.getApplication(cursor);
 
                     applications.add(application);
@@ -343,13 +342,7 @@ public class HomeScreensActivity extends AppCompatActivity {
                     try {
                         ApplicationInfo applicationInfo = packageManager.getApplicationInfo(application.getPackageName(), PackageManager.GET_META_DATA);
                         Resources resources = packageManager.getResourcesForApplication(application.getPackageName());
-                        Drawable icon;
-                        if (Build.VERSION.SDK_INT >= 22) {
-                            icon = resources.getDrawableForDensity(applicationInfo.icon, DisplayMetrics.DENSITY_XXHIGH, null);
-                        } else {
-                            // This method was deprecated in API level 22
-                            icon = resources.getDrawableForDensity(applicationInfo.icon, DisplayMetrics.DENSITY_XXHIGH);
-                        }
+                        Drawable icon = resources.getDrawableForDensity(applicationInfo.icon, DisplayMetrics.DENSITY_XXHIGH, null);
                         appIconImageView.setImageDrawable(icon);
                     } catch (PackageManager.NameNotFoundException e) {
                         Timber.e(e);
