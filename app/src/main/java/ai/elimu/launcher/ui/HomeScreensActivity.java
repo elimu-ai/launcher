@@ -91,7 +91,7 @@ public class HomeScreensActivity extends AppCompatActivity {
 
         // Fetch Applications from the Appstore's ContentProvider
         applications = new ArrayList<>();
-        Uri uri = Uri.parse("content://" + BuildConfig.APPSTORE_APPLICATION_ID + ".provider.application_provider/application");
+        Uri uri = Uri.parse("content://" + BuildConfig.APPSTORE_APPLICATION_ID + ".provider.application_provider/applications");
         Timber.i("uri: " + uri);
         Cursor cursor = getContentResolver().query(uri, null, null, null, null);
         if (cursor != null) {
