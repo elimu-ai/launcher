@@ -118,12 +118,12 @@
                 android:paddingRight="@dimen/activity_horizontal_margin">
 
                 <ImageView
+                    android:id="@+id/egmaOralCountingImageView"
                     android:layout_width="200dp"
                     android:layout_height="200dp"
                     android:src="@drawable/egma_unlocked" />
 
                 <ImageView
-                    android:id="@+id/egmaOralCountingImageView"
                     android:layout_width="110dp"
                     android:layout_height="110dp"
                     android:layout_marginTop="10dp"
@@ -139,12 +139,12 @@
                 android:paddingRight="@dimen/activity_horizontal_margin">
 
                 <ImageView
+                    android:id="@+id/egmaNumberIdentificationImageView"
                     android:layout_width="200dp"
                     android:layout_height="200dp"
                     android:src="@drawable/egma_unlocked" />
 
                 <ImageView
-                    android:id="@+id/egmaNumberIdentificationImageView"
                     android:layout_width="110dp"
                     android:layout_height="110dp"
                     android:layout_marginTop="10dp"
@@ -158,12 +158,12 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
+                    android:id="@+id/egmaMissingNumberImageView"
                     android:layout_width="200dp"
                     android:layout_height="200dp"
                     android:src="@drawable/egma_unlocked" />
 
                 <ImageView
-                    android:id="@+id/egmaMissingNumberImageView"
                     android:layout_width="110dp"
                     android:layout_height="110dp"
                     android:layout_marginTop="10dp"
