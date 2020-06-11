@@ -39,7 +39,7 @@ import ai.elimu.launcher.R;
 import ai.elimu.launcher.util.CursorToApplicationConverter;
 import ai.elimu.model.enums.content.LiteracySkill;
 import ai.elimu.model.enums.content.NumeracySkill;
-import ai.elimu.model.v1.gson.admin.ApplicationGson;
+import ai.elimu.model.v2.gson.application.ApplicationGson;
 import timber.log.Timber;
 
 public class HomeScreensActivity extends AppCompatActivity {
