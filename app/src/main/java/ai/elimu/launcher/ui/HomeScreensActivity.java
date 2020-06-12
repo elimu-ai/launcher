@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -39,7 +40,7 @@ import ai.elimu.launcher.R;
 import ai.elimu.launcher.util.CursorToApplicationConverter;
 import ai.elimu.model.enums.content.LiteracySkill;
 import ai.elimu.model.enums.content.NumeracySkill;
-import ai.elimu.model.v1.gson.admin.ApplicationGson;
+import ai.elimu.model.v2.gson.application.ApplicationGson;
 import timber.log.Timber;
 
 public class HomeScreensActivity extends AppCompatActivity {
@@ -333,6 +334,15 @@ public class HomeScreensActivity extends AppCompatActivity {
                 Timber.i("isNumeracySkill: " + isNumeracySkill);
                 if (isTabletNavigationSkill || isLiteracySkill || isNumeracySkill) {
                     // Add Application to dialog
+
+                    // Check if the Application is already installed. If not, skip it.
+                    try {
+                        PackageInfo packageInfoAppstore = getContext().getPackageManager().getPackageInfo(application.getPackageName(), 0);
+                        Timber.i( "packageInfoAppstore.versionCode: " + packageInfoAppstore.versionCode);
+                    } catch (PackageManager.NameNotFoundException e) {
+                        Timber.i(e, "The Application has not been installed: " + application.getPackageName());
+                        continue;
+                    }
 
                     View appView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_apps_app_view, appGridLayout, false);
 
