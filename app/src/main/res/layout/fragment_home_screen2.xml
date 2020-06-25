@@ -17,50 +17,24 @@
         android:paddingBottom="@dimen/spaceship_vertical_margin"
         android:gravity="bottom">
 
-        <RelativeLayout
-            android:id="@+id/egraSyllableNamingContainer"
+        <include
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center">
+            layout="@layout/item_egra_syllable_naming" />
 
-            <ImageView
-                android:id="@+id/egraSyllableNamingImageView"
-                android:layout_width="@dimen/spaceship_width"
-                android:layout_height="@dimen/spaceship_height"
-                android:src="@drawable/egra_unlocked" />
-
-            <ImageView
-                android:layout_width="@dimen/skill_image_width"
-                android:layout_height="@dimen/skill_image_height"
-                android:layout_marginTop="@dimen/skill_image_margin_top"
-                android:layout_marginLeft="@dimen/skill_image_margin_left"
-                android:src="@drawable/egra_syllable_naming" />
-        </RelativeLayout>
-
-        <RelativeLayout
+        <include
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center">
+            layout="@layout/item_egra_locked" />
 
-            <ImageView
-                android:layout_width="@dimen/spaceship_width"
-                android:layout_height="@dimen/spaceship_height"
-                android:src="@drawable/egra_locked" />
-        </RelativeLayout>
-
-        <RelativeLayout
+        <include
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center">
+            layout="@layout/item_egra_locked" />
 
-            <ImageView
-                android:layout_width="@dimen/spaceship_width"
-                android:layout_height="@dimen/spaceship_height"
-                android:src="@drawable/egra_locked" />
-        </RelativeLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -68,42 +42,25 @@
         android:layout_weight="1"
         android:paddingTop="@dimen/spaceship_vertical_margin">
 
-        <RelativeLayout
+        <include
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center">
+            layout="@layout/item_egma_locked" />
 
-            <ImageView
-                android:layout_width="@dimen/spaceship_width"
-                android:layout_height="@dimen/spaceship_width"
-                android:src="@drawable/egma_locked" />
-        </RelativeLayout>
-
-        <RelativeLayout
+        <include
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            android:gravity="center">
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            layout="@layout/item_egma_locked" />
 
-            <ImageView
-                android:layout_width="@dimen/spaceship_width"
-                android:layout_height="@dimen/spaceship_width"
-                android:src="@drawable/egma_locked" />
-        </RelativeLayout>
-
-        <RelativeLayout
+        <include
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center">
+            layout="@layout/item_egma_locked" />
 
-            <ImageView
-                android:layout_width="@dimen/spaceship_width"
-                android:layout_height="@dimen/spaceship_width"
-                android:src="@drawable/egma_locked" />
-        </RelativeLayout>
     </LinearLayout>
 
 </LinearLayout>

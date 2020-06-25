@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/egraPhonemicAwarenessContainer"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/egraPhonemicAwarenessImageView"
+        android:layout_width="@dimen/spaceship_width"
+        android:layout_height="@dimen/spaceship_height"
+        android:src="@drawable/egra_unlocked" />
+
+    <ImageView
+        android:layout_width="@dimen/skill_image_width"
+        android:layout_height="@dimen/skill_image_height"
+        android:layout_marginTop="@dimen/skill_image_margin_top"
+        android:layout_marginLeft="@dimen/skill_image_margin_left"
+        android:src="@drawable/egra_phonemic_awareness" />
+</RelativeLayout>
