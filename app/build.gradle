@@ -9,7 +9,7 @@ android {
         minSdkVersion 24
         targetSdkVersion 29
         versionCode 2001001
-        versionName "2.1.1-SNAPSHOT"
+        versionName "2.1.1"
     }
 
     buildTypes {
