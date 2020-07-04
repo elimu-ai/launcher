@@ -27,20 +27,21 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:paddingBottom="@dimen/spaceship_vertical_margin">
+            android:paddingBottom="@dimen/spaceship_vertical_margin"
+            android:gravity="bottom">
 
             <include
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/spaceship_height"
                 android:layout_weight="1"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
                 layout="@layout/item_egra_oral_vocabulary" />
 
             <include
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/spaceship_height"
                 android:layout_weight="1"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 layout="@layout/item_egra_phonemic_awareness" />
@@ -48,34 +49,34 @@
             <include
                 layout="@layout/item_egra_letter_identification"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/spaceship_height"
                 android:layout_weight="1"
                 android:layout_marginBottom="@dimen/activity_vertical_margin" />
 
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:paddingTop="@dimen/spaceship_vertical_margin">
 
             <include
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/spaceship_height"
                 android:layout_weight="1"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
                 layout="@layout/item_egma_oral_counting" />
 
             <include
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/spaceship_height"
                 android:layout_weight="1"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 layout="@layout/item_egma_number_identification" />
 
             <include
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/spaceship_height"
                 android:layout_weight="1"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
                 layout="@layout/item_egma_missing_number" />

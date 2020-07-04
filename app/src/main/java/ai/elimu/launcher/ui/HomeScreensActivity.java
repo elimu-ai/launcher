@@ -21,6 +21,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -133,28 +134,28 @@ public class HomeScreensActivity extends AppCompatActivity {
 
         // Skills: EGRA
 
-        private RelativeLayout egraOralVocabularyContainer;
+        private ConstraintLayout egraOralVocabularyContainer;
         private ImageView egraOralVocabularyImageView;
 
-        private RelativeLayout egraPhonemicAwarenessContainer;
+        private ConstraintLayout egraPhonemicAwarenessContainer;
         private ImageView egraPhonemicAwarenessImageView;
 
-        private RelativeLayout egraLetterIdentificationContainer;
+        private ConstraintLayout egraLetterIdentificationContainer;
         private ImageView egraLetterIdentificationImageView;
 
-        private RelativeLayout egraSyllableNamingContainer;
+        private ConstraintLayout egraSyllableNamingContainer;
         private ImageView egraSyllableNamingImageView;
 
 
         // Skills: EGMA
 
-        private RelativeLayout egmaOralCountingContainer;
+        private ConstraintLayout egmaOralCountingContainer;
         private ImageView egmaOralCountingImageView;
 
-        private RelativeLayout egmaNumberIdentificationContainer;
+        private ConstraintLayout egmaNumberIdentificationContainer;
         private ImageView egmaNumberIdentificationImageView;
 
-        private RelativeLayout egmaMissingNumberContainer;
+        private ConstraintLayout egmaMissingNumberContainer;
         private ImageView egmaMissingNumberImageView;
 
 

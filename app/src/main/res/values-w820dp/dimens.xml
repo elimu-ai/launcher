@@ -6,7 +6,7 @@
 
     <dimen name="spaceship_width">200dp</dimen>
     <dimen name="spaceship_height">200dp</dimen>
-    <dimen name="spaceship_vertical_margin">16dp</dimen>
+    <dimen name="spaceship_vertical_margin">24dp</dimen>
 
     <dimen name="skill_image_width">105dp</dimen>
     <dimen name="skill_image_height">105dp</dimen>
