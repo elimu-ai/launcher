@@ -34,14 +34,14 @@
 
             <include
                 android:layout_width="0dp"
-                android:layout_height="@dimen/spaceship_height"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
                 layout="@layout/item_egra_oral_vocabulary" />
 
             <include
                 android:layout_width="0dp"
-                android:layout_height="@dimen/spaceship_height"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 layout="@layout/item_egra_phonemic_awareness" />
@@ -49,7 +49,7 @@
             <include
                 layout="@layout/item_egra_letter_identification"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/spaceship_height"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginBottom="@dimen/activity_vertical_margin" />
 
@@ -62,21 +62,21 @@
 
             <include
                 android:layout_width="0dp"
-                android:layout_height="@dimen/spaceship_height"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
                 layout="@layout/item_egma_oral_counting" />
 
             <include
                 android:layout_width="0dp"
-                android:layout_height="@dimen/spaceship_height"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 layout="@layout/item_egma_number_identification" />
 
             <include
                 android:layout_width="0dp"
-                android:layout_height="@dimen/spaceship_height"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
                 layout="@layout/item_egma_missing_number" />

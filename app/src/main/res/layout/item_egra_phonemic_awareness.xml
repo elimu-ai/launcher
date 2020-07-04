@@ -6,7 +6,7 @@
     android:id="@+id/egraPhonemicAwarenessContainer"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="8dp"
+    android:maxHeight="@dimen/spaceship_height"
     tools:layout_width="@dimen/spaceship_width"
     tools:layout_height="@dimen/spaceship_height">
 
