@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/egmaMissingNumberContainer"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:maxHeight="@dimen/spaceship_height"
+    tools:layout_width="@dimen/spaceship_width"
+    tools:layout_height="@dimen/spaceship_height"
+    android:padding="8dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/egmaMissingNumberImageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/egma_unlocked" />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="@id/egmaMissingNumberImageView"
+        app:layout_constraintBottom_toBottomOf="@id/egmaMissingNumberImageView"
+        app:layout_constraintStart_toStartOf="@id/egmaMissingNumberImageView"
+        app:layout_constraintEnd_toEndOf="@id/egmaMissingNumberImageView"
+        app:layout_constraintWidth_percent=".5"
+        app:layout_constraintHeight_percent=".5"
+        app:layout_constraintVertical_bias=".15"
+        app:layout_constraintHorizontal_bias=".45"
+        android:src="@drawable/egma_missing_number" />
+</androidx.constraintlayout.widget.ConstraintLayout>

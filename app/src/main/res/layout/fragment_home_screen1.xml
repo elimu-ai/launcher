@@ -1,177 +1,81 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".ui.HomeScreensActivity$PlaceholderFragment">
+    android:padding="@dimen/activity_vertical_margin"
+    android:gravity="center"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_gravity="center"
         android:gravity="center">
 
-        <RelativeLayout
-            android:id="@+id/tabletNavigationContainer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/tabletNavigationImageView"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:src="@drawable/tablet_navigation_earth" />
-
-            <ImageView
-                android:layout_width="110dp"
-                android:layout_height="110dp"
-                android:layout_marginTop="45dp"
-                android:layout_marginLeft="45dp"
-                android:src="@drawable/tablet_navigation" />
-        </RelativeLayout>
+        <include
+            android:layout_width="@dimen/spaceship_width"
+            android:layout_height="@dimen/spaceship_height"
+            layout="@layout/item_tablet_navigation" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="3"
-        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:gravity="center">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/activity_vertical_margin">
+        <include
+            android:layout_width="0dp"
+            android:layout_height="@dimen/spaceship_height"
+            android:layout_weight="1"
+            layout="@layout/item_egra_oral_vocabulary" />
 
-            <RelativeLayout
-                android:id="@+id/egraOralVocabularyContainer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingRight="@dimen/activity_horizontal_margin">
+        <include
+            android:layout_width="0dp"
+            android:layout_height="@dimen/spaceship_height"
+            android:layout_weight="1"
+            layout="@layout/item_egma_oral_counting" />
 
-                <ImageView
-                    android:id="@+id/egraOralVocabularyImageView"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:src="@drawable/egra_unlocked" />
+    </LinearLayout>
 
-                <ImageView
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="40dp"
-                    android:src="@drawable/egra_oral_vocabulary" />
-            </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center">
 
-            <RelativeLayout
-                android:id="@+id/egraPhonemicAwarenessContainer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="@dimen/activity_vertical_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin">
+        <include
+            android:layout_width="0dp"
+            android:layout_height="@dimen/spaceship_height"
+            android:layout_weight="1"
+            layout="@layout/item_egra_phonemic_awareness" />
 
-                <ImageView
-                    android:id="@+id/egraPhonemicAwarenessImageView"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:src="@drawable/egra_unlocked" />
+        <include
+            android:layout_width="0dp"
+            android:layout_height="@dimen/spaceship_height"
+            android:layout_weight="1"
+            layout="@layout/item_egma_number_identification" />
 
-                <ImageView
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="40dp"
-                    android:src="@drawable/egra_phonemic_awareness" />
-            </RelativeLayout>
+    </LinearLayout>
 
-            <RelativeLayout
-                android:id="@+id/egraLetterIdentificationContainer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center">
 
-                <ImageView
-                    android:id="@+id/egraLetterIdentificationImageView"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:src="@drawable/egra_unlocked" />
+        <include
+            android:layout_width="0dp"
+            android:layout_height="@dimen/spaceship_height"
+            android:layout_weight="1"
+            layout="@layout/item_egra_letter_identification" />
 
-                <ImageView
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="40dp"
-                    android:src="@drawable/egra_letter_identification" />
-            </RelativeLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/activity_vertical_margin">
+        <include
+            android:layout_width="0dp"
+            android:layout_height="@dimen/spaceship_height"
+            android:layout_weight="1"
+            layout="@layout/item_egma_missing_number" />
 
-            <RelativeLayout
-                android:id="@+id/egmaOralCountingContainer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingRight="@dimen/activity_horizontal_margin">
-
-                <ImageView
-                    android:id="@+id/egmaOralCountingImageView"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:src="@drawable/egma_unlocked" />
-
-                <ImageView
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="40dp"
-                    android:src="@drawable/egma_oral_counting" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/egmaNumberIdentificationContainer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="@dimen/activity_vertical_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin">
-
-                <ImageView
-                    android:id="@+id/egmaNumberIdentificationImageView"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:src="@drawable/egma_unlocked" />
-
-                <ImageView
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="40dp"
-                    android:src="@drawable/egma_number_identification" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/egmaMissingNumberContainer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:id="@+id/egmaMissingNumberImageView"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:src="@drawable/egma_unlocked" />
-
-                <ImageView
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="40dp"
-                    android:src="@drawable/egma_missing_number" />
-            </RelativeLayout>
-        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
