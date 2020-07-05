@@ -15,7 +15,10 @@
         android:layout_gravity="center"
         android:gravity="center">
 
-        <include layout="@layout/item_tablet_navigation" />
+        <include
+            android:layout_width="@dimen/spaceship_width"
+            android:layout_height="@dimen/spaceship_height"
+            layout="@layout/item_tablet_navigation" />
     </LinearLayout>
 
     <LinearLayout

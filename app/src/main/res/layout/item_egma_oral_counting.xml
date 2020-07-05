@@ -7,6 +7,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:maxHeight="@dimen/spaceship_height"
+    android:padding="8dp"
     tools:layout_width="@dimen/spaceship_width"
     tools:layout_height="@dimen/spaceship_height">
 

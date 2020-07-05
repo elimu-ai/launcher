@@ -128,7 +128,7 @@ public class HomeScreensActivity extends AppCompatActivity {
 
         // Skill: Tablet navigation
 
-        private RelativeLayout tabletNavigationContainer;
+        private ConstraintLayout tabletNavigationContainer;
         private ImageView tabletNavigationImageView;
 
 
