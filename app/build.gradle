@@ -8,8 +8,8 @@ android {
         applicationId "ai.elimu.launcher"
         minSdkVersion 24
         targetSdkVersion 29
-        versionCode 2001002
-        versionName "2.1.2"
+        versionCode 2001003
+        versionName "2.1.3-SNAPSHOT"
         setProperty("archivesBaseName", "${applicationId}-${versionCode}")
     }
 
