@@ -8,11 +8,11 @@
     android:fitsSystemWindows="true"
     tools:context=".ui.HomeScreensActivity">
 
-    <com.andraskindler.parallaxviewpager.ParallaxViewPager
+    <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background" />
+        android:background="@drawable/background"/>
 
     <com.matthewtamlin.sliding_intro_screen_library.indicators.DotIndicator
         android:id="@+id/dotIndicator"
