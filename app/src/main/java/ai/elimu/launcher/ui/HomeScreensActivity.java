@@ -8,6 +8,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -42,9 +43,15 @@ import ai.elimu.model.enums.content.NumeracySkill;
 import ai.elimu.model.v2.gson.application.ApplicationGson;
 import timber.log.Timber;
 
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+
 public class HomeScreensActivity extends AppCompatActivity {
 
+    public static final double WIDTH_INCREMENT = 0.1;
+
     private SectionsPagerAdapter mSectionsPagerAdapter;
+
+    private View background;
 
     private ViewPager2 viewPager;
 
@@ -65,15 +72,27 @@ public class HomeScreensActivity extends AppCompatActivity {
 
         // Set up the ViewPager with the sections adapter.
         viewPager = findViewById(R.id.container);
-        viewPager.setBackgroundResource(R.drawable.background);
         viewPager.setAdapter(mSectionsPagerAdapter);
 
         dotIndicator = findViewById(R.id.dotIndicator);
+
+        background = findViewById(R.id.background);
+
+        //Increase the width of the background image to apply the parallax effect
+        updateBackgroundImageWidth();
+
+        final int pageTranslation = (int) (getDisplayWidth() * WIDTH_INCREMENT / (mSectionsPagerAdapter.getItemCount() -1));
 
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 Timber.i("onPageScrolled");
+
+                if (positionOffset >= -1 && positionOffset <= 1) {
+                    int setTranslationX = - (int) ((position + positionOffset) * pageTranslation);
+
+                    background.setTranslationX(setTranslationX);
+                }
             }
 
             @Override
@@ -117,6 +136,18 @@ public class HomeScreensActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "cursor == null", Toast.LENGTH_LONG).show();
         }
         Timber.i("applications.size(): " + applications.size());
+    }
+
+    private void updateBackgroundImageWidth() {
+        int backgroundWidth = (int) (getDisplayWidth() * (1 + WIDTH_INCREMENT));
+        ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(backgroundWidth, MATCH_PARENT);
+        background.setLayoutParams(layoutParams);
+    }
+
+    private int getDisplayWidth() {
+        Point displaySize = new Point();
+        getWindowManager().getDefaultDisplay().getSize(displaySize);
+        return displaySize.x;
     }
 
     public static class PlaceholderFragment extends Fragment {
