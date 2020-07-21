@@ -12,6 +12,7 @@ import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +35,7 @@ import com.matthewtamlin.sliding_intro_screen_library.indicators.DotIndicator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import ai.elimu.launcher.BuildConfig;
 import ai.elimu.launcher.R;
@@ -59,6 +61,8 @@ public class HomeScreensActivity extends AppCompatActivity {
 
     private static List<ApplicationGson> applications;
 
+    private boolean isRightToLeft;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +82,8 @@ public class HomeScreensActivity extends AppCompatActivity {
 
         background = findViewById(R.id.background);
 
+        isRightToLeft = TextUtils.getLayoutDirectionFromLocale(Locale.getDefault()) == View.LAYOUT_DIRECTION_RTL;
+
         //Increase the width of the background image to apply the parallax effect
         updateBackgroundImageWidth();
 
@@ -89,9 +95,13 @@ public class HomeScreensActivity extends AppCompatActivity {
                 Timber.i("onPageScrolled");
 
                 if (positionOffset >= -1 && positionOffset <= 1) {
-                    int setTranslationX = - (int) ((position + positionOffset) * pageTranslation);
+                    int translationX = - (int) ((position + positionOffset) * pageTranslation);
 
-                    background.setTranslationX(setTranslationX);
+                    if (isRightToLeft) {
+                        translationX = - (int) (translationX + getDisplayWidth() * WIDTH_INCREMENT);
+                    }
+
+                    background.setTranslationX(translationX);
                 }
             }
 
@@ -99,7 +109,11 @@ public class HomeScreensActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 Timber.i("onPageSelected");
 
-                dotIndicator.setSelectedItem(position, true);
+                if (isRightToLeft) {
+                    dotIndicator.setSelectedItem(dotIndicator.getNumberOfItems() - 1 - position, true);
+                } else {
+                    dotIndicator.setSelectedItem(position, true);
+                }
             }
 
             @Override
@@ -142,6 +156,9 @@ public class HomeScreensActivity extends AppCompatActivity {
         int backgroundWidth = (int) (getDisplayWidth() * (1 + WIDTH_INCREMENT));
         ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(backgroundWidth, MATCH_PARENT);
         background.setLayoutParams(layoutParams);
+        if (isRightToLeft) {
+            background.setTranslationX(-(float) (getDisplayWidth() * WIDTH_INCREMENT));
+        }
     }
 
     private int getDisplayWidth() {
