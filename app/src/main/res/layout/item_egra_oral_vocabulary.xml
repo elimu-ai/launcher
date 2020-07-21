@@ -31,7 +31,7 @@
         app:layout_constraintWidth_percent=".5"
         app:layout_constraintHeight_percent=".5"
         app:layout_constraintVertical_bias=".15"
-        app:layout_constraintHorizontal_bias=".45"
+        app:layout_constraintHorizontal_bias="@dimen/spaceship_content_horizontal_bias"
         android:src="@drawable/egra_oral_vocabulary" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

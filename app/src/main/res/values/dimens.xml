@@ -8,4 +8,6 @@
     <dimen name="spaceship_width">140dp</dimen>
     <dimen name="spaceship_height">140dp</dimen>
     <dimen name="spaceship_vertical_margin">8dp</dimen>
+
+    <item name="spaceship_content_horizontal_bias" type="dimen">0.45</item>
 </resources>
