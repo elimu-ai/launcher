@@ -36,5 +36,6 @@
         app:selectedDotColor="#CCFFFFFF"
         app:unselectedDotColor="#CCFFFFFF"
         app:numberOfDots="4"
-        app:selectedDotIndex="0" />
+        app:selectedDotIndex="0"
+        android:layoutDirection="ltr"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

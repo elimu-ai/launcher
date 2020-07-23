@@ -31,6 +31,6 @@
         app:layout_constraintWidth_percent=".5"
         app:layout_constraintHeight_percent=".5"
         app:layout_constraintVertical_bias=".15"
-        app:layout_constraintHorizontal_bias=".45"
+        app:layout_constraintHorizontal_bias="@dimen/spaceship_content_horizontal_bias"
         android:src="@drawable/egma_missing_number" />
 </androidx.constraintlayout.widget.ConstraintLayout>
