@@ -27,10 +27,6 @@ android {
             buildConfigField("String", "ANALYTICS_APPLICATION_ID", '"ai.elimu.analytics"')
         }
     }
-
-    lintOptions {
-        abortOnError false
-    }
 }
 
 dependencies {
