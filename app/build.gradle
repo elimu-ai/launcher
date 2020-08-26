@@ -21,6 +21,13 @@ android {
             buildConfigField("String", "APPSTORE_APPLICATION_ID", '"ai.elimu.appstore.debug"')
             buildConfigField("String", "ANALYTICS_APPLICATION_ID", '"ai.elimu.analytics.debug"')
         }
+        qa_test {
+            applicationIdSuffix ".test"
+            versionNameSuffix "-test"
+            manifestPlaceholders = [appstoreApplicationId: "ai.elimu.appstore.test"]
+            buildConfigField("String", "APPSTORE_APPLICATION_ID", '"ai.elimu.appstore.test"')
+            buildConfigField("String", "ANALYTICS_APPLICATION_ID", '"ai.elimu.analytics.test"')
+        }
         release {
             manifestPlaceholders = [appstoreApplicationId: "ai.elimu.appstore"]
             buildConfigField("String", "APPSTORE_APPLICATION_ID", '"ai.elimu.appstore"')
