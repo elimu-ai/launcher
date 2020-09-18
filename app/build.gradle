@@ -48,6 +48,6 @@ dependencies {
     implementation 'com.matthew-tamlin:sliding-intro-screen:3.2.0'
     implementation 'com.afollestad.material-dialogs:core:0.8.6.2'
 
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
