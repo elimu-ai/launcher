@@ -28,6 +28,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
@@ -48,6 +49,8 @@ import timber.log.Timber;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 public class HomeScreensActivity extends AppCompatActivity {
+
+    private static final String APPSTORE_DOWNLOAD_URL = "https://github.com/elimu-ai/appstore/releases";
 
     public static final double WIDTH_INCREMENT = 0.1;
 
@@ -70,6 +73,9 @@ public class HomeScreensActivity extends AppCompatActivity {
 
         getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+
+        // Check if the elimu.ai Appstore is already installed
+        checkIfAppstoreIsInstalled();
 
         // Create the adapter that will return a fragment for each of the primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(this);
@@ -150,6 +156,30 @@ public class HomeScreensActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "cursor == null", Toast.LENGTH_LONG).show();
         }
         Timber.i("applications.size(): " + applications.size());
+    }
+
+    private void checkIfAppstoreIsInstalled() {
+        try {
+            PackageInfo packageInfoAppstore = getPackageManager().getPackageInfo(BuildConfig.APPSTORE_APPLICATION_ID, 0);
+            Timber.i("packageInfoAppstore.versionCode: " + packageInfoAppstore.versionCode);
+        } catch (PackageManager.NameNotFoundException e) {
+            Timber.w(null, e);
+            new MaterialDialog.Builder(this)
+                    .content(getResources().getString(R.string.appstore_needed) + BuildConfig.APPSTORE_APPLICATION_ID)
+                    .positiveText(getResources().getString(R.string.download))
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            goToAppstoreDownload();
+                        }
+                    })
+                    .show();
+        }
+    }
+
+    private void goToAppstoreDownload() {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(APPSTORE_DOWNLOAD_URL));
+        startActivity(intent);
     }
 
     private void updateBackgroundImageWidth() {
