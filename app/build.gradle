@@ -22,6 +22,7 @@ android {
             buildConfigField("String", "ANALYTICS_APPLICATION_ID", '"ai.elimu.analytics.debug"')
         }
         qa_test {
+            initWith debug
             applicationIdSuffix ".test"
             versionNameSuffix "-test"
             manifestPlaceholders = [appstoreApplicationId: "ai.elimu.appstore.test"]
