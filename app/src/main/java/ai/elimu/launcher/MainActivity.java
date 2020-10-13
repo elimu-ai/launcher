@@ -14,8 +14,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-            Intent intent = new Intent(getApplicationContext(), HomeScreensActivity.class);
-            startActivity(intent);
+        Intent intent = new Intent(getApplicationContext(), HomeScreensActivity.class);
+        startActivity(intent);
 
         finish();
     }

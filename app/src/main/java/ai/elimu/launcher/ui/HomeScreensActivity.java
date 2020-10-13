@@ -170,16 +170,12 @@ public class HomeScreensActivity extends AppCompatActivity {
                     .onPositive(new MaterialDialog.SingleButtonCallback() {
                         @Override
                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                            goToAppstoreDownload();
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(APPSTORE_DOWNLOAD_URL));
+                            startActivity(intent);
                         }
                     })
                     .show();
         }
-    }
-
-    private void goToAppstoreDownload() {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(APPSTORE_DOWNLOAD_URL));
-        startActivity(intent);
     }
 
     private void updateBackgroundImageWidth() {
