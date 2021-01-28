@@ -14,7 +14,7 @@ See demo at https://www.youtube.com/watch?v=lLinDWyL564
 
 (Also see https://github.com/elimu-ai/wiki/blob/master/PEDAGOGY.md)
 
-Each app on the platform is categorized by which literacy/numeracy it teaches, and each skill (and its collection of apps) is gradually unlocked for every type of skill:
+Each app/game on the platform is categorized by which literacy/numeracy it teaches, and each skill (and its collection of apps) is gradually unlocked for every type of skill:
 
 ### Early Grade Reading Assessment (EGRA)
 
