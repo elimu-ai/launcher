@@ -40,7 +40,7 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-    implementation 'ai.elimu:model:2.0.27'
+    implementation 'com.github.elimu-ai:model:model-2.0.37' // See https://jitpack.io/#elimu-ai/model
 
     implementation 'com.jakewharton.timber:timber:4.7.1'
     implementation 'androidx.appcompat:appcompat:1.2.0'
