@@ -42,7 +42,7 @@ dependencies {
 
     implementation 'com.github.elimu-ai:model:model-2.0.37' // See https://jitpack.io/#elimu-ai/model
 
-    implementation 'com.jakewharton.timber:timber:4.7.1'
+    implementation 'com.jakewharton.timber:timber:5.0.0'
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
