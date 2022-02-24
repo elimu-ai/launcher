@@ -34,6 +34,7 @@ To install the launcher on an Android device during development, use the followi
 
     ./gradlew clean build
     adb install app/build/outputs/apk/debug/ai.elimu.launcher-<versionCode>-debug.apk
+    adb shell am start -n ai.elimu.launcher.debug/ai.elimu.launcher.MainActivity
 
 ## Software Architecture
 
