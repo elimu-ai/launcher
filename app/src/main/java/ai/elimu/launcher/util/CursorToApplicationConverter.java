@@ -8,9 +8,9 @@ import org.json.JSONException;
 import java.util.HashSet;
 import java.util.Set;
 
-import ai.elimu.model.enums.admin.ApplicationStatus;
-import ai.elimu.model.enums.content.LiteracySkill;
-import ai.elimu.model.enums.content.NumeracySkill;
+import ai.elimu.model.v2.enums.admin.ApplicationStatus;
+import ai.elimu.model.v2.enums.content.LiteracySkill;
+import ai.elimu.model.v2.enums.content.NumeracySkill;
 import ai.elimu.model.v2.gson.application.ApplicationGson;
 import timber.log.Timber;
 

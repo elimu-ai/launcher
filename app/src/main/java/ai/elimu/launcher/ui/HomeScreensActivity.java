@@ -41,8 +41,8 @@ import java.util.Locale;
 import ai.elimu.launcher.BuildConfig;
 import ai.elimu.launcher.R;
 import ai.elimu.launcher.util.CursorToApplicationConverter;
-import ai.elimu.model.enums.content.LiteracySkill;
-import ai.elimu.model.enums.content.NumeracySkill;
+import ai.elimu.model.v2.enums.content.LiteracySkill;
+import ai.elimu.model.v2.enums.content.NumeracySkill;
 import ai.elimu.model.v2.gson.application.ApplicationGson;
 import timber.log.Timber;
 
