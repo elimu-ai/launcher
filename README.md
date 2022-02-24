@@ -28,6 +28,13 @@ EGMA subtasks (represented by the _blue_ spaceships in the launcher):
 
 ![egma_correlations](https://user-images.githubusercontent.com/15718174/27515894-91bfd4f2-59ae-11e7-9d87-5b03117c206f.png)
 
+## Development
+
+To install the launcher on an Android device during development, use the following commands:
+
+    ./gradlew clean build
+    adb install app/build/outputs/apk/debug/ai.elimu.launcher-<versionCode>-debug.apk
+
 ## Software Architecture
 
 See https://github.com/elimu-ai/wiki/blob/master/SOFTWARE_ARCHITECTURE.md
