@@ -1,13 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 31
-    buildToolsVersion "29.0.3"
+    compileSdkVersion 32
 
     defaultConfig {
         applicationId "ai.elimu.launcher"
         minSdkVersion 24
-        targetSdkVersion 31
+        targetSdkVersion 32
         versionCode 2001008
         versionName "2.1.8-SNAPSHOT"
         setProperty("archivesBaseName", "${applicationId}-${versionCode}")
