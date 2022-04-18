@@ -32,7 +32,7 @@ EGMA subtasks (represented by the _blue_ spaceships in the launcher):
 
 Note: This app depends on the [elimu.ai Appstore](https://github.com/elimu-ai/appstore) to be installed.
 
-## Development
+## Development 👩🏽‍💻
 
 To install and run the launcher on an Android device during development, use the following commands:
 
