@@ -44,12 +44,9 @@ To install and run the launcher on an Android device during development, use the
 
 See https://github.com/elimu-ai/wiki/blob/master/SOFTWARE_ARCHITECTURE.md
 
+
 ---
 
-## About the elimu.ai Community
+elimu.ai - Free personalized learning for every child on Earth 🌍🌏🌎
 
-![elimu ai-tagline](https://user-images.githubusercontent.com/15718174/54360503-e8e88980-465c-11e9-9792-32b513105cf3.png)
-
- * For a high-level description of the project, see https://github.com/elimu-ai/wiki#readme.
- * For project milestones, see https://github.com/elimu-ai/wiki/projects.
-
+[Website 🌐](https://elimu.ai) &nbsp; [Wiki 📃](https://github.com/elimu-ai/wiki#readme) &nbsp; [Projects 👩🏽‍💻](https://github.com/elimu-ai/wiki/projects) &nbsp; [Milestones 🎯](https://github.com/elimu-ai/wiki/milestones) &nbsp; [Community 👋🏽](https://github.com/elimu-ai/wiki#open-source-community)
