@@ -14,7 +14,8 @@ See demo at https://www.youtube.com/watch?v=lLinDWyL564
 
 (Also see https://github.com/elimu-ai/wiki/blob/master/PEDAGOGY.md)
 
-Each app/game on the platform is categorized by which literacy/numeracy it teaches, and each skill (and its collection of apps) is gradually unlocked for every type of skill:
+> [!NOTE]
+> Each app/game on the platform is categorized by which literacy/numeracy skill it teaches, and each skill (and its collection of apps) is gradually unlocked:
 
 ### Early Grade Reading Assessment (EGRA)
 
@@ -30,7 +31,8 @@ EGMA subtasks (represented by the _blue_ spaceships in the launcher):
 
 ## Installation
 
-Note: This app depends on the [elimu.ai Appstore](https://github.com/elimu-ai/appstore) to be installed.
+> [!IMPORTANT]
+> Note: This app depends on the [elimu.ai Appstore](https://github.com/elimu-ai/appstore) to be installed.
 
 ## Development 👩🏽‍💻
 
