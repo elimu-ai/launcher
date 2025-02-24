@@ -2,6 +2,7 @@ package ai.elimu.launcher.ui;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -497,6 +498,8 @@ public class HomeScreensActivity extends AppCompatActivity {
         }
     }
 
+
+    @SuppressLint("MissingSuperCall")
     @Override
     public void onBackPressed() {
         Timber.i("onBackPressed");
