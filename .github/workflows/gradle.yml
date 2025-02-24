@@ -19,5 +19,5 @@ jobs:
       with:
         distribution: temurin
         java-version: ${{ matrix.java }}
-    - uses: gradle/gradle-build-action@v4
+    - uses: gradle/gradle-build-action@v2
     - run: ./gradlew clean build
