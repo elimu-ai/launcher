@@ -2,6 +2,7 @@ package ai.elimu.launcher.ui;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -32,7 +33,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
-import com.matthewtamlin.sliding_intro_screen_library.indicators.DotIndicator;
+import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +61,7 @@ public class HomeScreensActivity extends AppCompatActivity {
 
     private ViewPager2 viewPager;
 
-    private DotIndicator dotIndicator;
+    private DotsIndicator dotIndicator;
 
     private static List<ApplicationGson> applications;
 
@@ -114,12 +115,6 @@ public class HomeScreensActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 Timber.i("onPageSelected");
-
-                if (isRightToLeft) {
-                    dotIndicator.setSelectedItem(dotIndicator.getNumberOfItems() - 1 - position, true);
-                } else {
-                    dotIndicator.setSelectedItem(position, true);
-                }
             }
 
             @Override
@@ -127,6 +122,7 @@ public class HomeScreensActivity extends AppCompatActivity {
                 Timber.i("onPageScrollStateChanged");
             }
         });
+        dotIndicator.attachTo(viewPager);
 
         // Fetch Applications from the Appstore's ContentProvider
         applications = new ArrayList<>();
@@ -502,6 +498,8 @@ public class HomeScreensActivity extends AppCompatActivity {
         }
     }
 
+
+    @SuppressLint("MissingSuperCall")
     @Override
     public void onBackPressed() {
         Timber.i("onBackPressed");

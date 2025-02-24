@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <com.matthewtamlin.sliding_intro_screen_library.indicators.DotIndicator
+    <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
         android:id="@+id/dotIndicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,12 +30,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:unselectedDotDiameter="10dp"
-        app:selectedDotDiameter="20dp"
-        app:spacingBetweenDots="20dp"
+        app:dotsColor="#CCFFFFFF"
+        app:dotsCornerRadius="8dp"
+        app:dotsSize="20dp"
+        app:dotsSpacing="20dp"
+        app:dotsWidthFactor="2.5"
         app:selectedDotColor="#CCFFFFFF"
-        app:unselectedDotColor="#CCFFFFFF"
-        app:numberOfDots="4"
-        app:selectedDotIndex="0"
+        app:progressMode="true"
         android:layoutDirection="ltr"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

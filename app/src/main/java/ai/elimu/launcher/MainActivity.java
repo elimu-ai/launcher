@@ -1,5 +1,6 @@
 package ai.elimu.launcher;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
+    @SuppressLint("MissingSuperCall")
     @Override
     public void onBackPressed() {
         Timber.i("onBackPressed");
