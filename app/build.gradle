@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.jetbrains.kotlin.android'
 
 android {
     compileSdk 35
@@ -39,6 +40,9 @@ android {
     buildFeatures {
         buildConfig = true
     }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 }
 
 dependencies {
@@ -52,6 +56,7 @@ dependencies {
     implementation 'androidx.viewpager2:viewpager2:1.1.0'
     implementation 'com.tbuonomo:dotsindicator:5.1.0'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
+    implementation 'androidx.core:core-ktx:1.15.0'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
