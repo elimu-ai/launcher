@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "ai.elimu.launcher"
-        minSdkVersion 24
+        minSdkVersion 26
         targetSdkVersion 35
         versionCode 2001008
         versionName "2.1.8-SNAPSHOT"
