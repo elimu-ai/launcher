@@ -1,0 +1,22 @@
+[versions]
+elimuModel = "model-2.0.83"
+timber = "5.0.1"
+viewpager2 = "1.1.0"
+dotsIndicator = "5.1.0"
+materialDialog = "0.9.6.0"
+
+constraintLayout = "2.2.1"
+appCompat = "1.7.0"
+coreKtx = "1.15.0"
+
+[libraries]
+elimu-model = { group = "com.github.elimu-ai", name = "model", version.ref = "elimuModel" }
+timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
+dots-indicator = { group = "com.tbuonomo", name = "dotsindicator", version.ref = "dotsIndicator" }
+material-dialog = { group = "com.afollestad.material-dialogs", name = "core", version.ref = "materialDialog" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appCompat" }
+androidx-constraint-layout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintLayout" }
+androidx-viewpager = { group = "androidx.viewpager2", name = "viewpager2", version.ref = "viewpager2" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+
+[plugins]

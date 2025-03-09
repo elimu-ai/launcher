@@ -40,15 +40,15 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-    implementation 'com.github.elimu-ai:model:model-2.0.83' // See https://jitpack.io/#elimu-ai/model
+    implementation(libs.elimu.model) // See https://jitpack.io/#elimu-ai/model
 
-    implementation 'com.jakewharton.timber:timber:5.0.1'
-    implementation 'androidx.appcompat:appcompat:1.7.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.2.0'
-    implementation 'androidx.viewpager2:viewpager2:1.1.0'
-    implementation 'com.tbuonomo:dotsindicator:5.1.0'
-    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
-    implementation 'androidx.core:core-ktx:1.15.0'
+    implementation(libs.timber)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.constraint.layout)
+    implementation(libs.androidx.viewpager)
+    implementation(libs.dots.indicator)
+    implementation(libs.material.dialog)
+    implementation libs.androidx.core.ktx
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
