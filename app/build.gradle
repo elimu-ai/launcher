@@ -48,7 +48,7 @@ dependencies {
     implementation(libs.androidx.viewpager)
     implementation(libs.dots.indicator)
     implementation(libs.material.dialog)
-    implementation 'androidx.core:core-ktx:1.15.0'
+    implementation libs.androidx.core.ktx
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
