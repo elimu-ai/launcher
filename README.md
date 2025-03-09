@@ -2,11 +2,11 @@
 
 Custom Android launcher providing a clear instructional path (based on EGRA/EGMA skills). The applications are fetched from the [Appstore](https://github.com/elimu-ai/appstore)'s [Content Provider](https://github.com/elimu-ai/appstore/tree/master/app/src/main/java/ai/elimu/appstore/provider).
 
-![screenshot_20170619-205117](https://user-images.githubusercontent.com/15718174/27299219-ecf36596-552b-11e7-9fe9-09e5ca29d655.png)
+<kbd>![screenshot_20170619-205117](https://user-images.githubusercontent.com/15718174/27299219-ecf36596-552b-11e7-9fe9-09e5ca29d655.png)</kbd>
 
-![screenshot_20170625-145536](https://user-images.githubusercontent.com/15718174/27515871-41872c60-59ae-11e7-9b2d-3ca886d0d7f2.png)
+<kbd>![screenshot_20170625-145536](https://user-images.githubusercontent.com/15718174/27515871-41872c60-59ae-11e7-9b2d-3ca886d0d7f2.png)</kbd>
 
-![scr_20170619_211129_512](https://user-images.githubusercontent.com/15718174/27299402-95bea44c-552c-11e7-84ab-217cdca758e4.gif)
+<kbd>![scr_20170619_211129_512](https://user-images.githubusercontent.com/15718174/27299402-95bea44c-552c-11e7-84ab-217cdca758e4.gif)</kbd>
 
 See demo at https://www.youtube.com/watch?v=lLinDWyL564
 
@@ -41,6 +41,12 @@ To install and run the launcher on an Android device during development, use the
     ./gradlew clean build
     adb install app/build/outputs/apk/debug/ai.elimu.launcher-<versionCode>-debug.apk
     adb shell am start -n ai.elimu.launcher.debug/ai.elimu.launcher.MainActivity
+
+### Gradle Upgrade
+
+```
+./gradlew wrapper --gradle-version x.x.x
+```
 
 ## Software Architecture
 

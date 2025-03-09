@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.jetbrains.kotlin.android'
 
 android {
     compileSdk 35
@@ -6,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "ai.elimu.launcher"
-        minSdkVersion 24
+        minSdkVersion 26
         targetSdkVersion 35
         versionCode 2001008
         versionName "2.1.8-SNAPSHOT"
@@ -21,14 +22,6 @@ android {
             buildConfigField("String", "APPSTORE_APPLICATION_ID", '"ai.elimu.appstore.debug"')
             buildConfigField("String", "ANALYTICS_APPLICATION_ID", '"ai.elimu.analytics.debug"')
         }
-        qa_test {
-            initWith debug
-            applicationIdSuffix ".test"
-            versionNameSuffix "-test"
-            manifestPlaceholders = [appstoreApplicationId: "ai.elimu.appstore.test"]
-            buildConfigField("String", "APPSTORE_APPLICATION_ID", '"ai.elimu.appstore.test"')
-            buildConfigField("String", "ANALYTICS_APPLICATION_ID", '"ai.elimu.analytics.test"')
-        }
         release {
             manifestPlaceholders = [appstoreApplicationId: "ai.elimu.appstore"]
             buildConfigField("String", "APPSTORE_APPLICATION_ID", '"ai.elimu.appstore"')
@@ -38,6 +31,9 @@ android {
 
     buildFeatures {
         buildConfig = true
+    }
+    kotlinOptions {
+        jvmTarget = '17'
     }
 }
 
@@ -52,6 +48,7 @@ dependencies {
     implementation(libs.androidx.viewpager)
     implementation(libs.dots.indicator)
     implementation(libs.material.dialog)
+    implementation 'androidx.core:core-ktx:1.15.0'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
