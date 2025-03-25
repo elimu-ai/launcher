@@ -56,6 +56,6 @@ dependencies {
     implementation(libs.material.dialog)
     implementation libs.androidx.core.ktx
 
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    testImplementation libs.junit
+    androidTestImplementation libs.android.test.espresso
 }
