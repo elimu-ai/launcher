@@ -1,19 +1,15 @@
-package ai.elimu.launcher;
+package ai.elimu.launcher
 
-import android.app.Application;
-import android.util.Log;
+import android.app.Application
+import timber.log.Timber
+import timber.log.Timber.Forest.plant
 
-import timber.log.Timber;
-
-public class BaseApplication extends Application {
-
-    @Override
-    public void onCreate() {
-        Log.i(getClass().getName(), "onCreate");
-        super.onCreate();
+class BaseApplication : Application() {
+    override fun onCreate() {
+        super.onCreate()
 
         // Log config
-        Timber.plant(new Timber.DebugTree());
-        Timber.i("onCreate");
+        plant(Timber.DebugTree())
+        Timber.d("onCreate")
     }
 }
