@@ -1,30 +1,25 @@
-package ai.elimu.launcher;
+package ai.elimu.launcher
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.os.Bundle;
+import ai.elimu.launcher.ui.HomeScreensActivity
+import android.annotation.SuppressLint
+import android.content.Intent
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import timber.log.Timber
 
-import androidx.appcompat.app.AppCompatActivity;
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-import ai.elimu.launcher.ui.HomeScreensActivity;
-import timber.log.Timber;
+        val intent = Intent(applicationContext, HomeScreensActivity::class.java)
+        startActivity(intent)
 
-public class MainActivity extends AppCompatActivity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        Intent intent = new Intent(getApplicationContext(), HomeScreensActivity.class);
-        startActivity(intent);
-
-        finish();
+        finish()
     }
 
     @SuppressLint("MissingSuperCall")
-    @Override
-    public void onBackPressed() {
-        Timber.i("onBackPressed");
+    override fun onBackPressed() {
+        Timber.i("onBackPressed")
 
         // Do nothing
     }
