@@ -2,6 +2,7 @@ package ai.elimu.launcher.ui
 
 import ai.elimu.launcher.BuildConfig
 import ai.elimu.launcher.R
+import ai.elimu.launcher.databinding.ActivityHomeScreensBinding
 import ai.elimu.launcher.util.CursorToApplicationConverter
 import ai.elimu.model.v2.enums.content.LiteracySkill
 import ai.elimu.model.v2.enums.content.NumeracySkill
@@ -26,29 +27,23 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.afollestad.materialdialogs.GravityEnum
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.Theme
-import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
 import timber.log.Timber
 import java.util.Locale
 
 class HomeScreensActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityHomeScreensBinding
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
-
-    private var background: View? = null
-
-    private var viewPager: ViewPager2? = null
-
-    private var dotIndicator: DotsIndicator? = null
 
     private var isRightToLeft = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home_screens)
+        binding = ActivityHomeScreensBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         window.decorView.systemUiVisibility =
             View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -60,12 +55,7 @@ class HomeScreensActivity : AppCompatActivity() {
         mSectionsPagerAdapter = SectionsPagerAdapter(this)
 
         // Set up the ViewPager with the sections adapter.
-        viewPager = findViewById(R.id.container)
-        viewPager?.setAdapter(mSectionsPagerAdapter)
-
-        dotIndicator = findViewById(R.id.dotIndicator)
-
-        background = findViewById(R.id.background)
+        binding.container.setAdapter(mSectionsPagerAdapter)
 
         isRightToLeft =
             TextUtils.getLayoutDirectionFromLocale(Locale.getDefault()) == View.LAYOUT_DIRECTION_RTL
@@ -76,7 +66,7 @@ class HomeScreensActivity : AppCompatActivity() {
         val pageTranslation =
             (displayWidth * WIDTH_INCREMENT / (mSectionsPagerAdapter!!.itemCount - 1)).toInt()
 
-        viewPager?.let {
+        binding.container.let {
             it.registerOnPageChangeCallback(object : OnPageChangeCallback() {
                 override fun onPageScrolled(
                     position: Int,
@@ -92,7 +82,7 @@ class HomeScreensActivity : AppCompatActivity() {
                             translationX = -(translationX + this@HomeScreensActivity.displayWidth * WIDTH_INCREMENT).toInt()
                         }
 
-                        background?.setTranslationX(translationX.toFloat())
+                        binding.background.translationX = translationX.toFloat()
                     }
                 }
 
@@ -104,7 +94,7 @@ class HomeScreensActivity : AppCompatActivity() {
                     Timber.i("onPageScrollStateChanged")
                 }
             })
-            dotIndicator?.attachTo(it)
+            binding.dotIndicator.attachTo(it)
         }
 
         // Fetch Applications from the Appstore's ContentProvider
@@ -163,9 +153,9 @@ class HomeScreensActivity : AppCompatActivity() {
         val backgroundWidth = (displayWidth * (1 + WIDTH_INCREMENT)).toInt()
         val layoutParams =
             ConstraintLayout.LayoutParams(backgroundWidth, ViewGroup.LayoutParams.MATCH_PARENT)
-        background!!.layoutParams = layoutParams
+        binding.background.layoutParams = layoutParams
         if (isRightToLeft) {
-            background!!.translationX =
+            binding.background.translationX =
                 -(displayWidth * WIDTH_INCREMENT).toFloat()
         }
     }
@@ -229,12 +219,12 @@ class HomeScreensActivity : AppCompatActivity() {
 
                 tabletNavigationContainer = rootView.findViewById(R.id.tabletNavigationContainer)
                 tabletNavigationImageView = rootView.findViewById(R.id.tabletNavigationImageView)
-                tabletNavigationImageView?.setOnClickListener(View.OnClickListener {
+                tabletNavigationImageView?.setOnClickListener {
                     Timber.i("tabletNavigationImageView onClick")
                     // Tablet Navigation
                     //                        initializeDialog(null, null);
                     initializeDialog(null, NumeracySkill.SHAPE_IDENTIFICATION)
-                })
+                }
 
 
                 // 2. EGRA skills
@@ -242,60 +232,60 @@ class HomeScreensActivity : AppCompatActivity() {
                     rootView.findViewById(R.id.egraOralVocabularyContainer)
                 egraOralVocabularyImageView =
                     rootView.findViewById(R.id.egraOralVocabularyImageView)
-                egraOralVocabularyImageView?.setOnClickListener(View.OnClickListener {
+                egraOralVocabularyImageView?.setOnClickListener {
                     Timber.i("egraOralVocabularyImageView onClick")
                     // Oral Vocabulary and Listening Comprehension
                     // TODO: include LiteracySkill.LISTENING_COMPREHENSION
                     initializeDialog(LiteracySkill.ORAL_VOCABULARY, null)
-                })
+                }
 
                 egraPhonemicAwarenessContainer =
                     rootView.findViewById(R.id.egraPhonemicAwarenessContainer)
                 egraPhonemicAwarenessImageView =
                     rootView.findViewById(R.id.egraPhonemicAwarenessImageView)
-                egraPhonemicAwarenessImageView?.setOnClickListener(View.OnClickListener {
+                egraPhonemicAwarenessImageView?.setOnClickListener {
                     Timber.i("egraPhonemicAwarenessImageView onClick")
                     // Phonemic Awareness
                     initializeDialog(LiteracySkill.PHONEMIC_AWARENESS, null)
-                })
+                }
 
                 egraLetterIdentificationContainer =
                     rootView.findViewById(R.id.egraLetterIdentificationContainer)
                 egraLetterIdentificationImageView =
                     rootView.findViewById(R.id.egraLetterIdentificationImageView)
-                egraLetterIdentificationImageView?.setOnClickListener(View.OnClickListener {
+                egraLetterIdentificationImageView?.setOnClickListener {
                     Timber.i("egraLetterIdentificationImageView onClick")
                     // Letter Identification
                     initializeDialog(LiteracySkill.LETTER_IDENTIFICATION, null)
-                })
+                }
 
 
                 // 3. EGMA skills
                 egmaOralCountingContainer = rootView.findViewById(R.id.egmaOralCountingContainer)
                 egmaOralCountingImageView = rootView.findViewById(R.id.egmaOralCountingImageView)
-                egmaOralCountingImageView?.setOnClickListener(View.OnClickListener {
+                egmaOralCountingImageView?.setOnClickListener {
                     Timber.i("egmaOralCountingImageView onClick")
                     // Oral Counting
                     initializeDialog(null, NumeracySkill.ORAL_COUNTING)
-                })
+                }
 
                 egmaNumberIdentificationContainer =
                     rootView.findViewById(R.id.egmaNumberIdentificationContainer)
                 egmaNumberIdentificationImageView =
                     rootView.findViewById(R.id.egmaNumberIdentificationImageView)
-                egmaNumberIdentificationImageView?.setOnClickListener(View.OnClickListener {
+                egmaNumberIdentificationImageView?.setOnClickListener {
                     Timber.i("egmaNumberIdentificationImageView onClick")
                     // Number Identification
                     initializeDialog(null, NumeracySkill.NUMBER_IDENTIFICATION)
-                })
+                }
 
                 egmaMissingNumberContainer = rootView.findViewById(R.id.egmaMissingNumberContainer)
                 egmaMissingNumberImageView = rootView.findViewById(R.id.egmaMissingNumberImageView)
-                egmaMissingNumberImageView?.setOnClickListener(View.OnClickListener {
+                egmaMissingNumberImageView?.setOnClickListener {
                     Timber.i("egmaMissingNumberImageView onClick")
                     // Missing Number and Quantity Discrimination
                     initializeDialog(null, NumeracySkill.MISSING_NUMBER)
-                })
+                }
             } else if (sectionNumber == 2) {
                 // 1. EGRA skills
 
@@ -303,11 +293,11 @@ class HomeScreensActivity : AppCompatActivity() {
                     rootView.findViewById(R.id.egraSyllableNamingContainer)
                 egraSyllableNamingImageView =
                     rootView.findViewById(R.id.egraSyllableNamingImageView)
-                egraSyllableNamingImageView?.setOnClickListener(View.OnClickListener {
+                egraSyllableNamingImageView?.setOnClickListener {
                     Timber.i("egraSyllableNamingImageView onClick")
                     // Syllable Naming and Familiar Word Reading
                     initializeDialog(LiteracySkill.FAMILIAR_WORD_READING, null)
-                })
+                }
 
 
                 // 2. EGMA skills
@@ -344,7 +334,7 @@ class HomeScreensActivity : AppCompatActivity() {
             val customView = materialDialog.customView
             val appGridLayout = customView!!.findViewById<GridLayout>(R.id.appGridLayout)
 
-            for (application in applications!!) {
+            for (application in applications) {
                 Timber.i("application.getPackageName(): " + application.packageName)
                 val isTabletNavigationSkill = false // TODO
                 Timber.i("isTabletNavigationSkill: $isTabletNavigationSkill")
