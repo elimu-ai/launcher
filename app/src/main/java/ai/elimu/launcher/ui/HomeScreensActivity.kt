@@ -1,5 +1,7 @@
 package ai.elimu.launcher.ui
 
+import ai.elimu.common.utils.ui.setLightStatusBar
+import ai.elimu.common.utils.ui.setStatusBarColorCompat
 import ai.elimu.launcher.BuildConfig
 import ai.elimu.launcher.R
 import ai.elimu.launcher.databinding.ActivityHomeScreensBinding
@@ -126,6 +128,11 @@ class HomeScreensActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, "cursor == null", Toast.LENGTH_LONG).show()
         }
         Timber.i("applications.size(): " + applications.size)
+
+        window.apply {
+            setLightStatusBar()
+            setStatusBarColorCompat(R.color.colorPrimaryDark)
+        }
     }
 
     private fun checkIfAppstoreIsInstalled() {
