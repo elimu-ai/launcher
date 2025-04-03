@@ -414,38 +414,44 @@ class HomeScreensActivity : AppCompatActivity() {
             Timber.i("onResume")
             super.onResume()
 
-            // Add subtle movements to the space ships
-            val objectAnimatorEGRA = ObjectAnimator.ofFloat(
-                egraOralVocabularyContainer,
-                "rotation",
-                (2 + (Math.random().toInt() * 3)).toFloat()
-            )
-            objectAnimatorEGRA.setDuration((1000 + (Math.random().toInt() * 1000)).toLong())
-            objectAnimatorEGRA.repeatCount = ValueAnimator.INFINITE
-            objectAnimatorEGRA.repeatMode = ValueAnimator.REVERSE
-            objectAnimatorEGRA.start()
+            egraOralVocabularyContainer?.let { container ->
+                // Add subtle movements to the space ships
+                val objectAnimatorEGRA = ObjectAnimator.ofFloat(
+                    container,
+                    "rotation",
+                    (2 + (Math.random().toInt() * 3)).toFloat()
+                )
+                objectAnimatorEGRA.setDuration((1000 + (Math.random().toInt() * 1000)).toLong())
+                objectAnimatorEGRA.repeatCount = ValueAnimator.INFINITE
+                objectAnimatorEGRA.repeatMode = ValueAnimator.REVERSE
+                objectAnimatorEGRA.start()
+            }
 
-            val objectAnimatorEgmaPhonemicAwareness = ObjectAnimator.ofFloat(
-                egraPhonemicAwarenessContainer,
-                "rotation",
-                (2 + (Math.random().toInt() * 3)).toFloat()
-            )
-            objectAnimatorEgmaPhonemicAwareness.setDuration(
-                (1000 + (Math.random().toInt() * 1000)).toLong()
-            )
-            objectAnimatorEgmaPhonemicAwareness.repeatCount = ValueAnimator.INFINITE
-            objectAnimatorEgmaPhonemicAwareness.repeatMode = ValueAnimator.REVERSE
-            objectAnimatorEgmaPhonemicAwareness.start()
+            egraPhonemicAwarenessContainer?.let { container ->
+                val objectAnimatorEgmaPhonemicAwareness = ObjectAnimator.ofFloat(
+                    container,
+                    "rotation",
+                    (2 + (Math.random().toInt() * 3)).toFloat()
+                )
+                objectAnimatorEgmaPhonemicAwareness.setDuration(
+                    (1000 + (Math.random().toInt() * 1000)).toLong()
+                )
+                objectAnimatorEgmaPhonemicAwareness.repeatCount = ValueAnimator.INFINITE
+                objectAnimatorEgmaPhonemicAwareness.repeatMode = ValueAnimator.REVERSE
+                objectAnimatorEgmaPhonemicAwareness.start()
+            }
 
-            val objectAnimatorEGMA = ObjectAnimator.ofFloat(
-                egmaOralCountingContainer,
-                "rotation",
-                (2 + (Math.random().toInt() * 3)).toFloat()
-            )
-            objectAnimatorEGMA.setDuration((1000 + (Math.random().toInt() * 1000)).toLong())
-            objectAnimatorEGMA.repeatCount = ValueAnimator.INFINITE
-            objectAnimatorEGMA.repeatMode = ValueAnimator.REVERSE
-            objectAnimatorEGMA.start()
+            egmaOralCountingContainer?.let { container ->
+                val objectAnimatorEGMA = ObjectAnimator.ofFloat(
+                    container,
+                    "rotation",
+                    (2 + (Math.random().toInt() * 3)).toFloat()
+                )
+                objectAnimatorEGMA.setDuration((1000 + (Math.random().toInt() * 1000)).toLong())
+                objectAnimatorEGMA.repeatCount = ValueAnimator.INFINITE
+                objectAnimatorEGMA.repeatMode = ValueAnimator.REVERSE
+                objectAnimatorEGMA.start()
+            }
         }
 
         companion object {
