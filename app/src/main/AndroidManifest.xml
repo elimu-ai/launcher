@@ -31,8 +31,5 @@
 
         <activity
             android:name=".ui.HomeScreensActivity" />
-
-        <activity
-            android:name=".ui.CategoryOverlayActivity" />
     </application>
 </manifest>
