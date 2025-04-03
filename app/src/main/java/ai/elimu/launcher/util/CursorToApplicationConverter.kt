@@ -1,80 +1,75 @@
-package ai.elimu.launcher.util;
+package ai.elimu.launcher.util
 
-import android.database.Cursor;
+import ai.elimu.model.v2.enums.admin.ApplicationStatus
+import ai.elimu.model.v2.enums.content.LiteracySkill
+import ai.elimu.model.v2.enums.content.NumeracySkill
+import ai.elimu.model.v2.gson.application.ApplicationGson
+import android.database.Cursor
+import org.json.JSONArray
+import org.json.JSONException
+import timber.log.Timber
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
-import java.util.HashSet;
-import java.util.Set;
-
-import ai.elimu.model.v2.enums.admin.ApplicationStatus;
-import ai.elimu.model.v2.enums.content.LiteracySkill;
-import ai.elimu.model.v2.enums.content.NumeracySkill;
-import ai.elimu.model.v2.gson.application.ApplicationGson;
-import timber.log.Timber;
-
-public class CursorToApplicationConverter {
-
+object CursorToApplicationConverter {
     /**
      * See https://github.com/elimu-ai/appstore/tree/master/app/schemas/ai.elimu.appstore.room.RoomDb and
      * https://github.com/elimu-ai/appstore/tree/master/app/src/main/java/ai/elimu/appstore/room.
      */
-    public static ApplicationGson getApplication(Cursor cursor) {
-        Timber.i("getApplication");
+    fun getApplication(cursor: Cursor): ApplicationGson {
+        Timber.i("getApplication")
 
-        int columnIndexId = cursor.getColumnIndex("id");
-        Long id = cursor.getLong(columnIndexId);
-        Timber.i("id: " + id);
+        val columnIndexId = cursor.getColumnIndex("id")
+        val id = cursor.getLong(columnIndexId)
+        Timber.i("id: $id")
 
-        int columnIndexPackageName = cursor.getColumnIndex("packageName");
-        String packageName = cursor.getString(columnIndexPackageName);
-        Timber.i("packageName: " + packageName);
+        val columnIndexPackageName = cursor.getColumnIndex("packageName")
+        val packageName = cursor.getString(columnIndexPackageName)
+        Timber.i("packageName: $packageName")
 
-        int columnIndexApplicationStatus = cursor.getColumnIndex("applicationStatus");
-        ApplicationStatus applicationStatus = ApplicationStatus.valueOf(cursor.getString(columnIndexApplicationStatus));
-        Timber.i("applicationStatus: " + applicationStatus);
+        val columnIndexApplicationStatus = cursor.getColumnIndex("applicationStatus")
+        val applicationStatus =
+            ApplicationStatus.valueOf(cursor.getString(columnIndexApplicationStatus))
+        Timber.i("applicationStatus: $applicationStatus")
 
-        int columnIndexLiteracySkills = cursor.getColumnIndex("literacySkills");
-        String literacySkillsAsString = cursor.getString(columnIndexLiteracySkills);
-        Timber.i("literacySkillsAsString: " + literacySkillsAsString);
-        Set<LiteracySkill> literacySkills = new HashSet<>();
+        val columnIndexLiteracySkills = cursor.getColumnIndex("literacySkills")
+        val literacySkillsAsString = cursor.getString(columnIndexLiteracySkills)
+        Timber.i("literacySkillsAsString: $literacySkillsAsString")
+        val literacySkills: MutableSet<LiteracySkill> = HashSet()
         try {
-            JSONArray jsonArray = new JSONArray(literacySkillsAsString);
-            Timber.i("jsonArray: " + jsonArray);
-            for (int i = 0; i < jsonArray.length(); i++) {
-                String value = jsonArray.getString(i);
-                Timber.i("value: " + value);
-                LiteracySkill literacySkill = LiteracySkill.valueOf(value);
-                literacySkills.add(literacySkill);
+            val jsonArray = JSONArray(literacySkillsAsString)
+            Timber.i("jsonArray: $jsonArray")
+            for (i in 0 until jsonArray.length()) {
+                val value = jsonArray.getString(i)
+                Timber.i("value: $value")
+                val literacySkill = LiteracySkill.valueOf(value)
+                literacySkills.add(literacySkill)
             }
-        } catch (JSONException e) {
-            Timber.e(e);
+        } catch (e: JSONException) {
+            Timber.e(e)
         }
 
-        int columnIndexNumeracySkills = cursor.getColumnIndex("numeracySkills");
-        String numeracySkillsAsString = cursor.getString(columnIndexNumeracySkills);
-        Timber.i("columnNumeracySkillsAsString: " + numeracySkillsAsString);
-        Set<NumeracySkill> numeracySkills = new HashSet<>();
+        val columnIndexNumeracySkills = cursor.getColumnIndex("numeracySkills")
+        val numeracySkillsAsString = cursor.getString(columnIndexNumeracySkills)
+        Timber.i("columnNumeracySkillsAsString: $numeracySkillsAsString")
+        val numeracySkills: MutableSet<NumeracySkill> = HashSet()
         try {
-            JSONArray jsonArray = new JSONArray(numeracySkillsAsString);
-            Timber.i("jsonArray: " + jsonArray);
-            for (int i = 0; i < jsonArray.length(); i++) {
-                String value = jsonArray.getString(i);
-                Timber.i("value: " + value);
-                NumeracySkill numeracySkill = NumeracySkill.valueOf(value);
-                numeracySkills.add(numeracySkill);
+            val jsonArray = JSONArray(numeracySkillsAsString)
+            Timber.i("jsonArray: $jsonArray")
+            for (i in 0 until jsonArray.length()) {
+                val value = jsonArray.getString(i)
+                Timber.i("value: $value")
+                val numeracySkill = NumeracySkill.valueOf(value)
+                numeracySkills.add(numeracySkill)
             }
-        } catch (JSONException e) {
-            Timber.e(e);
+        } catch (e: JSONException) {
+            Timber.e(e)
         }
 
-        ApplicationGson application = new ApplicationGson();
-        application.setId(id);
-        application.setPackageName(packageName);
-        application.setApplicationStatus(applicationStatus);
-        application.setLiteracySkills(literacySkills);
-        application.setNumeracySkills(numeracySkills);
-        return application;
+        val application = ApplicationGson()
+        application.id = id
+        application.packageName = packageName
+        application.applicationStatus = applicationStatus
+        application.literacySkills = literacySkills
+        application.numeracySkills = numeracySkills
+        return application
     }
 }
