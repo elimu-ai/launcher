@@ -334,7 +334,7 @@ class HomeScreensActivity : AppCompatActivity() {
             val materialDialog = MaterialDialog.Builder(requireContext())
                 .customView(R.layout.dialog_apps, true)
                 .theme(Theme.DARK)
-                .title(dialogTitle!!)
+                .title(dialogTitle ?: "")
                 .titleGravity(GravityEnum.CENTER)
                 .show()
 
