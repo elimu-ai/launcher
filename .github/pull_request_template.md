@@ -27,6 +27,17 @@
 - [ ] I tested my changes on Android 8.1 (API 27)
 - [ ] I tested my changes on Android 8.0 (API 26)
 
+#### UI Tests
+<!-- Did you verify that your changes didn't break existing functionalities on other screen sizes? -->
+- [ ] I tested my changes on a 6-7" screen (portrait orientation)
+- [ ] I tested my changes on a 6-7" screen (landscape orientation)
+- [ ] I tested my changes on a 7-8" screen (portrait orientation)
+- [ ] I tested my changes on a 7-8" screen (landscape orientation)
+- [ ] I tested my changes on a 9-10" screen (portrait orientation)
+- [ ] I tested my changes on a 9-10" screen (landscape orientation)
+
+![](https://github.com/user-attachments/assets/8f208838-0465-4ada-bc27-67dfde8459be)
+
 ### Screenshots
 <!-- If this PR affects the UI, please include before/after screenshots demonstrating the change(s). -->
 *
