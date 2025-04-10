@@ -8,7 +8,7 @@ materialDialog = "0.9.6.0"
 
 constraintLayout = "2.2.1"
 appCompat = "1.7.0"
-coreKtx = "1.15.0"
+coreKtx = "1.16.0"
 junit = "4.13.2"
 testEspresso = "3.0.2"
 
