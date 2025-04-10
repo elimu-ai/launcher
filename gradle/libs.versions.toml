@@ -1,5 +1,5 @@
 [versions]
-elimuModel = "model-2.0.83"
+elimuModel = "model-2.0.88"
 elimuCommonUtils = "1.0.5"
 timber = "5.0.1"
 viewpager2 = "1.1.0"
