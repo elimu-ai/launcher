@@ -4,7 +4,7 @@ elimuCommonUtils = "1.0.8"
 timber = "5.0.1"
 viewpager2 = "1.1.0"
 dotsIndicator = "5.1.0"
-materialDialog = "0.9.6.0"
+materialDialog = "3.3.0"
 
 constraintLayout = "2.2.1"
 appCompat = "1.7.0"
