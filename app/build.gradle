@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'maven-publish'
 
 android {
     compileSdk 35
@@ -61,4 +62,15 @@ dependencies {
 
     testImplementation libs.junit
     androidTestImplementation libs.android.test.espresso
+}
+
+publishing {
+    publications {
+        apk(MavenPublication) {
+            artifact("${buildDir}/outputs/apk/release/${android.defaultConfig.applicationId}-${android.defaultConfig.versionCode}-release-unsigned.apk")
+        }
+    }
+}
+tasks.named("publishApkPublicationToMavenLocal") {
+    mustRunAfter(":app:assembleRelease")
 }
