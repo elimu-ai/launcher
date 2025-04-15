@@ -1,6 +1,8 @@
+plugins {
+    id 'maven-publish'
+}
 apply plugin: 'com.android.application'
 apply plugin: 'org.jetbrains.kotlin.android'
-apply plugin: 'maven-publish'
 
 android {
     compileSdk 35
