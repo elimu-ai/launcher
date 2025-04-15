@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'maven-publish'
 
 android {
     compileSdk 35
@@ -9,8 +10,8 @@ android {
         applicationId "ai.elimu.launcher"
         minSdkVersion 26
         targetSdkVersion 35
-        versionCode 2001010
-        versionName "2.1.10-SNAPSHOT"
+        versionCode 2001012
+        versionName "2.1.12-SNAPSHOT"
         setProperty("archivesBaseName", "${applicationId}-${versionCode}")
         testInstrumentationRunner("androidx.test.runner.AndroidJUnitRunner")
     }
@@ -61,4 +62,15 @@ dependencies {
 
     testImplementation libs.junit
     androidTestImplementation libs.android.test.espresso
+}
+
+publishing {
+    publications {
+        apk(MavenPublication) {
+            artifact("${buildDir}/outputs/apk/release/${android.defaultConfig.applicationId}-${android.defaultConfig.versionCode}-release-unsigned.apk")
+        }
+    }
+}
+tasks.named("publishApkPublicationToMavenLocal") {
+    mustRunAfter(":app:assembleRelease")
 }
