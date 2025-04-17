@@ -1,6 +1,6 @@
 [versions]
 elimuModel = "model-2.0.97"
-elimuCommonUtils = "1.0.9"
+elimuCommonUtils = "1.0.10"
 timber = "5.0.1"
 viewpager2 = "1.1.0"
 dotsIndicator = "5.1.0"
