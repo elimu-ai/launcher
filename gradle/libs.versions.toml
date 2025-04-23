@@ -1,6 +1,6 @@
 [versions]
 elimuModel = "model-2.0.97"
-elimuCommonUtils = "1.0.10"
+elimuCommonUtils = "1.0.11"
 timber = "5.0.1"
 viewpager2 = "1.1.0"
 dotsIndicator = "5.1.0"
@@ -13,8 +13,8 @@ junit = "4.13.2"
 testEspresso = "3.0.2"
 
 [libraries]
-elimu-model = { group = "com.github.elimu-ai", name = "model", version.ref = "elimuModel" }
-elimu-common-utils = { group = "com.github.elimu-ai", name = "common-utils", version.ref = "elimuCommonUtils" }
+elimu-model = { group = "ai.elimu", name = "model", version.ref = "elimuModel" }
+elimu-common-utils = { group = "ai.elimu", name = "common-utils", version.ref = "elimuCommonUtils" }
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
 dots-indicator = { group = "com.tbuonomo", name = "dotsindicator", version.ref = "dotsIndicator" }
 material-dialog = { group = "com.afollestad.material-dialogs", name = "core", version.ref = "materialDialog" }
