@@ -105,7 +105,7 @@ class HomeScreensActivity : AppCompatActivity() {
         Timber.i("uri: $uri")
         val cursor = contentResolver.query(uri, null, null, null, null)
         if (cursor != null) {
-            Timber.i("cursor.getCount(): " + cursor.count)
+            Timber.i("cursor.getCount(): %s", cursor.count)
             if (cursor.count > 0) {
                 var isLast = false
                 while (!isLast) {
@@ -118,7 +118,7 @@ class HomeScreensActivity : AppCompatActivity() {
 
                     isLast = cursor.isLast
                 }
-                Timber.i("cursor.isClosed(): " + cursor.isClosed)
+                Timber.i("cursor.isClosed(): %s", cursor.isClosed)
                 cursor.close()
             } else {
                 Toast.makeText(applicationContext, "cursor.getCount() == 0", Toast.LENGTH_LONG)
@@ -127,7 +127,7 @@ class HomeScreensActivity : AppCompatActivity() {
         } else {
             Toast.makeText(applicationContext, "cursor == null", Toast.LENGTH_LONG).show()
         }
-        Timber.i("applications.size(): " + applications.size)
+        Timber.i("applications.size(): %s", applications.size)
 
         window.apply {
             setLightStatusBar()
@@ -139,7 +139,7 @@ class HomeScreensActivity : AppCompatActivity() {
         try {
             val packageInfoAppstore =
                 packageManager.getPackageInfo(BuildConfig.APPSTORE_APPLICATION_ID, 0)
-            Timber.i("packageInfoAppstore.versionCode: " + packageInfoAppstore.versionCode)
+            Timber.i("packageInfoAppstore.versionCode: %s", packageInfoAppstore.versionCode)
         } catch (e: PackageManager.NameNotFoundException) {
             Timber.w(null, e)
             MaterialDialog.Builder(this)
@@ -342,7 +342,7 @@ class HomeScreensActivity : AppCompatActivity() {
             val appGridLayout = customView!!.findViewById<GridLayout>(R.id.appGridLayout)
 
             for (application in applications) {
-                Timber.i("application.getPackageName(): " + application.packageName)
+                Timber.i("application.getPackageName(): %s", application.packageName)
                 val isTabletNavigationSkill = false // TODO
                 Timber.i("isTabletNavigationSkill: $isTabletNavigationSkill")
                 val isLiteracySkill = application.literacySkills.contains(literacySkill)
@@ -357,11 +357,11 @@ class HomeScreensActivity : AppCompatActivity() {
                     try {
                         val packageInfoAppstore =
                             requireContext().packageManager.getPackageInfo(application.packageName, 0)
-                        Timber.i("packageInfoAppstore.versionCode: " + packageInfoAppstore.versionCode)
+                        Timber.i("packageInfoAppstore.versionCode: %s", packageInfoAppstore.versionCode)
                     } catch (e: PackageManager.NameNotFoundException) {
                         Timber.i(
                             e,
-                            "The Application has not been installed: " + application.packageName
+                            "The Application has not been installed: %s", application.packageName
                         )
                         continue
                     }
