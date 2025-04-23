@@ -49,8 +49,8 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-    implementation(libs.elimu.model) // https://jitpack.io/#elimu-ai/model
-    implementation libs.elimu.common.utils // https://jitpack.io/#elimu-ai/common-utils
+    implementation(libs.elimu.model) // https://jitpack.io/#ai.elimu/model
+    implementation libs.elimu.common.utils // https://jitpack.io/#ai.elimu/common-utils
 
     implementation(libs.timber)
     implementation(libs.androidx.appcompat)
