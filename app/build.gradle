@@ -118,7 +118,7 @@ task bumpVersion {
         def file = file("build.gradle")
         def originalFileContent = file.getText()
         def newFileContent = originalFileContent.replaceFirst("versionCode \\d+", "versionCode ${newVersionCode}")
-        newFileContent = newFileContent.replaceFirst("versionName \"([^\"]*)\"", "versionName \"${newVersionName}\"")
+        newFileContent = newFileContent.replaceFirst("versionName \"\\d+\\.\\d+\\.\\d+\"", "versionName \"${newVersionName}\"")
         file.write(newFileContent)
     }
 }
