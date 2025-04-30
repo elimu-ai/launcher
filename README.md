@@ -1,8 +1,8 @@
-# elimu.ai Launcher 🚀
-
 [![Release](https://jitpack.io/v/ai.elimu/launcher.svg)](https://jitpack.io/#ai.elimu/launcher)
 
-Custom Android launcher providing a clear instructional path (based on EGRA/EGMA skills). The applications are fetched from the [Appstore](https://github.com/elimu-ai/appstore)'s [Content Provider](https://github.com/elimu-ai/appstore/tree/master/app/src/main/java/ai/elimu/appstore/provider).
+# elimu.ai Launcher 🚀
+
+Custom Android launcher providing a clear instructional path (based on EGRA/EGMA skills). The applications are fetched from the [Appstore](https://github.com/elimu-ai/appstore)'s [Content Provider](https://github.com/elimu-ai/appstore/tree/main/app/src/main/java/ai/elimu/appstore/provider).
 
 <kbd>![screenshot_20170619-205117](https://user-images.githubusercontent.com/15718174/27299219-ecf36596-552b-11e7-9fe9-09e5ca29d655.png)</kbd>
 
@@ -14,7 +14,7 @@ See demo at https://www.youtube.com/watch?v=lLinDWyL564
 
 ## Pedagogy
 
-(Also see https://github.com/elimu-ai/wiki/blob/master/PEDAGOGY.md)
+(Also see https://github.com/elimu-ai/wiki/blob/main/PEDAGOGY.md)
 
 > [!NOTE]
 > Each app/game on the platform is categorized by which literacy/numeracy skill it teaches, and each skill (and its collection of apps) is gradually unlocked:
@@ -41,7 +41,7 @@ EGMA subtasks (represented by the _blue_ spaceships in the launcher):
 To install and run the launcher on an Android device during development, use the following commands:
 
     ./gradlew clean build
-    adb install app/build/outputs/apk/debug/ai.elimu.launcher-<versionCode>-debug.apk
+    adb install app/build/outputs/apk/debug/app-debug.apk
     adb shell am start -n ai.elimu.launcher.debug/ai.elimu.launcher.MainActivity
 
 ### Gradle Upgrade
@@ -52,7 +52,7 @@ To install and run the launcher on an Android device during development, use the
 
 ## Software Architecture
 
-See https://github.com/elimu-ai/wiki/blob/master/SOFTWARE_ARCHITECTURE.md
+See https://github.com/elimu-ai/wiki/blob/main/SOFTWARE_ARCHITECTURE.md
 
 ---
 
@@ -60,7 +60,7 @@ See https://github.com/elimu-ai/wiki/blob/master/SOFTWARE_ARCHITECTURE.md
   <img src="https://github.com/elimu-ai/webapp/blob/main/src/main/webapp/static/img/logo-text-256x78.png" />
 </p>
 <p align="center">
-  elimu.ai - Free open-source learning software for out-of-school children ✨🚀
+  elimu.ai - Free open-source learning software for out-of-school children 🚀✨
 </p>
 <p align="center">
   <a href="https://elimu.ai">Website 🌐</a>
