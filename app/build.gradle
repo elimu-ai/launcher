@@ -52,8 +52,7 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-    implementation(libs.elimu.model) // https://jitpack.io/#ai.elimu/model
-    implementation libs.elimu.common.utils // https://jitpack.io/#ai.elimu/common-utils
+    implementation(libs.elimu.appstore) // https://jitpack.io/#ai.elimu/appstore
 
     implementation(libs.timber)
     implementation(libs.androidx.appcompat)
@@ -61,7 +60,6 @@ dependencies {
     implementation(libs.androidx.viewpager)
     implementation(libs.dots.indicator)
     implementation(libs.material.dialog)
-    implementation libs.androidx.core.ktx
 
     testImplementation libs.junit
     androidTestImplementation libs.android.test.espresso
