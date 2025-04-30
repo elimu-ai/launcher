@@ -6,8 +6,8 @@ apply plugin: 'org.jetbrains.kotlin.android'
 apply plugin: 'maven-publish'
 
 android {
-    compileSdk 35
     namespace "ai.elimu.launcher"
+    compileSdk 35
 
     defaultConfig {
         applicationId "ai.elimu.launcher"
@@ -15,7 +15,6 @@ android {
         targetSdkVersion 35
         versionCode 2001018
         versionName "2.1.18-SNAPSHOT"
-        setProperty("archivesBaseName", "${applicationId}-${versionCode}")
         testInstrumentationRunner("androidx.test.runner.AndroidJUnitRunner")
     }
 
@@ -68,7 +67,7 @@ dependencies {
 publishing {
     publications {
         apk(MavenPublication) {
-            artifact("${buildDir}/outputs/apk/release/${android.defaultConfig.applicationId}-${android.defaultConfig.versionCode}-release-unsigned.apk")
+            artifact("${buildDir}/outputs/apk/release/app-release-unsigned.apk")
         }
     }
 }
