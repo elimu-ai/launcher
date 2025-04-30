@@ -6,8 +6,8 @@ apply plugin: 'org.jetbrains.kotlin.android'
 apply plugin: 'maven-publish'
 
 android {
-    compileSdk 35
     namespace "ai.elimu.launcher"
+    compileSdk 35
 
     defaultConfig {
         applicationId "ai.elimu.launcher"
@@ -15,7 +15,6 @@ android {
         targetSdkVersion 35
         versionCode 2001018
         versionName "2.1.18-SNAPSHOT"
-        setProperty("archivesBaseName", "${applicationId}-${versionCode}")
         testInstrumentationRunner("androidx.test.runner.AndroidJUnitRunner")
     }
 
@@ -52,8 +51,7 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-    implementation(libs.elimu.model) // https://jitpack.io/#ai.elimu/model
-    implementation libs.elimu.common.utils // https://jitpack.io/#ai.elimu/common-utils
+    implementation(libs.elimu.appstore) // https://jitpack.io/#ai.elimu/appstore
 
     implementation(libs.timber)
     implementation(libs.androidx.appcompat)
@@ -61,7 +59,6 @@ dependencies {
     implementation(libs.androidx.viewpager)
     implementation(libs.dots.indicator)
     implementation(libs.material.dialog)
-    implementation libs.androidx.core.ktx
 
     testImplementation libs.junit
     androidTestImplementation libs.android.test.espresso
@@ -70,7 +67,7 @@ dependencies {
 publishing {
     publications {
         apk(MavenPublication) {
-            artifact("${buildDir}/outputs/apk/release/${android.defaultConfig.applicationId}-${android.defaultConfig.versionCode}-release-unsigned.apk")
+            artifact("${buildDir}/outputs/apk/release/app-release-unsigned.apk")
         }
     }
 }
