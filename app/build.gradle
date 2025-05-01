@@ -1,17 +1,20 @@
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
 apply plugin: 'com.android.application'
 apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'maven-publish'
 
 android {
-    compileSdk 35
     namespace "ai.elimu.launcher"
+    compileSdk 35
 
     defaultConfig {
         applicationId "ai.elimu.launcher"
         minSdkVersion 26
         targetSdkVersion 35
-        versionCode 2001010
-        versionName "2.1.10-SNAPSHOT"
-        setProperty("archivesBaseName", "${applicationId}-${versionCode}")
+        versionCode 2001019
+        versionName "2.1.19-SNAPSHOT"
         testInstrumentationRunner("androidx.test.runner.AndroidJUnitRunner")
     }
 
@@ -48,8 +51,7 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-    implementation(libs.elimu.model) // https://jitpack.io/#elimu-ai/model
-    implementation libs.elimu.common.utils // https://jitpack.io/#elimu-ai/common-utils
+    implementation(libs.elimu.appstore) // https://jitpack.io/#ai.elimu/appstore
 
     implementation(libs.timber)
     implementation(libs.androidx.appcompat)
@@ -57,8 +59,82 @@ dependencies {
     implementation(libs.androidx.viewpager)
     implementation(libs.dots.indicator)
     implementation(libs.material.dialog)
-    implementation libs.androidx.core.ktx
 
     testImplementation libs.junit
     androidTestImplementation libs.android.test.espresso
+}
+
+publishing {
+    publications {
+        apk(MavenPublication) {
+            artifact("${buildDir}/outputs/apk/release/app-release-unsigned.apk")
+        }
+    }
+}
+tasks.named("publishApkPublicationToMavenLocal") {
+    mustRunAfter(":app:assembleRelease")
+}
+
+task removeSnapshot {
+    doLast {
+        println("removeSnapshot")
+
+        def file = file("build.gradle")
+        def originalFileContent = file.getText()
+
+        Pattern pattern = Pattern.compile("versionName \"\\d+\\.\\d+\\.\\d+-SNAPSHOT\"")
+        Matcher matcher = pattern.matcher(originalFileContent)
+        matcher.find()
+        println("match: ${matcher.group()}")
+
+        def newVersionName = matcher.group().replace("-SNAPSHOT", "")
+        println("newVersionName: ${newVersionName}")
+
+        def newFileContent = originalFileContent.replaceFirst("versionName \"\\d+\\.\\d+\\.\\d+-SNAPSHOT\"", newVersionName)
+        file.write(newFileContent)
+    }
+}
+task getVersionName {
+    doLast {
+        println android.defaultConfig.versionName
+    }
+}
+task bumpVersion {
+    doLast {
+        println("bumpVersion")
+
+        def currentVersionCode = android.defaultConfig.versionCode
+        println("currentVersionCode: ${currentVersionCode}")
+
+        def newVersionCode = currentVersionCode + 1
+        println("newVersionCode: ${newVersionCode}")
+
+        def newVersionName = newVersionCode.toString().substring(0, 1).toInteger() + "." + newVersionCode.toString().substring(1, 4).toInteger() + "." + newVersionCode.toString().substring(4, 7).toInteger()
+        println("newVersionName: ${newVersionName}")
+
+        def file = file("build.gradle")
+        def originalFileContent = file.getText()
+        def newFileContent = originalFileContent.replaceFirst("versionCode \\d+", "versionCode ${newVersionCode}")
+        newFileContent = newFileContent.replaceFirst("versionName \"\\d+\\.\\d+\\.\\d+\"", "versionName \"${newVersionName}\"")
+        file.write(newFileContent)
+    }
+}
+task addSnapshot {
+    doLast {
+        println("addSnapshot")
+
+        def file = file("build.gradle")
+        def originalFileContent = file.getText()
+
+        Pattern pattern = Pattern.compile("versionName \"\\d+\\.\\d+\\.\\d+\"")
+        Matcher matcher = pattern.matcher(originalFileContent)
+        matcher.find()
+        println("match: ${matcher.group()}")
+
+        def newVersionName = "${matcher.group().substring(12, matcher.group().length() - 1)}-SNAPSHOT\""
+        println("newVersionName: ${newVersionName}")
+
+        def newFileContent = originalFileContent.replaceFirst("versionName \"\\d+\\.\\d+\\.\\d+\"", "versionName ${newVersionName}")
+        file.write(newFileContent)
+    }
 }

@@ -15,9 +15,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Point
-import android.net.Uri
 import android.os.Bundle
-import android.text.TextUtils
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
@@ -35,6 +33,8 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.Theme
 import timber.log.Timber
 import java.util.Locale
+import androidx.core.net.toUri
+import androidx.core.text.layoutDirection
 
 class HomeScreensActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeScreensBinding
@@ -60,7 +60,7 @@ class HomeScreensActivity : AppCompatActivity() {
         binding.container.setAdapter(mSectionsPagerAdapter)
 
         isRightToLeft =
-            TextUtils.getLayoutDirectionFromLocale(Locale.getDefault()) == View.LAYOUT_DIRECTION_RTL
+            Locale.getDefault().layoutDirection == View.LAYOUT_DIRECTION_RTL
 
         //Increase the width of the background image to apply the parallax effect
         updateBackgroundImageWidth()
@@ -73,7 +73,7 @@ class HomeScreensActivity : AppCompatActivity() {
                 override fun onPageScrolled(
                     position: Int,
                     positionOffset: Float,
-                    positionOffsetPixels: Int
+                    positionOffsetPixels: Int,
                 ) {
                     Timber.i("onPageScrolled")
 
@@ -101,11 +101,11 @@ class HomeScreensActivity : AppCompatActivity() {
 
         // Fetch Applications from the Appstore's ContentProvider
         val uri =
-            Uri.parse("content://" + BuildConfig.APPSTORE_APPLICATION_ID + ".provider.application_provider/applications")
+            ("content://" + BuildConfig.APPSTORE_APPLICATION_ID + ".provider.application_provider/applications").toUri()
         Timber.i("uri: $uri")
         val cursor = contentResolver.query(uri, null, null, null, null)
         if (cursor != null) {
-            Timber.i("cursor.getCount(): " + cursor.count)
+            Timber.i("cursor.getCount(): %s", cursor.count)
             if (cursor.count > 0) {
                 var isLast = false
                 while (!isLast) {
@@ -118,7 +118,7 @@ class HomeScreensActivity : AppCompatActivity() {
 
                     isLast = cursor.isLast
                 }
-                Timber.i("cursor.isClosed(): " + cursor.isClosed)
+                Timber.i("cursor.isClosed(): %s", cursor.isClosed)
                 cursor.close()
             } else {
                 Toast.makeText(applicationContext, "cursor.getCount() == 0", Toast.LENGTH_LONG)
@@ -127,7 +127,7 @@ class HomeScreensActivity : AppCompatActivity() {
         } else {
             Toast.makeText(applicationContext, "cursor == null", Toast.LENGTH_LONG).show()
         }
-        Timber.i("applications.size(): " + applications.size)
+        Timber.i("applications.size(): %s", applications.size)
 
         window.apply {
             setLightStatusBar()
@@ -139,16 +139,16 @@ class HomeScreensActivity : AppCompatActivity() {
         try {
             val packageInfoAppstore =
                 packageManager.getPackageInfo(BuildConfig.APPSTORE_APPLICATION_ID, 0)
-            Timber.i("packageInfoAppstore.versionCode: " + packageInfoAppstore.versionCode)
+            Timber.i("packageInfoAppstore.versionCode: %s", packageInfoAppstore.versionCode)
         } catch (e: PackageManager.NameNotFoundException) {
-            Timber.w(null, e)
+            Timber.e(e)
             MaterialDialog.Builder(this)
                 .content(resources.getString(R.string.appstore_needed) + BuildConfig.APPSTORE_APPLICATION_ID)
                 .positiveText(resources.getString(R.string.download))
                 .onPositive { dialog, which ->
                     val intent = Intent(
                         Intent.ACTION_VIEW,
-                        Uri.parse(APPSTORE_DOWNLOAD_URL)
+                        APPSTORE_DOWNLOAD_URL.toUri()
                     )
                     startActivity(intent)
                 }
@@ -207,7 +207,7 @@ class HomeScreensActivity : AppCompatActivity() {
 
         override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+            savedInstanceState: Bundle?,
         ): View? {
             Timber.i("onCreateView")
 
@@ -342,7 +342,7 @@ class HomeScreensActivity : AppCompatActivity() {
             val appGridLayout = customView!!.findViewById<GridLayout>(R.id.appGridLayout)
 
             for (application in applications) {
-                Timber.i("application.getPackageName(): " + application.packageName)
+                Timber.i("application.getPackageName(): %s", application.packageName)
                 val isTabletNavigationSkill = false // TODO
                 Timber.i("isTabletNavigationSkill: $isTabletNavigationSkill")
                 val isLiteracySkill = application.literacySkills.contains(literacySkill)
@@ -357,11 +357,11 @@ class HomeScreensActivity : AppCompatActivity() {
                     try {
                         val packageInfoAppstore =
                             requireContext().packageManager.getPackageInfo(application.packageName, 0)
-                        Timber.i("packageInfoAppstore.versionCode: " + packageInfoAppstore.versionCode)
+                        Timber.i("packageInfoAppstore.versionCode: %s", packageInfoAppstore.versionCode)
                     } catch (e: PackageManager.NameNotFoundException) {
                         Timber.i(
                             e,
-                            "The Application has not been installed: " + application.packageName
+                            "The Application has not been installed: %s", application.packageName
                         )
                         continue
                     }
