@@ -127,9 +127,18 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
-      - name: Publish the APK file URL
+      - name: Prepare the APK file URL
+        id: prepare_apk_file_url
         run: |
           echo "tagName ${{ needs.create_git_tag.outputs.tagName }}"
           APK_FILE_URL="https://github.com/elimu-ai/launcher/releases/download/${{ needs.create_git_tag.outputs.tagName }}/ai.elimu.launcher-${{ needs.create_git_tag.outputs.tagName }}.apk"
           echo "APK_FILE_URL $APK_FILE_URL"
-          # TODO
+          echo "::set-output name=apk_file_url::$APK_FILE_URL"
+
+      - name: Send HTTP request to `http://tha.elimu.ai/rest/v2/applications/ai.elimu.launcher/application-versions/${{ needs.create_git_tag.outputs.tagName }}`
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: http://tha.elimu.ai/rest/v2/applications/ai.elimu.launcher/application-versions/${{ needs.create_git_tag.outputs.tagName }}
+          method: PUT
+          data: '{"fileUrl": "${{ steps.prepare_apk_file_url.outputs.apk_file_url }}"}'
+          customHeaders: '{"Content-Type": "application/json"}'
