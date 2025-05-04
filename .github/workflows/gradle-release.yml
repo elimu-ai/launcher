@@ -75,3 +75,43 @@ jobs:
       - name: Git Push
         run: |
           git push
+
+  build_apk_artifact:
+    needs: create_git_tag
+    runs-on: ubuntu-latest
+
+    steps:
+      # Get the Git Tag name from the previous job
+      # TODO
+
+      - uses: actions/checkout@v4
+      # Clone the Git repo with the Tag name from the previous job
+      # TODO
+      
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/gradle-build-action@v3
+      - run: ./gradlew assembleRelease
+
+  sign_apk_artifact:
+    needs: build_apk_artifact
+    runs-on: ubuntu-latest
+
+    # Get APK file from previous job
+    # TODO
+
+  upload_signed_apk:
+    needs: sign_apk_artifact
+    runs-on: ubuntu-latest
+
+    # Get signed APK file from previous job
+    # TODO
+
+  publish_to_appstore:
+    needs: upload_signed_apk
+    runs-on: ubuntu-latest
+
+    # Get APK file URL from previous job
+    # TODO
