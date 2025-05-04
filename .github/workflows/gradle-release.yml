@@ -116,7 +116,7 @@ jobs:
 
       - run: echo "signedReleaseFile ${{steps.sign_app.outputs.signedReleaseFile}}"
 
-      - name: Rename signed release file to ai.elimu.launcher-${{ needs.create_git_tag.outputs.tagName }}.apk
+      - name: Rename signed release file to `ai.elimu.launcher-${{ needs.create_git_tag.outputs.tagName }}.apk`
         run: mv ${{steps.sign_app.outputs.signedReleaseFile}} app/build/outputs/apk/release/ai.elimu.launcher-${{ needs.create_git_tag.outputs.tagName }}.apk
 
       - name: Upload the signed APK file to GitHub release
@@ -128,5 +128,8 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
 
       - name: Publish the APK file URL
-        run: echo "tagName ${{ needs.create_git_tag.outputs.tagName }}"
-        # TODO
+        run: |
+          echo "tagName ${{ needs.create_git_tag.outputs.tagName }}"
+          APK_FILE_URL="https://github.com/elimu-ai/launcher/releases/download/${{ needs.create_git_tag.outputs.tagName }}/ai.elimu.launcher-${{ needs.create_git_tag.outputs.tagName }}.apk"
+          echo "APK_FILE_URL $APK_FILE_URL"
+          # TODO
