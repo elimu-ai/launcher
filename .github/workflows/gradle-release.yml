@@ -96,6 +96,8 @@ jobs:
           java-version: 17
 
       - uses: gradle/gradle-build-action@v3
+
+      - name: Assemble `release` build
         run: ./gradlew assembleRelease
 
       - name: Sign the APK file
