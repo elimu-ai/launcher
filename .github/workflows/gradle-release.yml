@@ -77,19 +77,19 @@ jobs:
         run: |
           git push
     outputs:
-      versionName: ${{ steps.get_version_name.outputs.version_name }}
+      tagName: ${{ steps.get_version_name.outputs.version_name }}
 
   release_apk:
     needs: create_git_tag
     runs-on: ubuntu-latest
     steps:
       - name: Get the Git Tag name from the previous job
-        run: echo "versionName ${{ needs.create_git_tag.outputs.versionName }}"
+        run: echo "tagName ${{ needs.create_git_tag.outputs.tagName }}"
 
-      - name: Checkout refs/tags/${{ needs.create_git_tag.outputs.versionName }}
+      - name: Checkout refs/tags/${{ needs.create_git_tag.outputs.tagName }}
         uses: actions/checkout@v4
         with:
-          ref: refs/tags/${{ needs.create_git_tag.outputs.versionName }}
+          ref: refs/tags/${{ needs.create_git_tag.outputs.tagName }}
 
       - name: Assemble APK file
         uses: actions/setup-java@v4
@@ -103,13 +103,13 @@ jobs:
         run: ./gradlew assembleRelease
 
       - name: Sign the APK file
-        run: echo "versionName ${{ needs.create_git_tag.outputs.versionName }}"
+        run: echo "tagName ${{ needs.create_git_tag.outputs.tagName }}"
         # TODO
 
       - name: Upload the signed APK file
-        run: echo "versionName ${{ needs.create_git_tag.outputs.versionName }}"
+        run: echo "tagName ${{ needs.create_git_tag.outputs.tagName }}"
         # TODO
 
       - name: Publish the APK file URL
-        run: echo "versionName ${{ needs.create_git_tag.outputs.versionName }}"
+        run: echo "tagName ${{ needs.create_git_tag.outputs.tagName }}"
         # TODO
