@@ -8,7 +8,7 @@ jobs:
   create_git_tag:
     runs-on: ubuntu-latest
     outputs:
-      versionName: { { steps.get_version_name.outputs.version_name } }
+      versionName: ${{ steps.get_version_name.outputs.version_name }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
