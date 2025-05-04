@@ -116,11 +116,14 @@ jobs:
 
       - run: echo "signedReleaseFile ${{steps.sign_app.outputs.signedReleaseFile}}"
 
+      - name: Rename signed release file to ai.elimu.launcher-${{ needs.create_git_tag.outputs.tagName }}.apk
+        run: mv ${{steps.sign_app.outputs.signedReleaseFile}} app/build/outputs/apk/release/ai.elimu.launcher-${{ needs.create_git_tag.outputs.tagName }}.apk
+
       - name: Upload the signed APK file to GitHub release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: '${{ needs.create_git_tag.outputs.tagName }}'
-          files: ./${{steps.sign_app.outputs.signedReleaseFile}}
+          files: app/build/outputs/apk/release/ai.elimu.launcher-${{ needs.create_git_tag.outputs.tagName }}.apk
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
