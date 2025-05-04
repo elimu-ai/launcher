@@ -39,6 +39,7 @@ jobs:
           ./gradlew getVersionName --quiet --console=plain
           VERSION_NAME="$(./gradlew getVersionName --quiet --console=plain)"
           echo "::set-output name=version_name::$VERSION_NAME"
+          echo "version_name=$VERSION_NAME" >> $GITHUB_OUTPUT
 
       - name: Git Commit
         run: |
@@ -76,14 +77,14 @@ jobs:
         run: |
           git push
     outputs:
-      TAG_NAME: {{ steps.get_version_name.outputs.version_name }}
+      versionName: {{ steps.get_version_name.outputs.version_name }}
 
   release_apk:
     needs: create_git_tag
     runs-on: ubuntu-latest
     steps:
       - name: Get the Git Tag name from the previous job
-        run: echo "TAG_NAME ${{ needs.create_git_tag.outputs.TAG_NAME }}"
+        run: echo "versionName ${{ needs.create_git_tag.outputs.versionName }}"
 
       - uses: actions/checkout@v4
         # Clone the Git repo with the Tag name from the previous job
@@ -101,13 +102,13 @@ jobs:
         run: ./gradlew assembleRelease
 
       - name: Sign the APK file
-        run: echo "TAG_NAME ${{ needs.create_git_tag.outputs.TAG_NAME }}"
+        run: echo "VERSION_NAME ${{ needs.create_git_tag.outputs.VERSION_NAME }}"
         # TODO
 
       - name: Upload the signed APK file
-        run: echo "TAG_NAME ${{ needs.create_git_tag.outputs.TAG_NAME }}"
+        run: echo "VERSION_NAME ${{ needs.create_git_tag.outputs.VERSION_NAME }}"
         # TODO
 
       - name: Publish the APK file URL
-        run: echo "TAG_NAME ${{ needs.create_git_tag.outputs.TAG_NAME }}"
+        run: echo "VERSION_NAME ${{ needs.create_git_tag.outputs.VERSION_NAME }}"
         # TODO
