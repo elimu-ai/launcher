@@ -111,6 +111,10 @@ jobs:
           alias: ${{ secrets.ALIAS }}
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
+        env:
+          BUILD_TOOLS_VERSION: "34.0.0"
+
+      - run: echo "signedReleaseFile ${{steps.sign_app.outputs.signedReleaseFile}}"
 
       - name: Upload the signed APK file
         run: echo "tagName ${{ needs.create_git_tag.outputs.tagName }}"
