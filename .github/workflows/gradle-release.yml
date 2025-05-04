@@ -79,7 +79,6 @@ jobs:
   build_apk_artifact:
     needs: create_git_tag
     runs-on: ubuntu-latest
-
     steps:
       # Get the Git Tag name from the previous job
       # TODO
@@ -98,20 +97,20 @@ jobs:
   sign_apk_artifact:
     needs: build_apk_artifact
     runs-on: ubuntu-latest
-
-    # Get APK file from previous job
-    # TODO
+    steps:
+      - name: Get APK file from previous job
+      # TODO
 
   upload_signed_apk:
     needs: sign_apk_artifact
     runs-on: ubuntu-latest
-
-    # Get signed APK file from previous job
-    # TODO
+    steps:
+      - name: Get signed APK file from previous job
+      # TODO
 
   publish_to_appstore:
     needs: upload_signed_apk
     runs-on: ubuntu-latest
-
-    # Get APK file URL from previous job
-    # TODO
+    steps:
+      - name: Get APK file URL from previous job
+      # TODO
