@@ -116,9 +116,13 @@ jobs:
 
       - run: echo "signedReleaseFile ${{steps.sign_app.outputs.signedReleaseFile}}"
 
-      - name: Upload the signed APK file
-        run: echo "tagName ${{ needs.create_git_tag.outputs.tagName }}"
-        # TODO
+      - name: Upload the signed APK file to GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: '${{ needs.create_git_tag.outputs.tagName }}'
+          files: ./${{steps.sign_app.outputs.signedReleaseFile}}
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
 
       - name: Publish the APK file URL
         run: echo "tagName ${{ needs.create_git_tag.outputs.tagName }}"
