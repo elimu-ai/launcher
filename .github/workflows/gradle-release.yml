@@ -80,12 +80,13 @@ jobs:
     needs: create_git_tag
     runs-on: ubuntu-latest
     steps:
-      # Get the Git Tag name from the previous job
-      # TODO
+      - name: Get the Git Tag name from the previous job
+        run: echo "$TAG_NAME"
+        # TODO
 
       - uses: actions/checkout@v4
-      # Clone the Git repo with the Tag name from the previous job
-      # TODO
+        # Clone the Git repo with the Tag name from the previous job
+        # TODO
       
       - uses: actions/setup-java@v4
         with:
@@ -99,18 +100,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get APK file from previous job
-      # TODO
+        run: echo "$APK_FILE"
+        # TODO
 
   upload_signed_apk:
     needs: sign_apk_artifact
     runs-on: ubuntu-latest
     steps:
       - name: Get signed APK file from previous job
-      # TODO
+        run: echo "$SIGNED_APK_FILE"
+        # TODO
 
   publish_to_appstore:
     needs: upload_signed_apk
     runs-on: ubuntu-latest
     steps:
       - name: Get APK file URL from previous job
-      # TODO
+        run: echo "$APK_FILE_URL"
+        # TODO
