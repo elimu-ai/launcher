@@ -75,19 +75,21 @@ jobs:
       - name: Git Push
         run: |
           git push
+    outputs:
+      TAG_NAME: {{ steps.get_version_name.outputs.version_name }}
 
-  build_apk_artifact:
+  release_apk:
     needs: create_git_tag
     runs-on: ubuntu-latest
     steps:
       - name: Get the Git Tag name from the previous job
-        run: echo "$TAG_NAME"
-        # TODO
+        run: echo "TAG_NAME ${{ needs.create_git_tag.outputs.TAG_NAME }}"
 
       - uses: actions/checkout@v4
         # Clone the Git repo with the Tag name from the previous job
         # TODO
-      
+
+      - name: Assemble APK file
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -95,26 +97,11 @@ jobs:
       - uses: gradle/gradle-build-action@v3
       - run: ./gradlew assembleRelease
 
-  sign_apk_artifact:
-    needs: build_apk_artifact
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get APK file from previous job
-        run: echo "$APK_FILE"
+      - name: Sign the APK file
         # TODO
 
-  upload_signed_apk:
-    needs: sign_apk_artifact
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get signed APK file from previous job
-        run: echo "$SIGNED_APK_FILE"
+      - name: Upload the signed APK file
         # TODO
 
-  publish_to_appstore:
-    needs: upload_signed_apk
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get APK file URL from previous job
-        run: echo "$APK_FILE_URL"
+      - name: Publish the APK file URL
         # TODO
