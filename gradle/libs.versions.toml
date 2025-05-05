@@ -8,6 +8,7 @@ constraintLayout = "2.2.1"
 appCompat = "1.7.0"
 junit = "4.13.2"
 testEspresso = "3.0.2"
+agp = "8.8.2"
 
 [libraries]
 elimu-appstore = { group = "ai.elimu", name = "appstore", version.ref = "elimuAppstore" }
@@ -19,5 +20,6 @@ androidx-constraint-layout = { group = "androidx.constraintlayout", name = "cons
 androidx-viewpager = { group = "androidx.viewpager2", name = "viewpager2", version.ref = "viewpager2" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 android-test-espresso = { group = "com.android.support.test.espresso", name = "espresso-core", version.ref = "testEspresso" }
+agp = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
 
 [plugins]
