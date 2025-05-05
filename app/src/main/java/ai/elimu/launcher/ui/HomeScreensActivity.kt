@@ -176,7 +176,6 @@ class HomeScreensActivity : AppCompatActivity() {
 
     class PlaceholderFragment : Fragment() {
         // Skill: Tablet navigation
-        private var tabletNavigationContainer: ConstraintLayout? = null
         private var tabletNavigationImageView: ImageView? = null
 
 
@@ -187,10 +186,8 @@ class HomeScreensActivity : AppCompatActivity() {
         private var egraPhonemicAwarenessContainer: ConstraintLayout? = null
         private var egraPhonemicAwarenessImageView: ImageView? = null
 
-        private var egraLetterIdentificationContainer: ConstraintLayout? = null
         private var egraLetterIdentificationImageView: ImageView? = null
 
-        private var egraSyllableNamingContainer: ConstraintLayout? = null
         private var egraSyllableNamingImageView: ImageView? = null
 
 
@@ -198,10 +195,8 @@ class HomeScreensActivity : AppCompatActivity() {
         private var egmaOralCountingContainer: ConstraintLayout? = null
         private var egmaOralCountingImageView: ImageView? = null
 
-        private var egmaNumberIdentificationContainer: ConstraintLayout? = null
         private var egmaNumberIdentificationImageView: ImageView? = null
 
-        private var egmaMissingNumberContainer: ConstraintLayout? = null
         private var egmaMissingNumberImageView: ImageView? = null
 
 
@@ -224,7 +219,6 @@ class HomeScreensActivity : AppCompatActivity() {
             if (sectionNumber == 1) {
                 // 1. Tablet navigation
 
-                tabletNavigationContainer = rootView.findViewById(R.id.tabletNavigationContainer)
                 tabletNavigationImageView = rootView.findViewById(R.id.tabletNavigationImageView)
                 tabletNavigationImageView?.setOnClickListener {
                     Timber.i("tabletNavigationImageView onClick")
@@ -256,8 +250,6 @@ class HomeScreensActivity : AppCompatActivity() {
                     initializeDialog(LiteracySkill.PHONEMIC_AWARENESS, null)
                 }
 
-                egraLetterIdentificationContainer =
-                    rootView.findViewById(R.id.egraLetterIdentificationContainer)
                 egraLetterIdentificationImageView =
                     rootView.findViewById(R.id.egraLetterIdentificationImageView)
                 egraLetterIdentificationImageView?.setOnClickListener {
@@ -276,8 +268,6 @@ class HomeScreensActivity : AppCompatActivity() {
                     initializeDialog(null, NumeracySkill.ORAL_COUNTING)
                 }
 
-                egmaNumberIdentificationContainer =
-                    rootView.findViewById(R.id.egmaNumberIdentificationContainer)
                 egmaNumberIdentificationImageView =
                     rootView.findViewById(R.id.egmaNumberIdentificationImageView)
                 egmaNumberIdentificationImageView?.setOnClickListener {
@@ -286,7 +276,6 @@ class HomeScreensActivity : AppCompatActivity() {
                     initializeDialog(null, NumeracySkill.NUMBER_IDENTIFICATION)
                 }
 
-                egmaMissingNumberContainer = rootView.findViewById(R.id.egmaMissingNumberContainer)
                 egmaMissingNumberImageView = rootView.findViewById(R.id.egmaMissingNumberImageView)
                 egmaMissingNumberImageView?.setOnClickListener {
                     Timber.i("egmaMissingNumberImageView onClick")
@@ -296,8 +285,6 @@ class HomeScreensActivity : AppCompatActivity() {
             } else if (sectionNumber == 2) {
                 // 1. EGRA skills
 
-                egraSyllableNamingContainer =
-                    rootView.findViewById(R.id.egraSyllableNamingContainer)
                 egraSyllableNamingImageView =
                     rootView.findViewById(R.id.egraSyllableNamingImageView)
                 egraSyllableNamingImageView?.setOnClickListener {
