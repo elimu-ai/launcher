@@ -3,4 +3,5 @@
 
     <string name="appstore_needed">The elimu.ai Launcher will not work without the elimu.ai Appstore:\u0020</string>
     <string name="download">Download</string>
+    <string name="content_desc_background">Background</string>
 </resources>
