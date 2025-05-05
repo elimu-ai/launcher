@@ -44,6 +44,14 @@ To install and run the launcher on an Android device during development, use the
     adb install app/build/outputs/apk/debug/app-debug.apk
     adb shell am start -n ai.elimu.launcher.debug/ai.elimu.launcher.MainActivity
 
+### Release 📦
+
+To perform a release, follow these steps:
+
+1. Merge your PR into the `main` branch
+1. Wait for the ["Gradle Release"](https://github.com/elimu-ai/launcher/actions/workflows/gradle-release.yml) workflow to complete
+1. Ensure that the new release version appears at https://github.com/elimu-ai/launcher/releases
+
 ### Gradle Upgrade
 
 ```
