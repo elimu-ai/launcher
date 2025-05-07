@@ -5,6 +5,23 @@
     <!-- elimu.ai Appstore ContentProvider (see https://github.com/elimu-ai/appstore/blob/master/app/src/main/AndroidManifest.xml) -->
     <uses-permission android:name="${appstoreApplicationId}.provider.READ" />
 
+    <queries>
+        <provider android:authorities="${appstoreApplicationId}.provider.application_provider" />
+
+        <package android:name="ai.elimu.vitabu" />
+        <package android:name="ai.elimu.launcher" />
+        <package android:name="ai.elimu.content_provider" />
+        <package android:name="ai.elimu.analytics" />
+        <package android:name="ai.elimu.kukariri" />
+        <package android:name="org.dsandler.apps.markers" />
+        <package android:name="com.eduapp4syria.feedthemonsterENGLISH" />
+        <package android:name="ai.elimu.herufi" />
+        <package android:name="com.google.fpl.liquidfunpaint" />
+        <package android:name="ai.elimu.soundcards" />
+        <package android:name="ai.elimu.imagepicker" />
+        <package android:name="ai.elimu.filamu" />
+    </queries>
+
     <application
         android:name=".BaseApplication"
         android:allowBackup="true"
