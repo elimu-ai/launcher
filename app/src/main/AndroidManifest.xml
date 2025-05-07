@@ -9,7 +9,6 @@
         <provider android:authorities="${appstoreApplicationId}.provider.application_provider" />
 
         <package android:name="ai.elimu.vitabu" />
-        <package android:name="ai.elimu.launcher" />
         <package android:name="ai.elimu.content_provider" />
         <package android:name="ai.elimu.analytics" />
         <package android:name="ai.elimu.kukariri" />
