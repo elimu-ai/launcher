@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="ai.elimu.launcher">
 
     <!-- elimu.ai Appstore ContentProvider (see https://github.com/elimu-ai/appstore/blob/master/app/src/main/AndroidManifest.xml) -->
     <uses-permission android:name="${appstoreApplicationId}.provider.READ" />
+
+    <!-- Request permission to query any `ai.elimu.*` package. -->
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" />
+
+    <queries>
+        <provider android:authorities="${appstoreApplicationId}.provider.application_provider" />
+    </queries>
 
     <application
         android:name=".BaseApplication"
