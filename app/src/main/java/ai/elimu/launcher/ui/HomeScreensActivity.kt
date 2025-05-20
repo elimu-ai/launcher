@@ -108,6 +108,7 @@ class HomeScreensActivity : AppCompatActivity() {
             Timber.i("cursor.getCount(): %s", cursor.count)
             if (cursor.count > 0) {
                 var isLast = false
+                applications.clear()
                 while (!isLast) {
                     cursor.moveToNext()
 
