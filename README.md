@@ -1,5 +1,3 @@
-[![Release](https://jitpack.io/v/ai.elimu/launcher.svg)](https://jitpack.io/#ai.elimu/launcher)
-
 # elimu.ai Launcher 🚀
 
 Custom Android launcher providing a clear instructional path (based on EGRA/EGMA skills). The applications are fetched from the [Appstore](https://github.com/elimu-ai/appstore)'s [Content Provider](https://github.com/elimu-ai/appstore/tree/main/app/src/main/java/ai/elimu/appstore/provider).
