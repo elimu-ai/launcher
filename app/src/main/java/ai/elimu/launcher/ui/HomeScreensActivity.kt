@@ -16,7 +16,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Point
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -369,7 +368,7 @@ class HomeScreensActivity : AppCompatActivity() {
                             packageManager.getResourcesForApplication(application.packageName)
                         val icon = resources.getDrawableForDensity(
                             applicationInfo.icon,
-                            DisplayMetrics.DENSITY_XXHIGH,
+                            0,
                             null
                         )
                         appIconImageView.setImageDrawable(icon)
