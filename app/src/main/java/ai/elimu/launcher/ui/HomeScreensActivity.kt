@@ -327,6 +327,7 @@ class HomeScreensActivity : AppCompatActivity() {
 
             val customView = materialDialog.customView
             val appGridLayout = customView!!.findViewById<GridLayout>(R.id.appGridLayout)
+            val spacing = requireContext().resources.getDimension(R.dimen.dialog_view_app_item_space).toInt()
 
             for (application in applications) {
                 Timber.i("application.getPackageName(): %s", application.packageName)
@@ -386,8 +387,20 @@ class HomeScreensActivity : AppCompatActivity() {
                         startActivity(intent)
                         //                            EventTracker.reportApplicationOpenedEvent(getContext(), activityInfo.packageName);
                     }
+                    val columnCount = appGridLayout.columnCount
+                    val pos = appGridLayout.childCount
+                    val row = pos / columnCount
+                    val column = pos % columnCount
 
-                    appGridLayout.addView(appView)
+                    val gridLayoutParams = GridLayout.LayoutParams().apply {
+                        rowSpec = GridLayout.spec(row)
+                        columnSpec = GridLayout.spec(column, 1f)
+                        width = 0
+                        height = GridLayout.LayoutParams.WRAP_CONTENT
+                        setMargins(spacing, spacing, spacing, spacing)
+                    }
+
+                    appGridLayout.addView(appView, gridLayoutParams)
                 }
             }
         }
