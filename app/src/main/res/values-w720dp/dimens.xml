@@ -7,4 +7,5 @@
     <dimen name="spaceship_width">160dp</dimen>
     <dimen name="spaceship_height">160dp</dimen>
     <dimen name="spaceship_vertical_margin">16dp</dimen>
+    <dimen name="dialog_view_app_item_size">96dp</dimen>
 </resources>
