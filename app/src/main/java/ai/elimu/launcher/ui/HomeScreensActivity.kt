@@ -26,7 +26,7 @@ import androidx.core.text.layoutDirection
 
 class HomeScreensActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeScreensBinding
-    private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
+    private var mSectionPagerAdapter: SectionPagerAdapter? = null
 
     private var isRightToLeft = false
 
@@ -42,10 +42,10 @@ class HomeScreensActivity : AppCompatActivity() {
         checkIfAppstoreIsInstalled()
 
         // Create the adapter that will return a fragment for each of the primary sections of the activity.
-        mSectionsPagerAdapter = SectionsPagerAdapter(this, applications)
+        mSectionPagerAdapter = SectionPagerAdapter(this, applications)
 
         // Set up the ViewPager with the sections adapter.
-        binding.container.setAdapter(mSectionsPagerAdapter)
+        binding.container.setAdapter(mSectionPagerAdapter)
 
         isRightToLeft =
             Locale.getDefault().layoutDirection == View.LAYOUT_DIRECTION_RTL
@@ -54,7 +54,7 @@ class HomeScreensActivity : AppCompatActivity() {
         updateBackgroundImageWidth()
 
         val pageTranslation =
-            (displayWidth * WIDTH_INCREMENT / (mSectionsPagerAdapter!!.itemCount - 1)).toInt()
+            (displayWidth * WIDTH_INCREMENT / (mSectionPagerAdapter!!.itemCount - 1)).toInt()
 
         binding.container.let {
             it.registerOnPageChangeCallback(object : OnPageChangeCallback() {
