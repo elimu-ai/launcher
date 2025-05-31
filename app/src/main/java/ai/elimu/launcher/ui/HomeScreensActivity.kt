@@ -17,8 +17,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.fragment.app.Fragment
-import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.afollestad.materialdialogs.MaterialDialog
 import timber.log.Timber
@@ -44,7 +42,7 @@ class HomeScreensActivity : AppCompatActivity() {
         checkIfAppstoreIsInstalled()
 
         // Create the adapter that will return a fragment for each of the primary sections of the activity.
-        mSectionsPagerAdapter = SectionsPagerAdapter(this)
+        mSectionsPagerAdapter = SectionsPagerAdapter(this, applications)
 
         // Set up the ViewPager with the sections adapter.
         binding.container.setAdapter(mSectionsPagerAdapter)
@@ -164,18 +162,6 @@ class HomeScreensActivity : AppCompatActivity() {
             windowManager.defaultDisplay.getSize(displaySize)
             return displaySize.x
         }
-
-
-    class SectionsPagerAdapter(activity: AppCompatActivity) : FragmentStateAdapter(activity) {
-        override fun createFragment(position: Int): Fragment {
-            return PlaceholderFragment.newInstance(position + 1, applications)
-        }
-
-        override fun getItemCount(): Int {
-            return 4
-        }
-    }
-
 
     @SuppressLint("MissingSuperCall")
     override fun onBackPressed() {
