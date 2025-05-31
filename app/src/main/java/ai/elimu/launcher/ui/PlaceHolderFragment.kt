@@ -232,10 +232,12 @@ class PlaceHolderFragment : Fragment() {
                     Timber.i("appIconImageView onClick")
                     val intent =
                         packageManager.getLaunchIntentForPackage(application.packageName)
-                    intent!!.addCategory(Intent.CATEGORY_LAUNCHER)
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED)
-                    startActivity(intent)
-                    //                            EventTracker.reportApplicationOpenedEvent(getContext(), activityInfo.packageName);
+                    intent?.let {
+                        intent.addCategory(Intent.CATEGORY_LAUNCHER)
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED)
+                        startActivity(intent)
+                    } ?: Timber.w("No launch intent found for package: ${application.packageName}")
+
                 }
                 val columnCount = appGridLayout.columnCount
                 val pos = appGridLayout.childCount
