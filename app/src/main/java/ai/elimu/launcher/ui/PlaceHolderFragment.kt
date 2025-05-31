@@ -271,9 +271,9 @@ class PlaceHolderFragment : Fragment() {
             val objectAnimatorEGRA = ObjectAnimator.ofFloat(
                 container,
                 "rotation",
-                (2 + (Math.random().toInt() * 3)).toFloat()
+                (2 + (Math.random() * 3)).toFloat()
             )
-            objectAnimatorEGRA.setDuration((1000 + (Math.random().toInt() * 1000)).toLong())
+            objectAnimatorEGRA.setDuration((1000 + (Math.random() * 1000)).toLong())
             objectAnimatorEGRA.repeatCount = ValueAnimator.INFINITE
             objectAnimatorEGRA.repeatMode = ValueAnimator.REVERSE
             objectAnimatorEGRA.start()
@@ -283,10 +283,10 @@ class PlaceHolderFragment : Fragment() {
             val objectAnimatorEgmaPhonemicAwareness = ObjectAnimator.ofFloat(
                 container,
                 "rotation",
-                (2 + (Math.random().toInt() * 3)).toFloat()
+                (2 + (Math.random() * 3)).toFloat()
             )
             objectAnimatorEgmaPhonemicAwareness.setDuration(
-                (1000 + (Math.random().toInt() * 1000)).toLong()
+                (1000 + (Math.random() * 1000)).toLong()
             )
             objectAnimatorEgmaPhonemicAwareness.repeatCount = ValueAnimator.INFINITE
             objectAnimatorEgmaPhonemicAwareness.repeatMode = ValueAnimator.REVERSE
@@ -297,9 +297,9 @@ class PlaceHolderFragment : Fragment() {
             val objectAnimatorEGMA = ObjectAnimator.ofFloat(
                 container,
                 "rotation",
-                (2 + (Math.random().toInt() * 3)).toFloat()
+                (2 + (Math.random() * 3)).toFloat()
             )
-            objectAnimatorEGMA.setDuration((1000 + (Math.random().toInt() * 1000)).toLong())
+            objectAnimatorEGMA.setDuration((1000 + (Math.random() * 1000)).toLong())
             objectAnimatorEGMA.repeatCount = ValueAnimator.INFINITE
             objectAnimatorEGMA.repeatMode = ValueAnimator.REVERSE
             objectAnimatorEGMA.start()
