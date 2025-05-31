@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
-class SectionsPagerAdapter(
+class SectionPagerAdapter(
     activity: AppCompatActivity,
     private val apps: MutableList<ApplicationGson>) : FragmentStateAdapter(activity) {
 
