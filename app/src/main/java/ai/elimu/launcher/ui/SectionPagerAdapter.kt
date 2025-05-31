@@ -10,7 +10,7 @@ class SectionsPagerAdapter(
     private val apps: MutableList<ApplicationGson>) : FragmentStateAdapter(activity) {
 
     override fun createFragment(position: Int): Fragment {
-        return PlaceholderFragment.newInstance(position + 1, apps)
+        return PlaceHolderFragment.newInstance(position + 1, apps)
     }
 
     override fun getItemCount(): Int {

@@ -21,7 +21,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.Theme
 import timber.log.Timber
 
-class PlaceholderFragment : Fragment() {
+class PlaceHolderFragment : Fragment() {
 
     private val apps: MutableList<ApplicationGson> = mutableListOf()
 
@@ -308,8 +308,8 @@ class PlaceholderFragment : Fragment() {
         private const val ARG_SECTION_NUMBER = "section_number"
 
 
-        fun newInstance(sectionNumber: Int, apps: MutableList<ApplicationGson>): PlaceholderFragment {
-            val fragment = PlaceholderFragment()
+        fun newInstance(sectionNumber: Int, apps: MutableList<ApplicationGson>): PlaceHolderFragment {
+            val fragment = PlaceHolderFragment()
             val args = Bundle()
             args.putInt(ARG_SECTION_NUMBER, sectionNumber)
             fragment.arguments = args
