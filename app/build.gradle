@@ -13,8 +13,8 @@ android {
         applicationId "ai.elimu.launcher"
         minSdkVersion 26
         targetSdkVersion 35
-        versionCode 2001070
-        versionName "2.1.70"
+        versionCode 2001071
+        versionName "2.1.71-SNAPSHOT"
         testInstrumentationRunner("androidx.test.runner.AndroidJUnitRunner")
     }
 
