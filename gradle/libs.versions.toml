@@ -8,7 +8,7 @@ constraintLayout = "2.2.1"
 appCompat = "1.7.1"
 junit = "4.13.2"
 testEspresso = "3.0.2"
-agp = "8.8.2"
+agp = "8.9.1"
 
 [libraries]
 elimu-appstore = { group = "ai.elimu", name = "appstore", version.ref = "elimuAppstore" }
