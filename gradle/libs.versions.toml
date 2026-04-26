@@ -1,5 +1,5 @@
 [versions]
-elimuAppstore = "2.5.95"
+elimuAppstore = "2.5.103"
 timber = "5.0.1"
 viewpager2 = "1.1.0"
 dotsIndicator = "5.1.0"
@@ -8,7 +8,7 @@ constraintLayout = "2.2.1"
 appCompat = "1.7.1"
 junit = "4.13.2"
 testEspresso = "3.0.2"
-agp = "8.8.2"
+agp = "8.9.1"
 
 [libraries]
 elimu-appstore = { group = "ai.elimu", name = "appstore", version.ref = "elimuAppstore" }
