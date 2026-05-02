@@ -8,6 +8,7 @@ constraintLayout = "2.2.1"
 appCompat = "1.7.1"
 junit = "4.13.2"
 testEspresso = "3.0.2"
+kotlinGradlePlugin = "2.2.0"
 agp = "8.9.1"
 
 [libraries]
@@ -20,6 +21,7 @@ androidx-constraint-layout = { group = "androidx.constraintlayout", name = "cons
 androidx-viewpager = { group = "androidx.viewpager2", name = "viewpager2", version.ref = "viewpager2" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 android-test-espresso = { group = "com.android.support.test.espresso", name = "espresso-core", version.ref = "testEspresso" }
+kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlinGradlePlugin" }
 agp = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
 
 [plugins]
