@@ -8,7 +8,7 @@ constraintLayout = "2.2.1"
 appCompat = "1.7.1"
 junit = "4.13.2"
 testEspresso = "3.0.2"
-kotlinGradlePlugin = "2.2.0"
+kotlinGradlePlugin = "2.3.21"
 agp = "8.9.1"
 
 [libraries]
