@@ -24,11 +24,13 @@ android {
             manifestPlaceholders = [appstoreApplicationId: "ai.elimu.appstore.debug"]
             buildConfigField("String", "APPSTORE_APPLICATION_ID", '"ai.elimu.appstore.debug"')
             buildConfigField("String", "ANALYTICS_APPLICATION_ID", '"ai.elimu.analytics.debug"')
+            buildConfigField("String", "KUKARIRI_APPLICATION_ID", '"ai.elimu.kukariri.debug"')
         }
         release {
             manifestPlaceholders = [appstoreApplicationId: "ai.elimu.appstore"]
             buildConfigField("String", "APPSTORE_APPLICATION_ID", '"ai.elimu.appstore"')
             buildConfigField("String", "ANALYTICS_APPLICATION_ID", '"ai.elimu.analytics"')
+            buildConfigField("String", "KUKARIRI_APPLICATION_ID", '"ai.elimu.kukariri"')
         }
     }
 

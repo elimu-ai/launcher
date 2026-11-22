@@ -124,6 +124,40 @@ class HomeScreensActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        // Refresh the shortcut, in case the Kukariri app was installed/uninstalled in the meantime
+        updateKukaririShortcut()
+    }
+
+    /**
+     * Shows a shortcut to the Kukariri app at the top left of the Launcher.
+     * The shortcut is hidden if the Kukariri app has not been installed.
+     */
+    private fun updateKukaririShortcut() {
+        val kukaririShortcut = binding.kukaririShortcutImageView
+        try {
+            kukaririShortcut.setImageDrawable(
+                packageManager.getApplicationIcon(BuildConfig.KUKARIRI_APPLICATION_ID)
+            )
+            kukaririShortcut.visibility = View.VISIBLE
+            kukaririShortcut.setOnClickListener {
+                Timber.i("kukaririShortcutImageView onClick")
+                val intent = packageManager.getLaunchIntentForPackage(BuildConfig.KUKARIRI_APPLICATION_ID)
+                intent?.let {
+                    it.addCategory(Intent.CATEGORY_LAUNCHER)
+                    it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED)
+                    startActivity(it)
+                } ?: Timber.w("No launch intent found for package: ${BuildConfig.KUKARIRI_APPLICATION_ID}")
+            }
+        } catch (e: PackageManager.NameNotFoundException) {
+            Timber.i(e, "The Kukariri app has not been installed: %s", BuildConfig.KUKARIRI_APPLICATION_ID)
+            kukaririShortcut.visibility = View.GONE
+            kukaririShortcut.setOnClickListener(null)
+        }
+    }
+
     private fun checkIfAppstoreIsInstalled() {
         try {
             val packageInfoAppstore =
